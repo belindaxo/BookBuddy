@@ -1,40 +1,57 @@
-# Virtual Wardrobe Assistant
+# BookBuddy: a Comprehensive Reading Management Tool
 
-**What will the application do?**
+## What will the application do?
 
-The Virtual Wardrobe Assistant is a Java application designed to allow users to digitally catalog their wardrobes, 
-having each user specify attributes such as color, style, and fabric for each item. Through the utilization of color 
-theory and general style rules, the Virtual Wardrobe Assistant will suggest outfits appropriate any occasion and 
-taking into account the user's personal preferences. The application offers the additional feature of weather-based 
-outfit suggestions, where the user can input the days' weather conditions to receive suitable recommendations. 
-Additionally, the Virtual Wardrobe Assistant includes an Outfit Diary feature where users can save and view their 
-favourite outfits. The application also provides insights on the user's wardrobe usage, such as most and least-worn 
-items, as well as allowing users to create custom tags and categories that can be used to further personalize the app.
+BookBuddy is an interactive Java application designed for book enthusiasts. This application helps users organize 
+their book collections, record their reading experiences, receive personalized book recommendations, and track their 
+reading habits and goals. 
+
+**Key features:**
+
+**Virtual Bookshelf** - Allows users to organize and manage their personal book collections digitally. Users can add 
+books, categorize them, and mark them as read, unread, or in-progress with additional details like author, genre,
+length, and more.
+
+**Interactive Reading Journal** - Offers a space for users to write notes, thoughts, and capture favorite quotes for 
+each book in their collection. This feature encourages reflective reading and serves as useful log of the user's 
+reading experiences.
+
+**Book Recommendation System** - Using a series of user-inputted preferences (such as genre, complexity, and length), 
+they will receive suggestions for their next read from their collection.
+
+**Reading Habit & Goal Tracker** - Helps users track their daily reading progress (in terms of pages or books) and set 
+specific reading goals. Daily reading streaks will be tracked to motivate consistent reading habits and completion of
+personalized goals. This feature will be updated in the future to include visual data representations to illustrate 
+the user's progress over time.
+
+Users will start by adding books to their virtual bookshelf. From there, they can create journal entries for each book
+that document their reading experiences and encourage reflective reading habits. The reading tracker feature will 
+allow for users to log their daily reading activities and set personal reading goals they hope to reach. The 
+recommendation feature suggests books from the user's collection based on their preferences for their next read.
 
 **Who will use it?**
 
-This application is particularly beneficial for those who struggle with the daily challenge of deciding what to wear.
-It also serves as a great tool for fashion enthusiasts to keep track of their best outfits and continue creating fun, 
-new looks from the items already found in their closet. For the eco-conscious user, the Virtual Wardrobe Assistant's 
-wardrobe organization and usage insights will prove useful for environmentally-friendly practices such as donating items
-that aren't frequently worn and offering fresh, new looks using the user's existing wardrobe to avoid unnecessary 
-purchases that contribute to the range of negative environmental impacts that the fashion industry is responsible for.
+BookBuddy is designed for avid readers and lovers of literature who want to organize their reading in a digital space.
+It is particularly appealing for those who, like myself, have a bad habit of buying new books more frequently than they
+end up actually reading, resulting in a large collection of books waiting to be read. This application is also great for 
+individuals wanting to track their reading habits and goals and reflect on their reading experiences, members of book
+clubs who want to organize their reading lists and prepare notes for discussions, students needing to organize and 
+keep track of their assigned readings, and lastly, anyone who is looking to introduce or improve the habit of reading 
+into their lives.
 
 **Why did I create this project?**
 
-I got the idea for this project while brainstorming options for a personal project. I wanted to develop something that 
-was unique and creative as well as something that both myself and others would use and benefit from. While thinking of 
-ways I could incorporate my interests into a Java application, I remembered the iconic scene from the 
-90's movie *Clueless*, [where the protagonist, Cher, picks out her outfit of the day using a 
-custom wardrobe program](https://www.youtube.com/watch?v=XNDubWJU0aU&ab_channel=KeriKelly). As someone with ADHD who 
-struggles to figure out what to wear in enough time to not be late, having an app that can provide outfit options would
-be a huge time saver and anxiety-reliever. I also often find that both myself and my two roommates always have the 
-feeling that we "don't have anything to wear", despite having a closet full of clothes. This often leads to spending
-more money on new clothes that we don't really need, and as the cycle repeats, a lot of the items we own are 
-rarely worn, collecting dust on the clothes rack. Thus, I knew that I wanted to develop an application with
-tools that: catalog a personal wardrobe, offer insights on the usage of items, give well-tuned and personalized outfit
-suggestions, save the best looks for future use, and lastly, provide inspiration for new outfit ideas for fellow 
-fashion-lovers like myself.
+As someone who enjoys reading, the idea of creating an application centered on enhancing the reading experience is both
+exciting and personally useful. As a person with ADHD, I struggle with completing books, reading consistently, and 
+buying books that end up collecting dust on my shelves as I promise myself "I'll get to them eventually." This has been
+particularly frustrating for me, as I truly am very passionate about literature and love to read, I just need a way to
+make the habit of reading more structured and goal-oriented. By being able to set goals for how much I would like to
+read daily and how many books I would like to finish in a year, I am better able to introduce an effective, consistent
+reading habit in my life. Additionally, I often find myself passively reading and forgetting any thoughts or experiences
+I had while reading, and by having an interface that includes the ability to jot down any ideas or memorable quotes as
+I read would be very beneficial. Aside from the personal benefit I would receive from using such an application, 
+developing this project would serve as a challenging opportunity to utilize my skills in software development, UX/UI 
+design, and data science.
 
 ****
 
