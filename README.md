@@ -2,11 +2,11 @@
 
 ## What will the application do?
 
-BookBuddy is an interactive Java application designed for book enthusiasts. This application helps users organize 
+**BookBuddy** is an interactive Java application designed for book enthusiasts. This application helps users organize 
 their book collections, record their reading experiences, receive personalized book recommendations, and track their 
 reading habits and goals. 
 
-**Key features:**
+### Key features:
 
 **Virtual Bookshelf** - Allows users to organize and manage their personal book collections digitally. Users can add 
 books, categorize them, and mark them as read, unread, or in-progress with additional details like author, genre,
@@ -29,7 +29,7 @@ that document their reading experiences and encourage reflective reading habits.
 allow for users to log their daily reading activities and set personal reading goals they hope to reach. The 
 recommendation feature suggests books from the user's collection based on their preferences for their next read.
 
-**Who will use it?**
+## Who will use it?
 
 BookBuddy is designed for avid readers and lovers of literature who want to organize their reading in a digital space.
 It is particularly appealing for those who, like myself, have a bad habit of buying new books more frequently than they
@@ -39,7 +39,7 @@ clubs who want to organize their reading lists and prepare notes for discussions
 keep track of their assigned readings, and lastly, anyone who is looking to introduce or improve the habit of reading 
 into their lives.
 
-**Why did I create this project?**
+## Why did I create this project?
 
 As someone who enjoys reading, the idea of creating an application centered on enhancing the reading experience is both
 exciting and personally useful. As a person with ADHD, I struggle with completing books, reading consistently, and 
