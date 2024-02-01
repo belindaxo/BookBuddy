@@ -57,17 +57,21 @@ design, and data science.
 
 ## User Stories
 
-As a user, I want to be able to add a book to my virtual bookshelf and specify the title, author, genre, 
+- As a user, I want to be able to add a book to my virtual bookshelf and specify the title, author, genre, 
 publication year, and number of pages, so that I can organize my reading collection digitally.
 
-As a user, I want to be able to view a list of titles in my book collection.
 
-As a user, I want to be able to log my daily reading progress by noting down the amount of pages read each day, and 
+- As a user, I want to be able to view a list of titles in my book collection.
+
+
+- As a user, I want to be able to log my daily reading progress by noting down the amount of pages read each day, and 
 view a summary of my progress towards my reading goals to track my reading habits.
 
-As a user, I want to be able to add journal entries for each book in my collection, specifying my thoughts, ratings, and
+
+- As a user, I want to be able to add journal entries for each book in my collection, specifying my thoughts, ratings, and
 quotes.
 
-As a user, I want to answer questions about my current mood, genre, and length preferences to receive personalized
+
+- As a user, I want to answer questions about my current mood, genre, and length preferences to receive personalized
 book recommendations from my collection to help me decide what to read next.
 
