@@ -5,7 +5,6 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BookTest {
-    private int pageCount;
     private Book book1;
     private Book book2;
     private Book book3;
@@ -22,12 +21,10 @@ public class BookTest {
     @Test
     public void testConstructor() {
         assertEquals("The Bell Jar", book1.getTitle());
-        assertEquals("Sylvia Plath", book1.getTitle());
+        assertEquals("Sylvia Plath", book1.getAuthor());
         assertEquals("Fiction", book1.getGenre());
         assertEquals(240, book1.getPageCount());
+        assertEquals("unread", book1.getStatus());
     }
-
-    //TODO
-    // tests for methods
 
 }

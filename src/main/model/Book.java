@@ -1,59 +1,76 @@
 package model;
 
-// Represents a book in a user's collection that has a title,
-// author, genre, page count
+// Represents a book in a user's collection that has a title, author, genre, page count, and read status
 public class Book {
     private String title;
     private String author;
     private String genre;
     private int pageCount;
-    //TODO
-    // should I add journal as field and status?
+    private String status;
 
 
-    // Constructor
-    // EFFECTS: constructs book with given title, author, genre, and page count
+    // EFFECTS: constructs book with given title, author, genre, page count, and initial status set to "unread"
     public Book(String title, String author, String genre, int pageCount) {
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.pageCount = pageCount;
+        this.status = "unread";
     }
 
 
-    // setters:
+    public String getTitle() {
+        return this.title;
+    }
+
     public void setTitle(String title) {
         this.title = title;
+    }
+
+
+    public String getAuthor() {
+        return this.author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
     }
 
+
+    public String getGenre() {
+        return this.genre;
+    }
+
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+
+    public int getPageCount() {
+        return pageCount;
     }
 
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
     }
 
-    // getters:
-    public String getTitle() {
-        return title;
+
+    public String getStatus() {
+        return status;
     }
 
-    public String getAuthor() {
-        return author;
+    public void setStatusRead() {
+        this.status = "read";
     }
 
-    public String getGenre() {
-        return genre;
+    public void setStatusInProgress() {
+        this.status = "in progress";
     }
 
-    public int getPageCount() {
-        return pageCount;
+    public void setStatusUnread() {
+        this.status = "unread";
     }
+
 
 }
 
