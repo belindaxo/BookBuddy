@@ -1,5 +1,6 @@
 package model;
 
+// Represents a reading goal set by the user with goal type, target, and progress so far
 public class ReadingGoal {
     private String goalType;
     private int target;

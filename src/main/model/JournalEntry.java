@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+// Represents a journal entry for a book with a date created, entry content, and list of highlights.
 public class JournalEntry {
     private LocalDate dateCreated;
     private String content;

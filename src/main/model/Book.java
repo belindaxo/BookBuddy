@@ -1,21 +1,25 @@
 package model;
 
-// Represents a book in a user's collection that has a title, author, genre,
-// publication year, and page count.
+// Represents a book in a user's collection that has a title,
+// author, genre, page count
 public class Book {
     private String title;
     private String author;
     private String genre;
     private int pageCount;
+    //TODO
+    // should I add journal as field and status?
+
 
     // Constructor
-    // EFFECTS: constructs book with given title, author, genre, publication year, and page count
+    // EFFECTS: constructs book with given title, author, genre, and page count
     public Book(String title, String author, String genre, int pageCount) {
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.pageCount = pageCount;
     }
+
 
     // setters:
     public void setTitle(String title) {
