@@ -18,7 +18,6 @@ public class Book {
         this.status = "unread";
     }
 
-
     public String getTitle() {
         return this.title;
     }
