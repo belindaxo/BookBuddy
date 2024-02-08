@@ -1,0 +1,41 @@
+package model;
+
+// Represents a single journal entry that has a book title, content, ratings, and quotes
+public class JournalEntry {
+    private String bookTitle;
+    private String content;
+    private String quotes;
+
+    public JournalEntry(String bookTitle, String notes, String quotes) {
+        this.bookTitle =  bookTitle;
+        this.content = notes;
+        this.quotes = quotes;
+    }
+
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getQuotes() {
+        return quotes;
+    }
+
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setQuotes(String quotes) {
+        this.quotes = quotes;
+    }
+
+}
+
+

@@ -3,8 +3,8 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BookshelfTest {
-    private Bookshelf bookshelf;
+public class VirtualBookshelfTest {
+    private VirtualBookshelf bookshelf;
     private Book book1;
     private Book book2;
     private Book book3;
@@ -14,7 +14,7 @@ public class BookshelfTest {
 
     @BeforeEach
     public void setup() {
-        bookshelf = new Bookshelf();
+        bookshelf = new VirtualBookshelf();
         book1 = new Book("The Bell Jar", "Sylvia Plath", "Fiction", 240);
         book2 = new Book("The Catcher in the Rye", "J.D. Salinger", "Fiction", 234);
         book3 = new Book("Crime and Punishment", "Fyodor Dostoevsky", "Fiction", 527);
@@ -25,30 +25,30 @@ public class BookshelfTest {
 
     @Test
     public void testConstructor() {
-        assertEquals(0, bookshelf.getBookshelf().size());
+        assertEquals(0, bookshelf.getBooks().size());
     }
 
     @Test
     public void testAddBook() {
         bookshelf.addBook(book1);
-        assertEquals(1, bookshelf.getBookshelf().size());
-        assertEquals(book1, bookshelf.getBookshelf().get(0));
+        assertEquals(1, bookshelf.getBooks().size());
+        assertEquals(book1, bookshelf.getBooks().get(0));
     }
 
     @Test
     public void testAddBookMultipleTimes() {
         bookshelf.addBook(book2);
-        assertEquals(1, bookshelf.getBookshelf().size());
+        assertEquals(1, bookshelf.getBooks().size());
 
         bookshelf.addBook(book3);
-        assertEquals(2, bookshelf.getBookshelf().size());
+        assertEquals(2, bookshelf.getBooks().size());
 
         bookshelf.addBook(book4);
-        assertEquals(3, bookshelf.getBookshelf().size());
+        assertEquals(3, bookshelf.getBooks().size());
 
-        assertEquals(book2, bookshelf.getBookshelf().get(0));
-        assertEquals(book3, bookshelf.getBookshelf().get(1));
-        assertEquals(book4, bookshelf.getBookshelf().get(2));
+        assertEquals(book2, bookshelf.getBooks().get(0));
+        assertEquals(book3, bookshelf.getBooks().get(1));
+        assertEquals(book4, bookshelf.getBooks().get(2));
 
     }
 
