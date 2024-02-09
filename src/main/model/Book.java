@@ -6,7 +6,7 @@ public class Book {
     private String author;
     private String genre;
     private int pageCount;
-    private String status;
+    private String status; // read, unread, in progress
 
 
     // EFFECTS: constructs book with given title, author, genre, page count, and initial status set to "unread"
@@ -18,6 +18,7 @@ public class Book {
         this.status = "unread";
     }
 
+    // getters and setters:
     public String getTitle() {
         return this.title;
     }
@@ -58,14 +59,20 @@ public class Book {
         return status;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets status of book to "read"
     public void setStatusRead() {
         this.status = "read";
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets status of book to "in progress"
     public void setStatusInProgress() {
         this.status = "in progress";
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets status of book to "read"
     public void setStatusUnread() {
         this.status = "unread";
     }

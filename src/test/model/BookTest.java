@@ -27,6 +27,24 @@ public class BookTest {
         assertEquals("unread", book1.getStatus());
     }
 
+    @Test
+    public void testSetStatusRead() {
+        book1.setStatusRead();
+        assertEquals("read", book1.getStatus());
+    }
+
+    @Test
+    public void testSetStatusInProgress() {
+        book2.setStatusInProgress();
+        assertEquals("in progress", book2.getStatus());
+    }
+
+    @Test
+    public void testSetStatusUnread() {
+        book3.setStatusUnread();
+        assertEquals("unread", book1.getStatus());
+    }
+
 
 
 }
