@@ -1,32 +1,52 @@
 package model;
 
-// Tracks daily reading progress and goals
+// Tracks reading progress and goals
 public class ReadingTracker {
-    private int dailyReadingGoal;
-    private int pagesReadToday;
+    private int totalPagesRead;
+    private int readingGoal;
 
-    public ReadingTracker(int dailyReadingGoal) {
-        this.dailyReadingGoal = dailyReadingGoal;
-        this.pagesReadToday = 0;
+    // EFFECTS: constructs a page counter with total pages read and the associated reading goal
+    public ReadingTracker() {
+        this.totalPagesRead = 0;
+        this.readingGoal = 0;
     }
 
-    //TODO
-    // updateDailyReading, checkProgress
-
-
-    public int getDailyReadingGoal() {
-        return dailyReadingGoal;
+    public int getTotalPagesRead() {
+        return this.totalPagesRead;
     }
 
-    public void setDailyReadingGoal(int dailyReadingGoal) {
-        this.dailyReadingGoal = dailyReadingGoal;
+    // MODIFIES: this
+    // EFFECTS: adds specified number of pages read to total pages read
+    public void addPagesRead(int pages) {
+        this.totalPagesRead += pages;
     }
 
-    public int getPagesReadToday() {
-        return pagesReadToday;
+    public int getReadingGoal() {
+        return this.readingGoal;
     }
 
-    public void setPagesReadToday(int pagesReadToday) {
-        this.pagesReadToday = pagesReadToday;
+    public void setReadingGoal(int goal) {
+        this.readingGoal = goal;
+    }
+
+    // EFFECTS: calculates number of pages left to reach goal
+    public int getPagesLeft() {
+        int pagesLeft = readingGoal - totalPagesRead;
+        return Math.max(pagesLeft, 0);
+    }
+
+    // EFFECTS: returns summary of goal progress
+    public String goalSummary() {
+        if (getPagesLeft() > 1) {
+            return "Goal: " + readingGoal + " pages"
+                    + "\nPages Read: " + totalPagesRead + " pages"
+                    + "\nPages Left: " + getPagesLeft() + " pages";
+        } else if (getPagesLeft() == 1) {
+            return "Goal: " + readingGoal + " pages"
+                    + "\nPages Read: " + totalPagesRead + " page"
+                    + "\nPages Left: " + getPagesLeft() + " page";
+        } else {
+            return "Goal of " + readingGoal + " pages has been met!";
+        }
     }
 }

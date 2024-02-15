@@ -21,7 +21,19 @@ public class JournalEntryTest {
         assertEquals("The Bell Jar", entry1.getBookTitle());
         assertEquals("One of my favourite books ever!!", entry1.getContent());
         assertEquals("\"To the person in the bell jar... the world itself is a bad dream.\"",
-                entry1.getQuotes());
+                entry1.getQuote());
+    }
+
+    @Test
+    public void testSetContent() {
+        entry1.setContent("hi!");
+        assertEquals("hi!", entry1.getContent());
+    }
+
+    @Test
+    public void testSetQuote() {
+        entry2.setQuote("\"Yippeeeee\"");
+        assertEquals("\"Yippeeeee\"", entry2.getQuote());
     }
 
 

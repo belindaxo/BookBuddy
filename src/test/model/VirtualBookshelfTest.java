@@ -234,6 +234,7 @@ public class VirtualBookshelfTest {
 
     @Test
     public void testGetBooksByPageCount() {
+        book6.setPageCount(1000);
         bookshelf.addBook(book1);
         bookshelf.addBook(book2);
         bookshelf.addBook(book3);
@@ -260,6 +261,7 @@ public class VirtualBookshelfTest {
 
     @Test
     public void testGetBooksByGenre() {
+        book5.setGenre("Sci-Fi");
         bookshelf.addBook(book1);
         bookshelf.addBook(book2);
         bookshelf.addBook(book3);
@@ -293,6 +295,7 @@ public class VirtualBookshelfTest {
         book3.setAuthor("Franz Kafka");
         book2.setAuthor("Sylvia Plath");
         book6.setAuthor("Sylvia Plath");
+        book1.setTitle("title");
 
         assertEquals(3, bookshelf.getBooksByAuthor("Sylvia Plath").size());
         assertEquals(3, bookshelf.getBooksByAuthor("sylvia plath").size());

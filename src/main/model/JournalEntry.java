@@ -4,12 +4,12 @@ package model;
 public class JournalEntry {
     private String bookTitle;
     private String content;
-    private String quotes;
+    private String quote;
 
-    public JournalEntry(String bookTitle, String notes, String quotes) {
+    public JournalEntry(String bookTitle, String content, String quote) {
         this.bookTitle =  bookTitle;
-        this.content = notes;
-        this.quotes = quotes;
+        this.content = content;
+        this.quote = quote;
     }
 
     public String getBookTitle() {
@@ -20,8 +20,8 @@ public class JournalEntry {
         return content;
     }
 
-    public String getQuotes() {
-        return quotes;
+    public String getQuote() {
+        return quote;
     }
 
     public void setBookTitle(String bookTitle) {
@@ -32,8 +32,8 @@ public class JournalEntry {
         this.content = content;
     }
 
-    public void setQuotes(String quotes) {
-        this.quotes = quotes;
+    public void setQuote(String quote) {
+        this.quote = quote;
     }
 
 }

@@ -16,9 +16,6 @@ public class VirtualBookshelf {
     public void addBook(Book book) {
         books.add(book);
     }
-    //TODO
-    // if list contains book (all fields identical), don't add book, otherwise add
-
 
     // EFFECTS: returns the number of books in bookshelf that are read
     public int readCount() {

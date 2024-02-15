@@ -57,8 +57,8 @@ design, and data science.
 
 ## User Stories
 
-- As a user, I want to be able to add a book to my virtual bookshelf and specify the title, author, genre, 
-publication year, and number of pages, so that I can organize my reading collection digitally.
+- As a user, I want to be able to add a book to my virtual bookshelf and specify the title, author, genre, and number 
+of pages, so that I can organize my reading collection digitally.
 
 
 - As a user, I want to be able to view a list of titles in my book collection.
