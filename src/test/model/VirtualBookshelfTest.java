@@ -1,6 +1,6 @@
 package model;
-import org.junit.jupiter.api.*;
 
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VirtualBookshelfTest {
@@ -317,6 +317,28 @@ public class VirtualBookshelfTest {
         assertEquals(book4, bookshelf.getBooksByAuthor("FRANZ").get(1));
 
         assertEquals(book5, bookshelf.getBooksByAuthor("herbert").get(0));
+    }
+
+    @Test
+    public void testGetBooksByStatus() {
+        bookshelf.addBook(book1);
+        bookshelf.addBook(book2);
+        bookshelf.addBook(book3);
+        bookshelf.addBook(book4);
+        bookshelf.addBook(book5);
+        bookshelf.addBook(book6);
+
+        book1.setStatusRead();
+        book2.setStatusRead();
+        book3.setStatusInProgress();
+
+        assertEquals(3, bookshelf.getBooksByStatus("unread").size());
+        assertEquals(2, bookshelf.getBooksByStatus("read").size());
+        assertEquals(1, bookshelf.getBooksByStatus("in progress").size());
+
+        assertEquals(book1, bookshelf.getBooksByStatus("read").get(0));
+
+
     }
 
 }

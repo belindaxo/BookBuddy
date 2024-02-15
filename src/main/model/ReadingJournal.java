@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class ReadingJournal {
     private ArrayList<JournalEntry> journal;
 
+    // EFFECTS: initializes a reading journal with an empty list of journal entries
     public ReadingJournal() {
         this.journal = new ArrayList<>();
     }

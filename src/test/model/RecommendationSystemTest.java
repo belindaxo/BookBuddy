@@ -59,6 +59,7 @@ public class RecommendationSystemTest {
         assertTrue(rec.recBookByPageCount("medium").getPageCount() > 350
         && rec.recBookByPageCount("medium").getPageCount() <= 650);
         assertTrue(rec.recBookByPageCount("long").getPageCount() > 650);
+        assertNull(rec.recBookByPageCount("super long"));
     }
 
     @Test
@@ -77,6 +78,7 @@ public class RecommendationSystemTest {
         assertEquals("unread", rec.recBookByStatus("unread").getStatus());
         assertEquals("read", rec.recBookByStatus("read").getStatus());
         assertEquals("in progress", rec.recBookByStatus("in progress").getStatus());
+        assertNull(rec.recBookByStatus("lost"));
     }
 
     @Test

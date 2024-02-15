@@ -1,6 +1,6 @@
 package model;
 
-// Tracks reading progress and goals
+// Updates and tracks reading progress and goals
 public class ReadingTracker {
     private int totalPagesRead;
     private int readingGoal;

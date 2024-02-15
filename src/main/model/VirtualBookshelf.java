@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class VirtualBookshelf {
     private ArrayList<Book> books;
 
+    // EFFECTS: initializes a virtual bookshelf with an empty list of books
     public VirtualBookshelf() {
         this.books = new ArrayList<>();
     }
-
 
     // MODIFIES: this
     // EFFECTS: adds book to bookshelf
@@ -28,10 +28,6 @@ public class VirtualBookshelf {
         return count;
     }
 
-    //TODO
-    // readBooksList, inProgressBooksList, unreadBooksList
-
-
     // EFFECTS: returns the number of books in bookshelf that are in progress
     public int inProgressCount() {
         int count = 0;
@@ -42,7 +38,6 @@ public class VirtualBookshelf {
         }
         return count;
     }
-
 
     // EFFECTS: returns the number of books in bookshelf that are unread
     public int unreadCount() {
@@ -93,13 +88,24 @@ public class VirtualBookshelf {
     public ArrayList<Book> getBooksByAuthor(String a) {
         ArrayList<Book> temp = new ArrayList<>();
         for (Book b : books) {
-            if ((b.getAuthor().toLowerCase()).contains(a.toLowerCase())) {
+            if (b.getAuthor().toLowerCase().contains(a.toLowerCase())) {
                 temp.add(b);
             }
         }
         return temp;
     }
 
+    // REQUIRES: s = "read" OR "unread" OR "in progress"
+    // EFFECTS: returns a list of books in bookshelf that have specified status
+    public ArrayList<Book> getBooksByStatus(String s) {
+        ArrayList<Book> temp = new ArrayList<>();
+        for (Book b : books) {
+            if (b.getStatus().equalsIgnoreCase(s)) {
+                temp.add(b);
+            }
+        }
+        return temp;
+    }
 }
 
 
