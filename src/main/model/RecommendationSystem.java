@@ -6,7 +6,7 @@ import java.util.Random;
 // Suggests books using inputted user preferences for genre, length, and read-status
 public class RecommendationSystem {
     private VirtualBookshelf bookshelf;
-    private Book rec;
+
 
     public RecommendationSystem(VirtualBookshelf bookshelf) {
         this.bookshelf = bookshelf;
@@ -14,10 +14,11 @@ public class RecommendationSystem {
 
     //TODO
     // recommendBook method that recommends based off all three/a combo of some kind
+    // filterBy..., pass into the rec filter, bool params
 
     // MODIFIES: this
     // EFFECTS: returns title of random book from list of books that match specified preference and are unread
-    public String recBookByGenre(String pref) {
+    public Book recBookByGenre(String pref) {
         ArrayList<Book> temp = new ArrayList<>();
         for (Book book : bookshelf.getBooks()) {
             if (book.getGenre().equalsIgnoreCase(pref) && book.getStatus().equalsIgnoreCase("unread")) {
@@ -25,21 +26,20 @@ public class RecommendationSystem {
             }
         }
 
-        // if no books match preference, return error message
+        // if no books match preference, return null
         if (temp.size() == 0) {
-            return "No books found matching that genre, please try again.";
+            return null;
         }
 
         // randomly select one of the matching books in the temp list
         Random random = new Random();
-        this.rec = temp.get(random.nextInt(temp.size()));
+        return temp.get(random.nextInt(temp.size()));
 
-        return rec.getTitle();
     }
 
     // MODIFIES: this
     // EFFECTS: returns title of random book from list of books that match specified preference and are unread
-    public String recBookByPageCount(String pref) {
+    public Book recBookByPageCount(String pref) {
         ArrayList<Book> temp = new ArrayList<>();
         for (Book book : bookshelf.getBooks()) {
             if (book.getPageCount() <= 350
@@ -58,21 +58,20 @@ public class RecommendationSystem {
             }
         }
 
-        // if no books match preference, return error message
+        // if no books match preference, return null;
         if (temp.size() == 0) {
-            return "No books found with that length, please try again.";
+            return null;
         }
 
         // randomly select one of the matching books in the temp list
         Random random = new Random();
-        this.rec = temp.get(random.nextInt(temp.size()));
+        return temp.get(random.nextInt(temp.size()));
 
-        return rec.getTitle();
     }
 
     // MODIFIES: this
     // EFFECTS: returns title of random book from list of books that match specified preference and are unread
-    public String recBookByStatus(String pref) {
+    public Book recBookByStatus(String pref) {
         ArrayList<Book> temp = new ArrayList<>();
         for (Book book : bookshelf.getBooks()) {
             if (book.getStatus().equalsIgnoreCase(pref)) {
@@ -80,25 +79,21 @@ public class RecommendationSystem {
             }
         }
 
-        // if no books match preference, return error message
+        // if no books match preference, return null
         if (temp.size() == 0) {
-            return "No books found matching that status, please try again.";
+            return null;
         }
 
         // randomly select one of the matching books in the temp list
         Random random = new Random();
-        this.rec = temp.get(random.nextInt(temp.size()));
-
-        return rec.getTitle();
+        return temp.get(random.nextInt(temp.size()));
     }
 
     // MODIFIES: this
     // EFFECTS: returns title of random book from the whole bookshelf
-    public String recRandomBook() {
+    public Book recRandomBook() {
         Random random = new Random();
-        this.rec = bookshelf.getBooks().get(random.nextInt(bookshelf.getBooks().size()));
-
-        return rec.getTitle();
+        return bookshelf.getBooks().get(random.nextInt(bookshelf.getBooks().size()));
     }
 
 }
