@@ -55,6 +55,14 @@ public class VirtualBookshelf {
         return books;
     }
 
+    public ArrayList<String> getBookTitles() {
+        ArrayList<String> temp = new ArrayList<>();
+        for (Book b: books) {
+            temp.add(b.getTitle());
+        }
+        return temp;
+    }
+
     // EFFECTS: returns a list of books in bookshelf that match specified genre
     public ArrayList<Book> getBooksByGenre(String g) {
         ArrayList<Book> temp = new ArrayList<>();
