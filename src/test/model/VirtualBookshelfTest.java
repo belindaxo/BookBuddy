@@ -29,6 +29,20 @@ public class VirtualBookshelfTest {
     }
 
     @Test
+    public void testGetBookTitles() {
+        assertEquals(0, bookshelf.getBookTitles().size());
+        bookshelf.addBook(book1);
+        assertEquals(1, bookshelf.getBookTitles().size());
+        assertEquals("The Bell Jar", bookshelf.getBookTitles().get(0));
+
+        bookshelf.addBook(book2);
+        bookshelf.addBook(book3);
+        assertEquals(3, bookshelf.getBookTitles().size());
+        assertEquals("The Catcher in the Rye", bookshelf.getBookTitles().get(1));
+        assertEquals("Crime and Punishment", bookshelf.getBookTitles().get(2));
+    }
+
+    @Test
     public void testAddBook() {
         bookshelf.addBook(book1);
         assertEquals(1, bookshelf.getBooks().size());

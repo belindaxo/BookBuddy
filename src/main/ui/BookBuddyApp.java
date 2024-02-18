@@ -4,13 +4,16 @@ import model.*;
 
 import java.util.Scanner;
 
+// BookBuddy application
 public class BookBuddyApp {
-    private VirtualBookshelf bookshelf;
-    private ReadingJournal journal;
-    private ReadingTracker tracker;
-    private RecommendationSystem rec;
-    private Scanner input;
+    private final VirtualBookshelf bookshelf;
+    private final ReadingJournal journal;
+    private final ReadingTracker tracker;
+    private final RecommendationSystem rec;
+    private final Scanner input;
 
+    // EFFECTS: Initializes the BookBuddyApp instance with a bookshelf, journal,
+    //          tracker, recommendation system, and input scanner
     public BookBuddyApp() {
         bookshelf = new VirtualBookshelf();
         journal = new ReadingJournal();
@@ -19,52 +22,67 @@ public class BookBuddyApp {
         input = new Scanner(System.in);
     }
 
+    // MODIFIES: this
+    // EFFECTS: runs application until user chooses to exit and closes scanner
     public void runBookBuddy() {
         boolean run = true;
         while (run) {
             mainMenu();
-            int option = input.nextInt();
-            input.nextLine();
-            if (option == 1) {
-                addBook();
-            } else if (option == 2) {
-                viewBookshelf();
-            } else if (option == 3) {
-                addGoal();
-            } else if (option == 4) {
-                logPages();
-            } else if (option == 5) {
-                addJournalEntry();
-            } else if (option == 6) {
-                getRecommendation();
-            } else {
-                System.out.println("Invalid input. Please try again.");
-                runBookBuddy();
-            }
+            run = processUserInput();
         }
+        input.close();
     }
 
+    // EFFECTS: displays main menu options
     public void mainMenu() {
         System.out.println("Welcome to BookBuddy! What would you like to do?"
-                + "\n1. Add a book to your bookshelf"
-                + "\n2. View your bookshelf"
-                + "\n3. Create a reading goal"
-                + "\n4. Log reading activity"
-                + "\n5. Add a journal entry"
-                + "\n6. Get a book recommendation");
+                + "\n1. Access/modify your virtual bookshelf"
+                + "\n2. Open reading tracker"
+                + "\n3. Add a journal entry"
+                + "\n4. Get a book recommendation");
     }
 
-    public void nextAction() {
+    // REQUIRES: user input must match one of the valid options
+    // MODIFIES: this
+    // EFFECTS: processes user input based on menu selection, returns result of nextAction()
+    public boolean processUserInput() {
+        int option = input.nextInt();
+        input.nextLine();
+        switch (option) {
+            case 1:
+                virtualBookshelf();
+                break;
+            case 2:
+                readingTracker();
+                break;
+            case 3:
+                addJournalEntry();
+                break;
+            case 4:
+                getRecommendation();
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
+        return nextAction();
+    }
+
+    // EFFECTS: returns true if user chooses to return to main menu, false if they choose to close application
+    public boolean nextAction() {
         System.out.println("1. Return to main menu \n2. close application");
         int choice = input.nextInt();
         input.nextLine();
         if (choice == 1) {
-            runBookBuddy();
+            return true;
         } else {
             System.out.println("Thank you for using BookBuddy! Have a nice day.");
+            return false;
         }
     }
 
+    // REQUIRES: valid user input for book's title, author, genre, and page count
+    // MODIFIES: this, bookshelf
+    // EFFECTS: adds new book with inputted details to bookshelf and prints out confirmation message
     public void addBook() {
         System.out.println("What is the title?");
         String title = input.nextLine();
@@ -74,50 +92,76 @@ public class BookBuddyApp {
         String genre = input.nextLine();
         System.out.println("What is the page count?");
         int pc = input.nextInt();
+        input.nextLine();
         bookshelf.addBook(new Book(title, author, genre, pc));
         System.out.println(title + " by " + author + " has been added to your bookshelf.");
-        System.out.println("Would you like to add another book? \n1. yes \n2. no");
+    }
+
+    // EFFECTS: returns a current list of book titles in bookshelf
+    public void viewBookshelf() {
+        System.out.println(bookshelf.getBookTitles());
+    }
+
+    // REQUIRES: valid user input (1 or 2) for choice to view bookshelf or add book
+    // MODIFIES: this
+    // EFFECTS: processes user inputted choice to either add a book or view bookshelf
+    public void virtualBookshelf() {
+        System.out.println("Welcome to your virtual bookshelf. What would you like to do?"
+                + "\n1. Add a book" + "\n2. View bookshelf");
         int choice = input.nextInt();
         input.nextLine();
         if (choice == 1) {
             addBook();
-        } else {
-            nextAction();
+        } else if (choice == 2) {
+            viewBookshelf();
         }
     }
 
-    public void viewBookshelf() {
-        System.out.println(bookshelf.getBookTitles());
-        nextAction();
-    }
-
+    // REQUIRES: valid user input for number of pages read
+    // MODIFIES: this, tracker
+    // EFFECTS: adds user-specified amount of pages to reading tracker, prints confirmation message
     public void logPages() {
         System.out.println("How many pages have you read?");
         int pages = input.nextInt();
         tracker.addPagesRead(pages);
-        System.out.println(pages + " pages have been added. "
-                + "\nWould you like to view your current goal progress? \n1. yes \n2. no");
-        int choice = input.nextInt();
-        if (choice == 1) {
-            viewGoalSummary();
-        } else {
-            nextAction();
-        }
+        System.out.println(pages + " pages have been added.");
     }
 
+    // EFFECTS: displays summary of progress for current reading goal
     public void viewGoalSummary() {
         System.out.println(tracker.goalSummary());
-        nextAction();
     }
 
+    // REQUIRES: valid user input of number of pages read
+    // MODIFIES: this, tracker
+    // EFFECTS: adds new reading goal based on user-inputted number of pages, prints confirmation message
     public void addGoal() {
         System.out.println("How many pages would you like read?");
         int goal = input.nextInt();
         tracker.setReadingGoal(goal);
         System.out.println("A new reading goal of " + goal + " pages has been set.");
-        nextAction();
     }
 
+    // REQUIRES: valid user input for choice numbers
+    // MODIFIES: this
+    // EFFECTS: processes user input related to functions for the reading tracker
+    public void readingTracker() {
+        System.out.println("Welcome to the reading tracker! What would you like to do?"
+                + "\n1. Set reading goal" + "\n2. Log reading activity" + "\n3. View goal summary");
+        int choice = input.nextInt();
+        input.nextLine();
+        if (choice == 1) {
+            addGoal();
+        } else if (choice == 2) {
+            logPages();
+        } else if (choice == 3) {
+            viewGoalSummary();
+        }
+    }
+
+    // REQUIRES: valid user input
+    // MODIFIES: this, journal
+    // EFFECTS: adds journal entry for user-inputted book, content, and quote
     public void addJournalEntry() {
         System.out.println("What book would you like to create an entry for?");
         String title = input.nextLine();
@@ -127,78 +171,80 @@ public class BookBuddyApp {
         String quote = input.nextLine();
         journal.addEntry(new JournalEntry(title, content, quote));
         System.out.println("Your entry for " + title + " has been added to your journal.");
-        nextAction();
     }
 
+    // REQUIRES: valid user input for choices
+    // MODIFIES: this
+    // EFFECTS processes user input for recommendation preference choice, allows for another recommendation after
     public void getRecommendation() {
-        System.out.println("Get recommendation based on: \n1. Genre \n2. Book length \n3. Author \n4. Surprise me!");
-        int choice = input.nextInt();
-        if (choice == 1) {
-            getRecByGenre();
-        } else if (choice == 2) {
-            getRecByPageCount();
-        } else if (choice == 3) {
-            getRecByAuthor();
-        } else if (choice == 4) {
-            getRandomRec();
+        boolean continueRec = true;
+        while (continueRec) {
+            System.out.println("Get recommendation based on: "
+                    + "\n1. Genre \n2. Book length \n3. Surprise me!");
+            int choice = input.nextInt();
+            input.nextLine();
+            continueRec = processUserInputRec(choice);
         }
     }
 
+    // REQUIRES: valid user input for choices
+    // MODIFIES: this
+    // EFFECTS: processes user choice based on preference choice of genre, page count, or random,
+    //          returns result of askForAnotherRec
+    public boolean processUserInputRec(int choice) {
+        switch (choice) {
+            case 1:
+                getRecByGenre();
+                break;
+            case 2:
+                getRecByPageCount();
+                break;
+            case 3:
+                getRandomRec();
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+                return true;
+        }
+        return askForAnotherRec();
+    }
+
+    // REQUIRES: valid user input based on choices
+    // EFFECTS: returns true if user wants another recommendation, false otherwise
+    private boolean askForAnotherRec() {
+        System.out.println("Would you like to generate another recommendation? \n1. yes \n2. no");
+        int choice = input.nextInt();
+        input.nextLine();
+        return choice == 1;
+    }
+
+    // REQUIRES: valid user input for recommendation preference chosen
+    // MODIFIES: this, rec
+    // EFFECTS: processes user input of genre preference, returns book recommendation, prints confirmation message
     public void getRecByGenre() {
         System.out.println("What is your genre of choice?");
         String genre = input.nextLine();
         System.out.println("Generating a book with genre: " + genre + "...");
         Book book = rec.recBookByGenre(genre);
         System.out.println("Recommendation: " + book.getTitle() + " by " + book.getAuthor());
-        System.out.println("Would you like to generate another recommendation? \n1. yes \n2. no");
-        String choice = input.nextLine();
-        if (choice.equalsIgnoreCase("yes")) {
-            getRecommendation();
-        } else {
-            nextAction();
-        }
     }
 
+    // REQUIRES: valid user input for recommendation preference chosen
+    // MODIFIES: this, rec
+    // EFFECTS: processes user input of book length preference, returns book recommendation, prints confirmation message
     public void getRecByPageCount() {
         System.out.println("Would you like a short, medium, or long read?");
         String length = input.nextLine();
         System.out.println("Generating a " + length + "-length book...");
         Book book = rec.recBookByPageCount(length);
         System.out.println("Recommendation: " + book.getTitle() + " by " + book.getAuthor());
-        System.out.println("Would you like to generate another recommendation? \n1. yes \n2. no");
-        String choice = input.nextLine();
-        if (choice.equalsIgnoreCase("yes")) {
-            getRecommendation();
-        } else {
-            nextAction();
-        }
     }
 
-    public void getRecByAuthor() {
-        System.out.println("Which author would you like to read?");
-        String author = input.nextLine();
-        System.out.println("Generating a book by " + author + "...");
-        Book book = rec.recBookByPageCount(author);
-        System.out.println("Recommendation: " + book.getTitle() + " by " + book.getAuthor());
-        System.out.println("Would you like to generate another recommendation? \n1. yes \n2. no");
-        String choice = input.nextLine();
-        if (choice.equalsIgnoreCase("yes")) {
-            getRecommendation();
-        } else {
-            nextAction();
-        }
-    }
-
+    // MODIFIES: this, rec
+    // EFFECTS: returns random book recommendation, prints confirmation message
     public void getRandomRec() {
         System.out.println("Generating a surprise book from your collection...");
         Book book = rec.recRandomBook();
         System.out.println("Recommendation: " + book.getTitle() + " by " + book.getAuthor());
-        System.out.println("Would you like to generate another recommendation? \n1. yes \n2. no");
-        String choice = input.nextLine();
-        if (choice.equalsIgnoreCase("yes")) {
-            getRecommendation();
-        } else {
-            nextAction();
-        }
     }
 }
