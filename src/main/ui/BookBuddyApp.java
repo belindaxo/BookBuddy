@@ -86,17 +86,30 @@ public class BookBuddyApp {
     // MODIFIES: this.bookshelf
     // EFFECTS: creates new book with inputted details to bookshelf and displays confirmation message
     public void addBook() {
-        System.out.println("What is the title?");
-        String title = input.nextLine();
-        System.out.println("Who is the author?");
-        String author = input.nextLine();
-        System.out.println("What is the genre?");
-        String genre = input.nextLine();
-        System.out.println("What is the page count?");
-        int pc = input.nextInt();
+        boolean continueAdding = true;
+        while (continueAdding) {
+            System.out.println("What is the title?");
+            String title = input.nextLine();
+            System.out.println("Who is the author?");
+            String author = input.nextLine();
+            System.out.println("What is the genre?");
+            String genre = input.nextLine();
+            System.out.println("What is the page count?");
+            int pc = input.nextInt();
+            input.nextLine();
+
+            bookshelf.addBook(new Book(title, author, genre, pc));
+            System.out.println(title + " by " + author + " has been added to your bookshelf.");
+
+            continueAdding = addAnotherBook();
+        }
+    }
+
+    public boolean addAnotherBook() {
+        System.out.println("Would you like to add another book? \n1. yes \n2. no");
+        int choice = input.nextInt();
         input.nextLine();
-        bookshelf.addBook(new Book(title, author, genre, pc));
-        System.out.println(title + " by " + author + " has been added to your bookshelf.");
+        return choice == 1;
     }
 
     // EFFECTS: prints a current list of book titles in bookshelf

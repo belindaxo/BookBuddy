@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 // Represents a users collection of books added to their bookshelf
 public class VirtualBookshelf {
-    private ArrayList<Book> books;
+    private final ArrayList<Book> books;
 
     // EFFECTS: initializes a virtual bookshelf with an empty list of books
     public VirtualBookshelf() {

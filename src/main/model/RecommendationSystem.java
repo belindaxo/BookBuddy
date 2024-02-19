@@ -5,7 +5,7 @@ import java.util.Random;
 
 // Suggests books using inputted user preferences for genre, length, and read-status
 public class RecommendationSystem {
-    private VirtualBookshelf bookshelf;
+    private final VirtualBookshelf bookshelf;
 
     // EFFECTS: initializes a recommendation system with a bookshelf
     public RecommendationSystem(VirtualBookshelf bookshelf) {

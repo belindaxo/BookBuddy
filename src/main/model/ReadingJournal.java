@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 // Represents a reading journal that has a list of journal entries
 public class ReadingJournal {
-    private ArrayList<JournalEntry> journal;
+    private final ArrayList<JournalEntry> journal;
 
     // EFFECTS: initializes a reading journal with an empty list of journal entries
     public ReadingJournal() {
