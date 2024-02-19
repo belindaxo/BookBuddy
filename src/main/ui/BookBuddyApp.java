@@ -12,8 +12,8 @@ public class BookBuddyApp {
     private final RecommendationSystem rec;
     private final Scanner input;
 
-    // EFFECTS: Initializes the BookBuddyApp instance with a bookshelf, journal,
-    //          tracker, recommendation system, and input scanner
+    // EFFECTS: Initializes the BookBuddyApp instance with an empty bookshelf, journal,
+    //          tracker, recommendation system, and initializes input scanner
     public BookBuddyApp() {
         bookshelf = new VirtualBookshelf();
         journal = new ReadingJournal();
@@ -23,7 +23,8 @@ public class BookBuddyApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: runs application until user chooses to exit and closes scanner
+    // EFFECTS: runs main loop of application, displays main menu, and processes user input,
+    //          until user chooses to exit, closes scanner upon exit
     public void runBookBuddy() {
         boolean run = true;
         while (run) {
@@ -42,9 +43,9 @@ public class BookBuddyApp {
                 + "\n4. Get a book recommendation");
     }
 
-    // REQUIRES: user input must match one of the valid options
-    // MODIFIES: this
-    // EFFECTS: processes user input based on menu selection, returns result of nextAction()
+    // REQUIRES: integer input that matches one of the valid options
+    // MODIFIES: this, bookshelf, journal, tracker, or rec depending on user input
+    // EFFECTS: processes user main menu selection, returns true to continue loop, false to exit
     public boolean processUserInput() {
         int option = input.nextInt();
         input.nextLine();
@@ -67,6 +68,7 @@ public class BookBuddyApp {
         return nextAction();
     }
 
+    // REQUIRES: integer input matches valid options
     // EFFECTS: returns true if user chooses to return to main menu, false if they choose to close application
     public boolean nextAction() {
         System.out.println("1. Return to main menu \n2. close application");
@@ -80,9 +82,9 @@ public class BookBuddyApp {
         }
     }
 
-    // REQUIRES: valid user input for book's title, author, genre, and page count
-    // MODIFIES: this, bookshelf
-    // EFFECTS: adds new book with inputted details to bookshelf and prints out confirmation message
+    // REQUIRES: valid type inputs for book's title, author, genre, and page count
+    // MODIFIES: this.bookshelf
+    // EFFECTS: creates new book with inputted details to bookshelf and displays confirmation message
     public void addBook() {
         System.out.println("What is the title?");
         String title = input.nextLine();
@@ -97,14 +99,14 @@ public class BookBuddyApp {
         System.out.println(title + " by " + author + " has been added to your bookshelf.");
     }
 
-    // EFFECTS: returns a current list of book titles in bookshelf
+    // EFFECTS: prints a current list of book titles in bookshelf
     public void viewBookshelf() {
         System.out.println(bookshelf.getBookTitles());
     }
 
-    // REQUIRES: valid user input (1 or 2) for choice to view bookshelf or add book
-    // MODIFIES: this
-    // EFFECTS: processes user inputted choice to either add a book or view bookshelf
+    // REQUIRES: valid integer input (1 or 2) for choice to view bookshelf or add book
+    // MODIFIES: this, this.bookshelf if user chooses to add another book
+    // EFFECTS: processes user's choice to either add a book or view bookshelf
     public void virtualBookshelf() {
         System.out.println("Welcome to your virtual bookshelf. What would you like to do?"
                 + "\n1. Add a book" + "\n2. View bookshelf");
@@ -117,9 +119,9 @@ public class BookBuddyApp {
         }
     }
 
-    // REQUIRES: valid user input for number of pages read
-    // MODIFIES: this, tracker
-    // EFFECTS: adds user-specified amount of pages to reading tracker, prints confirmation message
+    // REQUIRES: valid integer input representing number of pages read
+    // MODIFIES: this.tracker
+    // EFFECTS: logs specified number of pages in the reading tracker, displays confirmation message
     public void logPages() {
         System.out.println("How many pages have you read?");
         int pages = input.nextInt();
@@ -132,9 +134,9 @@ public class BookBuddyApp {
         System.out.println(tracker.goalSummary());
     }
 
-    // REQUIRES: valid user input of number of pages read
-    // MODIFIES: this, tracker
-    // EFFECTS: adds new reading goal based on user-inputted number of pages, prints confirmation message
+    // REQUIRES: valid integer input of number of pages read
+    // MODIFIES: this.tracker
+    // EFFECTS: sets new reading goal of specified number of pages, displays confirmation message
     public void addGoal() {
         System.out.println("How many pages would you like read?");
         int goal = input.nextInt();
@@ -142,8 +144,8 @@ public class BookBuddyApp {
         System.out.println("A new reading goal of " + goal + " pages has been set.");
     }
 
-    // REQUIRES: valid user input for choice numbers
-    // MODIFIES: this
+    // REQUIRES: valid integer input for choice numbers
+    // MODIFIES: this, this.tracker if user chooses to set goal or log pages
     // EFFECTS: processes user input related to functions for the reading tracker
     public void readingTracker() {
         System.out.println("Welcome to the reading tracker! What would you like to do?"
@@ -159,8 +161,8 @@ public class BookBuddyApp {
         }
     }
 
-    // REQUIRES: valid user input
-    // MODIFIES: this, journal
+    // REQUIRES: valid String inputs
+    // MODIFIES: this.journal
     // EFFECTS: adds journal entry for user-inputted book, content, and quote
     public void addJournalEntry() {
         System.out.println("What book would you like to create an entry for?");
@@ -173,9 +175,8 @@ public class BookBuddyApp {
         System.out.println("Your entry for " + title + " has been added to your journal.");
     }
 
-    // REQUIRES: valid user input for choices
-    // MODIFIES: this
-    // EFFECTS processes user input for recommendation preference choice, allows for another recommendation after
+    // EFFECTS: processes user's choice for rec type,
+    //          continues until user does not want to receive further recs
     public void getRecommendation() {
         boolean continueRec = true;
         while (continueRec) {
@@ -187,10 +188,9 @@ public class BookBuddyApp {
         }
     }
 
-    // REQUIRES: valid user input for choices
-    // MODIFIES: this
-    // EFFECTS: processes user choice based on preference choice of genre, page count, or random,
-    //          returns result of askForAnotherRec
+    // REQUIRES: valid integer input for choices
+    // EFFECTS: processes user's rec based on preference choice of genre, page count, or random,
+    //          returns result of askForAnotherRec to see if user wants to get another rec
     public boolean processUserInputRec(int choice) {
         switch (choice) {
             case 1:
@@ -209,7 +209,7 @@ public class BookBuddyApp {
         return askForAnotherRec();
     }
 
-    // REQUIRES: valid user input based on choices
+    // REQUIRES: valid integer input based on choices
     // EFFECTS: returns true if user wants another recommendation, false otherwise
     private boolean askForAnotherRec() {
         System.out.println("Would you like to generate another recommendation? \n1. yes \n2. no");
@@ -218,8 +218,7 @@ public class BookBuddyApp {
         return choice == 1;
     }
 
-    // REQUIRES: valid user input for recommendation preference chosen
-    // MODIFIES: this, rec
+    // REQUIRES: valid String input for user's preferred genre
     // EFFECTS: processes user input of genre preference, returns book recommendation, prints confirmation message
     public void getRecByGenre() {
         System.out.println("What is your genre of choice?");
@@ -229,9 +228,8 @@ public class BookBuddyApp {
         System.out.println("Recommendation: " + book.getTitle() + " by " + book.getAuthor());
     }
 
-    // REQUIRES: valid user input for recommendation preference chosen
-    // MODIFIES: this, rec
-    // EFFECTS: processes user input of book length preference, returns book recommendation, prints confirmation message
+    // REQUIRES: valid String input for length preference ("long" OR "medium" OR "short")
+    // EFFECTS: processes choice of book length preference, returns book recommendation, displays confirmation message
     public void getRecByPageCount() {
         System.out.println("Would you like a short, medium, or long read?");
         String length = input.nextLine();
@@ -240,8 +238,7 @@ public class BookBuddyApp {
         System.out.println("Recommendation: " + book.getTitle() + " by " + book.getAuthor());
     }
 
-    // MODIFIES: this, rec
-    // EFFECTS: returns random book recommendation, prints confirmation message
+    // EFFECTS: returns random book recommendation, displays confirmation message
     public void getRandomRec() {
         System.out.println("Generating a surprise book from your collection...");
         Book book = rec.recRandomBook();
