@@ -75,3 +75,7 @@ quotes.
 - As a user, I want to answer questions about my current mood, genre, and length preferences to receive personalized
 book recommendations from my collection to help me decide what to read next.
 
+- As a user, I want to be presented the option to save my virtual bookshelf and any modifications I have made to file before quitting the application.
+
+- As a user, when I start the application, I want to have the option to load my virtual bookshelf from file.
+
