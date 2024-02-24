@@ -1,0 +1,16 @@
+{
+  "books" : [
+    {
+      "title": "The Bell Jar",
+      "author": "Sylvia Plath",
+      "genre": "Semi-Autobiography",
+      "page count": 244
+    },
+    {
+      "title": "Crime and Punishment",
+      "author": "Fyodor Dostoevsky",
+      "genre": "Fiction",
+      "page count": 624
+    }
+  ]
+}

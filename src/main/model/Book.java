@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writeable;
+
 // Represents a book in a user's collection that has a title, author, genre, page count, and read status
-public class Book {
+public class Book implements Writeable {
     private String title;
     private String author;
     private String genre;
@@ -75,6 +78,22 @@ public class Book {
     // EFFECTS: sets status of book to "read"
     public void setStatusUnread() {
         this.status = "unread";
+    }
+
+    // EFFECTS: returns string representation of a book
+    public String toString() {
+        return title + " by " + author + " (" + genre + "), " + pageCount + " pages, " + "status: " + status;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("author", author);
+        json.put("genre", genre);
+        json.put("page count", pageCount);
+        json.put("status", status);
+        return json;
     }
 
 

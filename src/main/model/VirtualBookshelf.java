@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.util.ArrayList;
 
 // Represents a users collection of books added to their bookshelf
-public class VirtualBookshelf {
+public class VirtualBookshelf implements Writeable {
     private final ArrayList<Book> books;
 
     // EFFECTS: initializes a virtual bookshelf with an empty list of books
@@ -113,6 +117,24 @@ public class VirtualBookshelf {
             }
         }
         return temp;
+    }
+
+
+    // EFFECTS: adds virtual bookshelf to JSON
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("books", booksToJson());
+        return json;
+    }
+
+    public JSONArray booksToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Book b : books) {
+            jsonArray.put(b.toJson());
+        }
+        return jsonArray;
     }
 }
 
