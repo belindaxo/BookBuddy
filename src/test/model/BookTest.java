@@ -44,6 +44,11 @@ public class BookTest {
         assertEquals("unread", book1.getStatus());
     }
 
+    @Test
+    public void testToString() {
+        assertEquals("The Bell Jar by Sylvia Plath (Fiction), 240 pages, status: unread", book1.toString());
+    }
+
 
 
 }
