@@ -8,15 +8,24 @@ public class ReadingJournalTest {
     private JournalEntry entry1;
     private JournalEntry entry2;
     private JournalEntry entry3;
+    private JournalEntry entry4;
+    private Book book1;
+    private Book book2;
+    private Book book3;
+    private Book book4;
 
     @BeforeEach
     public void setup() {
+        book1 = new Book("The Bell Jar", "Sylvia Plath", "Fiction", 240);
+        book2 = new Book("The Catcher in the Rye", "J.D. Salinger", "Fiction", 234);
+        book3 = new Book("Crime and Punishment", "Fyodor Dostoevsky", "Fiction", 527);
+        book4 = new Book("The Trial", "Franz Kafka", "Fiction", 262);
         journal = new ReadingJournal();
-        entry1 = new JournalEntry("The Bell Jar", "One of my favourite books ever!!",
-                "\"To the person in the bell jar... the world itself is a bad dream.\"");
-        entry2 = new JournalEntry("The Trial", "So crazy...",
-                "\"It's only because of their stupidity that they're able to be so sure of themselves.\"");
-        entry3 = new JournalEntry("BookA", "wow", "\"blah blah blah\"");
+        entry1 = new JournalEntry(book1, "One of my favourite books ever!!");
+        entry2 = new JournalEntry(book2, "So crazy...");
+        entry3 = new JournalEntry(book3, "wow");
+        entry4 = new JournalEntry(book1, "CRAY");
+
     }
 
     @Test
@@ -53,21 +62,16 @@ public class ReadingJournalTest {
         journal.addEntry(entry1);
         journal.addEntry(entry2);
         journal.addEntry(entry3);
+        journal.addEntry(entry4);
 
-        entry1.setBookTitle("Abc");
-        entry3.setBookTitle("Abc");
+        assertEquals(2, journal.getEntriesForBook(book1).size());
 
-        assertEquals(2, journal.getEntriesForBook("Abc").size());
-        assertEquals(2, journal.getEntriesForBook("abc").size());
-        assertEquals(2, journal.getEntriesForBook("ABC").size());
+        assertEquals(entry1, journal.getEntriesForBook(book1).get(0));
 
-        assertEquals(entry1, journal.getEntriesForBook("AbC").get(0));
-        assertEquals(entry3, journal.getEntriesForBook("aBc").get(1));
+        assertEquals(1, journal.getEntriesForBook(book2).size());
+        assertEquals(entry2, journal.getEntriesForBook(book2).get(0));
 
-        assertEquals(1, journal.getEntriesForBook("The trial").size());
-        assertEquals(entry2, journal.getEntriesForBook("the trial").get(0));
-
-        assertEquals(0, journal.getEntriesForBook("Jane Eyre").size());
+        assertEquals(0, journal.getEntriesForBook(book4).size());
 
     }
 

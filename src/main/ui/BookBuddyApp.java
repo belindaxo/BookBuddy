@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 // BookBuddy application
@@ -174,18 +175,34 @@ public class BookBuddyApp {
         }
     }
 
-    // REQUIRES: valid String inputs
+    // REQUIRES: valid integer inputs
     // MODIFIES: this.journal
-    // EFFECTS: adds journal entry for user-inputted book, content, and quote
+    // EFFECTS: adds journal entry for selected book and written content
     public void addJournalEntry() {
-        System.out.println("What book would you like to create an entry for?");
-        String title = input.nextLine();
-        System.out.println("Write your notes below:");
-        String content = input.nextLine();
-        System.out.println("Write down a memorable quote below:");
-        String quote = input.nextLine();
-        journal.addEntry(new JournalEntry(title, content, quote));
-        System.out.println("Your entry for " + title + " has been added to your journal.");
+        List<Book> books = bookshelf.getBooks();
+        if (books.isEmpty()) {
+            System.out.println("Your bookshelf is currently empty. Please add books before adding to your journal.");
+            return;
+        }
+
+        System.out.println("Which book would you like to create an entry for?");
+        for (int i = 1; i <= books.size(); i++) {
+            System.out.println(i + ": " + books.get(i - 1).getTitle());
+        }
+        int bookNum = input.nextInt();
+        input.nextLine();
+
+        if (bookNum >= 1 && bookNum <= books.size()) {
+            Book selection = books.get(bookNum - 1);
+
+            System.out.println("Write your notes below:");
+            String content = input.nextLine();
+
+            journal.addEntry(new JournalEntry(selection, content));
+            System.out.println("Your entry for " + selection.getTitle() + " has been added to your journal.");
+        } else {
+            System.out.println("Invalid selection.");
+        }
     }
 
     // EFFECTS: processes user's choice for rec type,
