@@ -10,6 +10,7 @@ public class Book implements Writeable {
     private String genre;
     private int pageCount;
     private String status; // read, unread, in progress
+    private JournalEntry entry;
 
 
     // EFFECTS: constructs book with given title, author, genre, page count, and initial status set to "unread"
@@ -78,6 +79,10 @@ public class Book implements Writeable {
     // EFFECTS: sets status of book to "read"
     public void setStatusUnread() {
         this.status = "unread";
+    }
+
+    public void addJournalEntry(String content, int rating) {
+        this.entry = new JournalEntry(content, rating);
     }
 
     // EFFECTS: returns string representation of a book

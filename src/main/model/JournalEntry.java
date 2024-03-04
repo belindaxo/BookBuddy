@@ -1,25 +1,21 @@
 package model;
 
-// Represents a single journal entry that has a book title, content, ratings, and quotes
+// Represents a single journal entry that has a book title and content
 public class JournalEntry {
-    private Book book;
     private String content;
+    private int rating;
 
-    public JournalEntry(Book book, String content) {
-        this.book =  book;
+    public JournalEntry(String content, int rating) {
         this.content = content;
-    }
-
-    public Book getBook() {
-        return this.book;
-    }
-
-    public String getBookTitle() {
-        return this.book.getTitle();
+        this.rating = rating;
     }
 
     public String getContent() {
-        return content;
+        return this.content;
+    }
+
+    public int getRating() {
+        return this.rating;
     }
 
 

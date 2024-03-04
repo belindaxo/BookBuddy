@@ -198,8 +198,11 @@ public class BookBuddyApp {
             System.out.println("Write your notes below:");
             String content = input.nextLine();
 
-            journal.addEntry(new JournalEntry(selection, content));
-            System.out.println("Your entry for " + selection.getTitle() + " has been added to your journal.");
+            System.out.println("What is your rating out of 5?");
+            int rating = input.nextInt();
+            input.nextLine();
+            journal.addEntry(new JournalEntry(content, rating));
+            System.out.println("Your entry for has been added to your journal.");
         } else {
             System.out.println("Invalid selection.");
         }

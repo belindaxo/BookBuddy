@@ -23,13 +23,13 @@ public class ReadingJournal {
     }
 
     // EFFECTS: returns a list of all entries in reading journal for the specified book
-    public ArrayList<JournalEntry> getEntriesForBook(Book book) {
-        ArrayList<JournalEntry> temp = new ArrayList<>();
-        for (JournalEntry entry : journal) {
-            if (entry.getBook().equals(book)) {
-                temp.add(entry);
-            }
-        }
-        return temp;
-    }
+//    public ArrayList<JournalEntry> getEntriesForBook(Book book) {
+//        ArrayList<JournalEntry> temp = new ArrayList<>();
+//        for (JournalEntry entry : journal) {
+//            if (entry.getBook().equals(book)) {
+//                temp.add(entry);
+//            }
+//        }
+//        return temp;
+//    }
 }
