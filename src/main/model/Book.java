@@ -11,6 +11,7 @@ public class Book implements Writeable {
     private int pageCount;
     private String status; // read, unread, in progress
     private JournalEntry entry;
+    private Rating rating;
 
 
     // EFFECTS: constructs book with given title, author, genre, page count, and initial status set to "unread"
@@ -20,6 +21,7 @@ public class Book implements Writeable {
         this.genre = genre;
         this.pageCount = pageCount;
         this.status = "unread";
+        this.rating = Rating.UNRATED;
     }
 
     // getters and setters:
@@ -51,7 +53,7 @@ public class Book implements Writeable {
 
 
     public int getPageCount() {
-        return pageCount;
+        return this.pageCount;
     }
 
     public void setPageCount(int pageCount) {
@@ -60,7 +62,11 @@ public class Book implements Writeable {
 
 
     public String getStatus() {
-        return status;
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     // MODIFIES: this
@@ -81,13 +87,38 @@ public class Book implements Writeable {
         this.status = "unread";
     }
 
-    public void addJournalEntry(String content, int rating) {
-        this.entry = new JournalEntry(content, rating);
+    public void setContent(String content) {
+        if (this.entry == null) {
+            this.entry = new JournalEntry(content);
+        } else {
+            this.entry.setContent(content);
+        }
+    }
+
+    public void setJournalEntry(JournalEntry entry) {
+        this.entry = entry;
+    }
+
+
+    public JournalEntry getJournalEntry() {
+        return this.entry;
+    }
+
+    public Rating getRating() {
+        return this.rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
     // EFFECTS: returns string representation of a book
     public String toString() {
-        return title + " by " + author + " (" + genre + "), " + pageCount + " pages, " + "status: " + status;
+        return this.title + " by " + this.author
+                + "\nGenre: " + this.genre
+                + "\nPage count: " + this.pageCount
+                + "\nStatus: " + this.status
+                + "\nRating: " + this.rating;
     }
 
     @Override
@@ -98,6 +129,10 @@ public class Book implements Writeable {
         json.put("genre", genre);
         json.put("page count", pageCount);
         json.put("status", status);
+        json.put("rating", rating);
+        if (entry != null) {
+            json.put("entry", entry.toJson());
+        }
         return json;
     }
 

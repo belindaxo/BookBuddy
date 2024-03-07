@@ -24,6 +24,7 @@ public class BookTest {
         assertEquals("Fiction", book1.getGenre());
         assertEquals(240, book1.getPageCount());
         assertEquals("unread", book1.getStatus());
+        assertEquals(Rating.UNRATED, book1.getRating());
     }
 
     @Test
@@ -46,8 +47,13 @@ public class BookTest {
 
     @Test
     public void testToString() {
-        assertEquals("The Bell Jar by Sylvia Plath (Fiction), 240 pages, status: unread", book1.toString());
+        book1.setRating(Rating.FIVE_STARS);
+
+        assertEquals("The Bell Jar by Sylvia Plath\nGenre: Fiction\nPage count: 240" +
+                        "\nStatus: unread\nRating: *****",
+                book1.toString());
     }
+
 
 
 

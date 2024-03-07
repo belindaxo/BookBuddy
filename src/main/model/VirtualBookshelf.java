@@ -9,16 +9,18 @@ import java.util.ArrayList;
 // Represents a users collection of books added to their bookshelf
 public class VirtualBookshelf implements Writeable {
     private final ArrayList<Book> books;
+    private ReadingTracker tracker;
 
     // EFFECTS: initializes a virtual bookshelf with an empty list of books
     public VirtualBookshelf() {
         this.books = new ArrayList<>();
+        this.tracker = new ReadingTracker();
     }
 
     // MODIFIES: this
     // EFFECTS: adds book to bookshelf
     public void addBook(Book book) {
-        books.add(book);
+        this.books.add(book);
     }
 
     // EFFECTS: returns the number of books in bookshelf that are read
@@ -56,7 +58,7 @@ public class VirtualBookshelf implements Writeable {
 
     // EFFECTS: returns list of all books in bookshelf.
     public ArrayList<Book> getBooks() {
-        return books;
+        return this.books;
     }
 
     public ArrayList<String> getBookTitles() {
@@ -119,13 +121,21 @@ public class VirtualBookshelf implements Writeable {
         return temp;
     }
 
+    public ReadingTracker getTracker() {
+        return this.tracker;
+    }
 
     // EFFECTS: adds virtual bookshelf to JSON
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("books", booksToJson());
+        json.put("tracker", this.tracker.toJson());
         return json;
+    }
+
+    public void setTracker(ReadingTracker tracker) {
+        this.tracker = tracker;
     }
 
     public JSONArray booksToJson() {

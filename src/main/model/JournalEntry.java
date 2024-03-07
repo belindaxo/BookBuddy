@@ -1,23 +1,29 @@
 package model;
 
-// Represents a single journal entry that has a book title and content
-public class JournalEntry {
-    private String content;
-    private int rating;
+import org.json.JSONObject;
+import persistence.Writeable;
 
-    public JournalEntry(String content, int rating) {
+// Represents a single journal entry that has a book title and content
+public class JournalEntry implements Writeable {
+    private String content;
+
+    public JournalEntry(String content) {
         this.content = content;
-        this.rating = rating;
     }
 
     public String getContent() {
         return this.content;
     }
 
-    public int getRating() {
-        return this.rating;
+    public void setContent(String content) {
+        this.content = content;
     }
 
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("content", content);
+        return json;
+    }
 
 }
 

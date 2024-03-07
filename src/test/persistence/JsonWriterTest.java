@@ -1,7 +1,6 @@
 package persistence;
 
-import model.VirtualBookshelf;
-import model.Book;
+import model.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +48,8 @@ public class JsonWriterTest extends JsonTest{
                     "Semi-Autobiography", 244));
             vb.addBook(new Book("Crime and Punishment", "Fyodor Dostoevsky",
                     "Fiction", 624));
+
+
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralBookshelf.json");
             writer.open();
             writer.write(vb);
@@ -59,9 +60,9 @@ public class JsonWriterTest extends JsonTest{
             List<Book> books = vb.getBooks();
             assertEquals(2, books.size());
             checkBook("The Bell Jar", "Sylvia Plath", "Semi-Autobiography", 244,
-                    books.get(0));
+                    "unread", Rating.UNRATED, null, books.get(0));
             checkBook("Crime and Punishment", "Fyodor Dostoevsky", "Fiction", 624,
-                    books.get(1));
+                    "unread", Rating.UNRATED, null, books.get(1));
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }

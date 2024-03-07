@@ -1,35 +1,22 @@
 package model;
 
+import java.util.List;
 import java.util.ArrayList;
+
 
 // Represents a reading journal that has a list of journal entries
 public class ReadingJournal {
-    private final ArrayList<JournalEntry> journal;
 
-    // EFFECTS: initializes a reading journal with an empty list of journal entries
-    public ReadingJournal() {
-        this.journal = new ArrayList<>();
+    public static List<JournalEntry> getAllEntries(VirtualBookshelf bookshelf) {
+        List<JournalEntry> allEntries = new ArrayList<>();
+        if (bookshelf.getBooks() != null) {
+            for (Book b : bookshelf.getBooks()) {
+                JournalEntry entry = b.getJournalEntry();
+                if (entry != null) {
+                    allEntries.add(entry);
+                }
+            }
+        }
+        return allEntries;
     }
-
-    // MODIFIES: this
-    // EFFECTS: adds an entry to reading journal
-    public void addEntry(JournalEntry entry) {
-        journal.add(entry);
-    }
-
-    // EFFECTS: returns a list of all entries in reading journal
-    public ArrayList<JournalEntry> getAllEntries() {
-        return journal;
-    }
-
-    // EFFECTS: returns a list of all entries in reading journal for the specified book
-//    public ArrayList<JournalEntry> getEntriesForBook(Book book) {
-//        ArrayList<JournalEntry> temp = new ArrayList<>();
-//        for (JournalEntry entry : journal) {
-//            if (entry.getBook().equals(book)) {
-//                temp.add(entry);
-//            }
-//        }
-//        return temp;
-//    }
 }

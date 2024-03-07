@@ -1,1 +1,7 @@
-{"books": []}
+{
+    "books": [],
+    "tracker": {
+        "pages": 0,
+        "goal": 0
+    }
+}

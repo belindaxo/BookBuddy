@@ -1,5 +1,7 @@
 package persistence;
 
+import model.JournalEntry;
+import model.Rating;
 import model.VirtualBookshelf;
 import model.Book;
 
@@ -40,11 +42,14 @@ public class JsonReaderTest extends JsonTest{
         try {
             VirtualBookshelf vb = reader.read();
             List<Book> books = vb.getBooks();
-            assertEquals(2, vb.getBooks().size());
+            assertEquals(2, books.size());
             checkBook("The Bell Jar", "Sylvia Plath", "Semi-Autobiography", 244,
-                    books.get(0));
+                    "unread", Rating.FIVE_STARS, null, books.get(0));
             checkBook("Crime and Punishment", "Fyodor Dostoevsky", "Fiction", 624,
-                    books.get(1));
+                    "unread", Rating.UNRATED, null, books.get(1));
+
+            assertEquals(200, vb.getTracker().getTotalPagesRead());
+            assertEquals(1000, vb.getTracker().getReadingGoal());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

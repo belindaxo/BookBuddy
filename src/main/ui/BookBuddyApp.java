@@ -8,7 +8,6 @@ import java.util.Scanner;
 // BookBuddy application
 public class BookBuddyApp {
     private final VirtualBookshelf bookshelf;
-    private final ReadingJournal journal;
     private final ReadingTracker tracker;
     private final RecommendationSystem rec;
     private final Scanner input;
@@ -17,7 +16,6 @@ public class BookBuddyApp {
     //          tracker, recommendation system, and initializes input scanner
     public BookBuddyApp() {
         bookshelf = new VirtualBookshelf();
-        journal = new ReadingJournal();
         tracker = new ReadingTracker();
         rec = new RecommendationSystem(bookshelf);
         input = new Scanner(System.in);
@@ -38,9 +36,9 @@ public class BookBuddyApp {
     // EFFECTS: displays main menu options
     public void mainMenu() {
         System.out.println("Welcome to BookBuddy! What would you like to do?"
-                + "\n1. Access/modify your virtual bookshelf"
+                + "\n1. Access your virtual bookshelf"
                 + "\n2. Open reading tracker"
-                + "\n3. Add a journal entry"
+                + "\n3. Access your reading journal"
                 + "\n4. Get a book recommendation");
     }
 
@@ -58,7 +56,7 @@ public class BookBuddyApp {
                 readingTracker();
                 break;
             case 3:
-                addJournalEntry();
+                readingJournal();
                 break;
             case 4:
                 getRecommendation();
@@ -123,13 +121,48 @@ public class BookBuddyApp {
     // EFFECTS: processes user's choice to either add a book or view bookshelf
     public void virtualBookshelf() {
         System.out.println("Welcome to your virtual bookshelf. What would you like to do?"
-                + "\n1. Add a book" + "\n2. View bookshelf");
+                + "\n1. Add a book" + "\n2. View bookshelf" + "\n3. Add a book rating" + "\n4. Update book status");
         int choice = input.nextInt();
         input.nextLine();
-        if (choice == 1) {
-            addBook();
-        } else if (choice == 2) {
-            viewBookshelf();
+        switch (choice) {
+            case 1:
+                addBook();
+                break;
+            case 2:
+                viewBookshelf();
+                break;
+            case 3:
+                rateBook();
+                break;
+            case 4:
+                updateBookStatus();
+                break;
+            default:
+                System.out.println("invalid option");
+        }
+    }
+
+    public void updateBookStatus() {
+        Book selectedBook = selectBookFromShelf();
+        System.out.println("Current status: " + selectedBook.getStatus());
+        System.out.println("Change status to: \n1. read \n2. in progress \n3. unread");
+        int choice = input.nextInt();
+        input.nextLine();
+        switch (choice) {
+            case 1:
+                selectedBook.setStatusRead();
+                System.out.println(selectedBook.getTitle() + " has been marked as " + selectedBook.getStatus());
+                break;
+            case 2:
+                selectedBook.setStatusInProgress();
+                System.out.println(selectedBook.getTitle() + " has been marked as " + selectedBook.getStatus());
+                break;
+            case 3:
+                selectedBook.setStatusUnread();
+                System.out.println(selectedBook.getTitle() + " has been marked as " + selectedBook.getStatus());
+                break;
+            default:
+                System.out.println("Invalid option.");
         }
     }
 
@@ -166,46 +199,121 @@ public class BookBuddyApp {
                 + "\n1. Set reading goal" + "\n2. Log reading activity" + "\n3. View goal summary");
         int choice = input.nextInt();
         input.nextLine();
-        if (choice == 1) {
-            addGoal();
-        } else if (choice == 2) {
-            logPages();
-        } else if (choice == 3) {
-            viewGoalSummary();
+        switch (choice) {
+            case 1:
+                addGoal();
+                break;
+            case 2:
+                logPages();
+                break;
+            case 3:
+                viewGoalSummary();
+                break;
+            default:
+                System.out.println("Invalid option.");
+        }
+    }
+
+    public void readingJournal() {
+        System.out.println("Welcome to your reading journal! What would you like to do?"
+                + "\n1. Add/edit entry" + "\n2. View journal");
+        int choice = input.nextInt();
+        input.nextLine();
+        switch (choice) {
+            case 1:
+                updateJournalEntry();
+                break;
+            case 2:
+                viewReadingJournal();
+                break;
+            default:
+                System.out.println("Invalid option.");
+        }
+    }
+
+    public void viewReadingJournal() {
+        List<JournalEntry> allEntries = ReadingJournal.getAllEntries(bookshelf);
+        if (allEntries.isEmpty()) {
+            System.out.println("Your journal is empty.");
+        } else {
+            for (Book b : bookshelf.getBooks()) {
+                JournalEntry entry = b.getJournalEntry();
+                if (entry != null) {
+                    System.out.println("Book: " + b.getTitle());
+                    System.out.println("Content: " + entry.getContent());
+                }
+            }
         }
     }
 
     // REQUIRES: valid integer inputs
     // MODIFIES: this.journal
     // EFFECTS: adds journal entry for selected book and written content
-    public void addJournalEntry() {
-        List<Book> books = bookshelf.getBooks();
-        if (books.isEmpty()) {
-            System.out.println("Your bookshelf is currently empty. Please add books before adding to your journal.");
-            return;
-        }
-
-        System.out.println("Which book would you like to create an entry for?");
-        for (int i = 1; i <= books.size(); i++) {
-            System.out.println(i + ": " + books.get(i - 1).getTitle());
-        }
-        int bookNum = input.nextInt();
-        input.nextLine();
-
-        if (bookNum >= 1 && bookNum <= books.size()) {
-            Book selection = books.get(bookNum - 1);
-
-            System.out.println("Write your notes below:");
+    public void updateJournalEntry() {
+        Book selectedBook = selectBookFromShelf();
+        if (selectedBook != null) {
+            System.out.println("Enter your notes:");
             String content = input.nextLine();
+            selectedBook.setContent(content);
+            System.out.println("Journal entry for " + selectedBook.getTitle() + " has been updated.");
+        } else {
+            System.out.println("Book not found.");
+        }
+    }
 
-            System.out.println("What is your rating out of 5?");
+    public void rateBook() {
+        Book selectedBook = selectBookFromShelf();
+        if (selectedBook != null) {
+            System.out.println("Enter rating from 1 to 5:");
             int rating = input.nextInt();
             input.nextLine();
-            journal.addEntry(new JournalEntry(content, rating));
-            System.out.println("Your entry for has been added to your journal.");
+            setBookRating(selectedBook, rating);
         } else {
-            System.out.println("Invalid selection.");
+            System.out.println("Book not found.");
         }
+    }
+
+    public void setBookRating(Book book, int rating) {
+        Rating bookRating;
+        switch (rating) {
+            case 1:
+                bookRating = Rating.ONE_STAR;
+                break;
+            case 2:
+                bookRating = Rating.TWO_STARS;
+                break;
+            case 3:
+                bookRating = Rating.THREE_STARS;
+                break;
+            case 4:
+                bookRating = Rating.FOUR_STARS;
+                break;
+            case 5:
+                bookRating = Rating.FIVE_STARS;
+                break;
+            default:
+                bookRating = Rating.UNRATED;
+        }
+        book.setRating(bookRating);
+        System.out.println("Rating updated for " + book.getTitle() + ": " + book.getRating());
+    }
+
+    public Book selectBookFromShelf() {
+        List<Book> books = bookshelf.getBooks();
+        if (books.isEmpty()) {
+            System.out.println("Your bookshelf is currently empty.");
+            return null;
+        }
+
+        System.out.println("Select a book:");
+        for (int i = 0; i < books.size(); i++) {
+            System.out.println((i + 1) + ": " + books.get(i).getTitle());
+        }
+
+        int selection = input.nextInt();
+        input.nextLine();
+
+        return books.get(selection - 1);
     }
 
     // EFFECTS: processes user's choice for rec type,

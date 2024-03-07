@@ -42,11 +42,23 @@ public class JsonReader {
     private VirtualBookshelf parseVirtualBookshelf(JSONObject jsonObject) {
         VirtualBookshelf vb = new VirtualBookshelf();
         addBooks(vb, jsonObject);
+        if (jsonObject.has("tracker")) {
+            JSONObject jsonTracker = jsonObject.getJSONObject("tracker");
+            ReadingTracker tracker = parseReadingTracker(jsonTracker);
+            vb.setTracker(tracker);
+        }
         return vb;
     }
 
+    private ReadingTracker parseReadingTracker(JSONObject jsonObject) {
+        ReadingTracker tracker = new ReadingTracker();
+        tracker.addPagesRead(jsonObject.getInt("pages"));
+        tracker.setReadingGoal(jsonObject.getInt("goal"));
+        return tracker;
+    }
+
     // MODIFIES: vb
-    // EFFECTS: parses books from JSON object and adds them to workroom
+    // EFFECTS: parses books from JSON object and adds them to bookshelf
     private void addBooks(VirtualBookshelf vb, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("books");
         for (Object json : jsonArray) {
@@ -56,19 +68,26 @@ public class JsonReader {
     }
 
     // MODIFIES: vb
-    // EFFECTS: parses book from JSON object and adds it to workroom
+    // EFFECTS: parses book from JSON object and adds it to bookshelf
     private void addBook(VirtualBookshelf vb, JSONObject jsonObject) {
         String title = jsonObject.getString("title");
         String author = jsonObject.getString("author");
         String genre = jsonObject.getString("genre");
         int pageCount = jsonObject.getInt("page count");
+        String status = jsonObject.optString("status", "unread");
+        Rating rating = Rating.valueOf(jsonObject.getString("rating"));
 
         Book book = new Book(title, author, genre, pageCount);
+        book.setStatus(status);
+        book.setRating(rating);
+
+        if (jsonObject.has("entry")) {
+            JSONObject jsonJournal = jsonObject.getJSONObject("entry");
+            String content = jsonJournal.getString("content");
+
+            JournalEntry entry = new JournalEntry(content);
+            book.setJournalEntry(entry);
+        }
         vb.addBook(book);
     }
-
-
-
-
-
 }

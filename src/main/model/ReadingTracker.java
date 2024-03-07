@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writeable;
+
 // Updates and tracks reading progress and goals
-public class ReadingTracker {
+public class ReadingTracker implements Writeable {
     private int totalPagesRead;
     private int readingGoal;
 
@@ -48,5 +51,12 @@ public class ReadingTracker {
         } else {
             return "Goal of " + readingGoal + " pages has been met!";
         }
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("pages", totalPagesRead);
+        json.put("goal", readingGoal);
+        return json;
     }
 }
