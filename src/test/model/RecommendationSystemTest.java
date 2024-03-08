@@ -71,8 +71,8 @@ public class RecommendationSystemTest {
         bookshelf.addBook(book5);
         bookshelf.addBook(book6);
 
-        book1.setStatusInProgress();
-        book2.setStatusRead();
+        book1.setStatus("in progress");
+        book2.setStatus("read");
 
         assertEquals(book1, rec.recBookByStatus("in progress"));
         assertEquals("unread", rec.recBookByStatus("unread").getStatus());

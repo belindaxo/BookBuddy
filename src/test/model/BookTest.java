@@ -29,19 +29,19 @@ public class BookTest {
 
     @Test
     public void testSetStatusRead() {
-        book1.setStatusRead();
+        book1.setStatus("read");
         assertEquals("read", book1.getStatus());
     }
 
     @Test
     public void testSetStatusInProgress() {
-        book2.setStatusInProgress();
+        book2.setStatus("in progress");
         assertEquals("in progress", book2.getStatus());
     }
 
     @Test
     public void testSetStatusUnread() {
-        book3.setStatusUnread();
+        book3.setStatus("unread");
         assertEquals("unread", book1.getStatus());
     }
 
@@ -50,7 +50,7 @@ public class BookTest {
         book1.setRating(Rating.FIVE_STARS);
 
         assertEquals("The Bell Jar by Sylvia Plath\nGenre: Fiction\nPage count: 240" +
-                        "\nStatus: unread\nRating: *****",
+                        "\nStatus: unread\nRating: FIVE_STARS",
                 book1.toString());
     }
 

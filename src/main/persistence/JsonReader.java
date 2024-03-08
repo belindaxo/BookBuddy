@@ -73,9 +73,9 @@ public class JsonReader {
         String title = jsonObject.getString("title");
         String author = jsonObject.getString("author");
         String genre = jsonObject.getString("genre");
-        int pageCount = jsonObject.getInt("page count");
+        int pageCount = jsonObject.getInt("pageCount");
         String status = jsonObject.optString("status", "unread");
-        Rating rating = Rating.valueOf(jsonObject.getString("rating"));
+        Rating rating = Rating.valueOf(jsonObject.optString("rating", Rating.UNRATED.name()));
 
         Book book = new Book(title, author, genre, pageCount);
         book.setStatus(status);
@@ -83,10 +83,10 @@ public class JsonReader {
 
         if (jsonObject.has("entry")) {
             JSONObject jsonJournal = jsonObject.getJSONObject("entry");
-            String content = jsonJournal.getString("content");
-
-            JournalEntry entry = new JournalEntry(content);
-            book.setJournalEntry(entry);
+            String content = jsonJournal.optString("content", "");
+            JournalEntry entry = new JournalEntry();
+            entry.setContent(content);
+            book.setEntry(entry);
         }
         vb.addBook(book);
     }

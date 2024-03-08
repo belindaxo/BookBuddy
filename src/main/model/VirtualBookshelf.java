@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import persistence.Writeable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Represents a users collection of books added to their bookshelf
 public class VirtualBookshelf implements Writeable {
@@ -37,7 +38,7 @@ public class VirtualBookshelf implements Writeable {
     // EFFECTS: returns the number of books in bookshelf that are in progress
     public int inProgressCount() {
         int count = 0;
-        for (Book book: books) {
+        for (Book book : books) {
             if (book.getStatus().equals("in progress")) {
                 count++;
             }
@@ -48,7 +49,7 @@ public class VirtualBookshelf implements Writeable {
     // EFFECTS: returns the number of books in bookshelf that are unread
     public int unreadCount() {
         int count = 0;
-        for (Book book: books) {
+        for (Book book : books) {
             if (book.getStatus().equals("unread")) {
                 count++;
             }
@@ -63,7 +64,7 @@ public class VirtualBookshelf implements Writeable {
 
     public ArrayList<String> getBookTitles() {
         ArrayList<String> temp = new ArrayList<>();
-        for (Book b: books) {
+        for (Book b : books) {
             temp.add(b.getTitle());
         }
         return temp;
@@ -145,6 +146,33 @@ public class VirtualBookshelf implements Writeable {
             jsonArray.put(b.toJson());
         }
         return jsonArray;
+    }
+
+    public List<JournalEntry> getAllEntries() {
+        List<JournalEntry> allEntries = new ArrayList<>();
+        for (Book b : books) {
+            JournalEntry entry = b.getEntry();
+            if (entry != null) {
+                allEntries.add(entry);
+            }
+        }
+        return allEntries;
+    }
+
+    public void addPagesRead(int pages) {
+        this.tracker.addPagesRead(pages);
+    }
+
+    public int getReadingGoal() {
+        return this.tracker.getReadingGoal();
+    }
+
+    public void setReadingGoal(int goal) {
+        this.tracker.setReadingGoal(goal);
+    }
+
+    public int getPagesLeft() {
+        return this.tracker.getPagesLeft();
     }
 }
 

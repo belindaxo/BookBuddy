@@ -21,6 +21,7 @@ public class Book implements Writeable {
         this.genre = genre;
         this.pageCount = pageCount;
         this.status = "unread";
+        this.entry = new JournalEntry();
         this.rating = Rating.UNRATED;
     }
 
@@ -69,39 +70,20 @@ public class Book implements Writeable {
         this.status = status;
     }
 
-    // MODIFIES: this
-    // EFFECTS: sets status of book to "read"
-    public void setStatusRead() {
-        this.status = "read";
+    public JournalEntry getEntry() {
+        return this.entry;
     }
 
-    // MODIFIES: this
-    // EFFECTS: sets status of book to "in progress"
-    public void setStatusInProgress() {
-        this.status = "in progress";
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets status of book to "read"
-    public void setStatusUnread() {
-        this.status = "unread";
-    }
-
-    public void setContent(String content) {
-        if (this.entry == null) {
-            this.entry = new JournalEntry(content);
-        } else {
-            this.entry.setContent(content);
-        }
-    }
-
-    public void setJournalEntry(JournalEntry entry) {
+    public void setEntry(JournalEntry entry) {
         this.entry = entry;
     }
 
+    public void addContent(String content) {
+        this.entry.setContent(content);
+    }
 
-    public JournalEntry getJournalEntry() {
-        return this.entry;
+    public boolean isEntryEmpty() {
+        return this.entry.getContent().isEmpty();
     }
 
     public Rating getRating() {
@@ -127,12 +109,10 @@ public class Book implements Writeable {
         json.put("title", title);
         json.put("author", author);
         json.put("genre", genre);
-        json.put("page count", pageCount);
+        json.put("pageCount", this.pageCount);
         json.put("status", status);
-        json.put("rating", rating);
-        if (entry != null) {
-            json.put("entry", entry.toJson());
-        }
+        json.put("rating", rating.name());
+        json.put("entry", entry.toJson());
         return json;
     }
 

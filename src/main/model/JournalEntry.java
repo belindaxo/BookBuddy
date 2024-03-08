@@ -7,8 +7,8 @@ import persistence.Writeable;
 public class JournalEntry implements Writeable {
     private String content;
 
-    public JournalEntry(String content) {
-        this.content = content;
+    public JournalEntry() {
+        this.content = "";
     }
 
     public String getContent() {

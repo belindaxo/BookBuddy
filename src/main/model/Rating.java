@@ -14,12 +14,4 @@ public enum Rating {
         this.stars = stars;
     }
 
-    public String getStars() {
-        return stars;
-    }
-
-    @Override
-    public String toString() {
-        return stars;
-    }
 }

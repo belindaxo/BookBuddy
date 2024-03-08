@@ -9,8 +9,10 @@ public class JournalEntryTest {
 
     @BeforeEach
     public void setup() {
-        entry1 = new JournalEntry("One of my favourite books ever!!");
-        entry2 = new JournalEntry("So crazy...");
+        entry1 = new JournalEntry();
+        entry1.setContent("One of my favourite books ever!!");
+        entry2 = new JournalEntry();
+        entry2.setContent("So crazy...");
     }
 
     @Test

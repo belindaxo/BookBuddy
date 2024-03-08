@@ -4,17 +4,23 @@
       "title": "The Bell Jar",
       "author": "Sylvia Plath",
       "genre": "Semi-Autobiography",
-      "page count": 244,
-      "status": "unread",
+      "pageCount": 244,
+      "status": "read",
       "rating": "FIVE_STARS",
+      "entry": {
+        "content": "One of my fave books ever!"
+      }
     },
     {
       "title": "Crime and Punishment",
       "author": "Fyodor Dostoevsky",
       "genre": "Fiction",
-      "page count": 624,
+      "pageCount": 624,
       "status": "unread",
-      "rating": "UNRATED"
+      "rating": "UNRATED",
+      "entry": {
+        "content:": ""
+      }
     }
   ],
   "tracker": {

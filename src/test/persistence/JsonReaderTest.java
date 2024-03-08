@@ -43,10 +43,14 @@ public class JsonReaderTest extends JsonTest{
             VirtualBookshelf vb = reader.read();
             List<Book> books = vb.getBooks();
             assertEquals(2, books.size());
+
+            assertEquals("One of my fave books ever!", books.get(0).getEntry().getContent());
             checkBook("The Bell Jar", "Sylvia Plath", "Semi-Autobiography", 244,
-                    "unread", Rating.FIVE_STARS, null, books.get(0));
+                    "read", Rating.FIVE_STARS, books.get(0));
+
+            assertEquals("", books.get(1).getEntry().getContent());
             checkBook("Crime and Punishment", "Fyodor Dostoevsky", "Fiction", 624,
-                    "unread", Rating.UNRATED, null, books.get(1));
+                    "unread", Rating.UNRATED, books.get(1));
 
             assertEquals(200, vb.getTracker().getTotalPagesRead());
             assertEquals(1000, vb.getTracker().getReadingGoal());

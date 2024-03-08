@@ -150,15 +150,15 @@ public class BookBuddyApp {
         input.nextLine();
         switch (choice) {
             case 1:
-                selectedBook.setStatusRead();
+                selectedBook.setStatus("read");
                 System.out.println(selectedBook.getTitle() + " has been marked as " + selectedBook.getStatus());
                 break;
             case 2:
-                selectedBook.setStatusInProgress();
+                selectedBook.setStatus("in progress");
                 System.out.println(selectedBook.getTitle() + " has been marked as " + selectedBook.getStatus());
                 break;
             case 3:
-                selectedBook.setStatusUnread();
+                selectedBook.setStatus("unread");
                 System.out.println(selectedBook.getTitle() + " has been marked as " + selectedBook.getStatus());
                 break;
             default:
@@ -232,16 +232,14 @@ public class BookBuddyApp {
     }
 
     public void viewReadingJournal() {
-        List<JournalEntry> allEntries = ReadingJournal.getAllEntries(bookshelf);
+        List<JournalEntry> allEntries = bookshelf.getAllEntries();
         if (allEntries.isEmpty()) {
             System.out.println("Your journal is empty.");
         } else {
             for (Book b : bookshelf.getBooks()) {
-                JournalEntry entry = b.getJournalEntry();
-                if (entry != null) {
-                    System.out.println("Book: " + b.getTitle());
-                    System.out.println("Content: " + entry.getContent());
-                }
+                JournalEntry entry = b.getEntry();
+                System.out.println("Book: " + b.getTitle());
+                System.out.println("Content: " + entry.getContent());
             }
         }
     }
@@ -254,7 +252,7 @@ public class BookBuddyApp {
         if (selectedBook != null) {
             System.out.println("Enter your notes:");
             String content = input.nextLine();
-            selectedBook.setContent(content);
+            selectedBook.addContent(content);
             System.out.println("Journal entry for " + selectedBook.getTitle() + " has been updated.");
         } else {
             System.out.println("Book not found.");

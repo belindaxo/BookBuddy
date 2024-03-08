@@ -73,10 +73,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusUnread();
-        book2.setStatusUnread();
-        book3.setStatusUnread();
-        book4.setStatusUnread();
+        book1.setStatus("unread");
+        book2.setStatus("unread");
+        book3.setStatus("unread");
+        book4.setStatus("unread");
 
         assertEquals(0, bookshelf.readCount());
     }
@@ -88,10 +88,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusRead();
-        book2.setStatusInProgress();
-        book3.setStatusUnread();
-        book4.setStatusUnread();
+        book1.setStatus("read");
+        book2.setStatus("in progress");
+        book3.setStatus("unread");
+        book4.setStatus("unread");
 
         assertEquals(1, bookshelf.readCount());
     }
@@ -103,10 +103,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusRead();
-        book2.setStatusInProgress();
-        book3.setStatusRead();
-        book4.setStatusUnread();
+        book1.setStatus("read");
+        book2.setStatus("in progress");
+        book3.setStatus("read");
+        book4.setStatus("unread");
 
         assertEquals(2, bookshelf.readCount());
     }
@@ -118,10 +118,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusRead();
-        book2.setStatusRead();
-        book3.setStatusRead();
-        book4.setStatusRead();
+        book1.setStatus("read");
+        book2.setStatus("read");
+        book3.setStatus("read");
+        book4.setStatus("read");
 
         assertEquals(4, bookshelf.readCount());
     }
@@ -133,10 +133,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusRead();
-        book2.setStatusRead();
-        book3.setStatusRead();
-        book4.setStatusUnread();
+        book1.setStatus("read");
+        book2.setStatus("read");
+        book3.setStatus("read");
+        book4.setStatus("unread");
 
         assertEquals(0, bookshelf.inProgressCount());
     }
@@ -148,10 +148,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusRead();
-        book2.setStatusInProgress();
-        book3.setStatusRead();
-        book4.setStatusUnread();
+        book1.setStatus("read");
+        book2.setStatus("in progress");
+        book3.setStatus("read");
+        book4.setStatus("unread");
 
         assertEquals(1, bookshelf.inProgressCount());
     }
@@ -163,10 +163,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusRead();
-        book2.setStatusInProgress();
-        book3.setStatusUnread();
-        book4.setStatusInProgress();
+        book1.setStatus("read");
+        book2.setStatus("in progress");
+        book3.setStatus("unread");
+        book4.setStatus("in progress");
 
         assertEquals(2, bookshelf.inProgressCount());
     }
@@ -178,10 +178,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusInProgress();
-        book2.setStatusInProgress();
-        book3.setStatusInProgress();
-        book4.setStatusInProgress();
+        book1.setStatus("in progress");
+        book2.setStatus("in progress");
+        book3.setStatus("in progress");
+        book4.setStatus("in progress");
 
         assertEquals(4, bookshelf.inProgressCount());
     }
@@ -193,10 +193,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusInProgress();
-        book2.setStatusRead();
-        book3.setStatusInProgress();
-        book4.setStatusInProgress();
+        book1.setStatus("in progress");
+        book2.setStatus("read");
+        book3.setStatus("in progress");
+        book4.setStatus("in progress");
 
         assertEquals(0, bookshelf.unreadCount());
     }
@@ -208,10 +208,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusInProgress();
-        book2.setStatusRead();
-        book3.setStatusUnread();
-        book4.setStatusInProgress();
+        book1.setStatus("in progress");
+        book2.setStatus("read");
+        book3.setStatus("unread");
+        book4.setStatus("in progress");
 
         assertEquals(1, bookshelf.unreadCount());
     }
@@ -223,10 +223,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusUnread();
-        book2.setStatusRead();
-        book3.setStatusUnread();
-        book4.setStatusUnread();
+        book1.setStatus("unread");
+        book2.setStatus("read");
+        book3.setStatus("unread");
+        book4.setStatus("unread");
 
         assertEquals(3, bookshelf.unreadCount());
     }
@@ -238,10 +238,10 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book3);
         bookshelf.addBook(book4);
 
-        book1.setStatusUnread();
-        book2.setStatusUnread();
-        book3.setStatusUnread();
-        book4.setStatusUnread();
+        book1.setStatus("unread");
+        book2.setStatus("unread");
+        book3.setStatus("unread");
+        book4.setStatus("unread");
 
         assertEquals(4, bookshelf.unreadCount());
     }
@@ -342,9 +342,9 @@ public class VirtualBookshelfTest {
         bookshelf.addBook(book5);
         bookshelf.addBook(book6);
 
-        book1.setStatusRead();
-        book2.setStatusRead();
-        book3.setStatusInProgress();
+        book1.setStatus("read");
+        book2.setStatus("read");
+        book3.setStatus("in progress");
 
         assertEquals(3, bookshelf.getBooksByStatus("unread").size());
         assertEquals(2, bookshelf.getBooksByStatus("read").size());
