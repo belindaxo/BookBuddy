@@ -152,7 +152,7 @@ public class VirtualBookshelf implements Writeable {
         List<JournalEntry> allEntries = new ArrayList<>();
         for (Book b : books) {
             JournalEntry entry = b.getEntry();
-            if (entry != null) {
+            if (!b.isEntryEmpty()) {
                 allEntries.add(entry);
             }
         }

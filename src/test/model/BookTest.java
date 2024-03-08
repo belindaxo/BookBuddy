@@ -54,6 +54,11 @@ public class BookTest {
                 book1.toString());
     }
 
+    @Test
+    public void testIsEntryEmpty() {
+        assertTrue(book1.isEntryEmpty());
+    }
+
 
 
 

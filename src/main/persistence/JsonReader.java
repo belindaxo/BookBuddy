@@ -42,11 +42,11 @@ public class JsonReader {
     private VirtualBookshelf parseVirtualBookshelf(JSONObject jsonObject) {
         VirtualBookshelf vb = new VirtualBookshelf();
         addBooks(vb, jsonObject);
-        if (jsonObject.has("tracker")) {
-            JSONObject jsonTracker = jsonObject.getJSONObject("tracker");
-            ReadingTracker tracker = parseReadingTracker(jsonTracker);
-            vb.setTracker(tracker);
-        }
+
+        JSONObject jsonTracker = jsonObject.getJSONObject("tracker");
+        ReadingTracker tracker = parseReadingTracker(jsonTracker);
+        vb.setTracker(tracker);
+
         return vb;
     }
 
@@ -81,13 +81,13 @@ public class JsonReader {
         book.setStatus(status);
         book.setRating(rating);
 
-        if (jsonObject.has("entry")) {
-            JSONObject jsonJournal = jsonObject.getJSONObject("entry");
-            String content = jsonJournal.optString("content", "");
-            JournalEntry entry = new JournalEntry();
-            entry.setContent(content);
-            book.setEntry(entry);
-        }
+
+        JSONObject jsonJournal = jsonObject.getJSONObject("entry");
+        String content = jsonJournal.optString("content", "");
+        JournalEntry entry = new JournalEntry();
+        entry.setContent(content);
+        book.setEntry(entry);
+
         vb.addBook(book);
     }
 }

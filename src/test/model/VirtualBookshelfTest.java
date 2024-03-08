@@ -351,8 +351,32 @@ public class VirtualBookshelfTest {
         assertEquals(1, bookshelf.getBooksByStatus("in progress").size());
 
         assertEquals(book1, bookshelf.getBooksByStatus("read").get(0));
-
-
     }
+
+    @Test
+    public void testGetAllEntries() {
+        bookshelf.addBook(book1);
+        bookshelf.addBook(book2);
+        bookshelf.addBook(book3);
+        bookshelf.addBook(book4);
+        bookshelf.addBook(book5);
+        bookshelf.addBook(book6);
+
+        book1.addContent("A");
+        book2.addContent("B");
+        book3.addContent("C");
+
+        assertEquals(3, bookshelf.getAllEntries().size());
+        assertEquals("A", bookshelf.getAllEntries().get(0).getContent());
+    }
+
+    @Test
+    public void testTrackerMethods() {
+        bookshelf.setReadingGoal(500);
+        bookshelf.addPagesRead(200);
+        assertEquals(500, bookshelf.getReadingGoal());
+        assertEquals(300, bookshelf.getPagesLeft());
+    }
+
 
 }
