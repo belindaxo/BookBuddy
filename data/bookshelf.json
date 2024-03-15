@@ -1,0 +1,26 @@
+{
+    "books": [
+        {
+            "entry": {"content": "dsfdsf"},
+            "pageCount": 144,
+            "author": "dsfsdf",
+            "genre": "dkfg",
+            "rating": "FIVE_STARS",
+            "title": "dsfklfjsdlkjf",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 324,
+            "author": "ewrwe",
+            "genre": "sdfsdf",
+            "rating": "THREE_STARS",
+            "title": "erwer",
+            "status": "unread"
+        }
+    ],
+    "tracker": {
+        "pages": 0,
+        "goal": 0
+    }
+}

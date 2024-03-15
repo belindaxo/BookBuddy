@@ -2,23 +2,32 @@ package ui;
 
 import model.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 // BookBuddy application
 public class BookBuddyApp {
-    private final VirtualBookshelf bookshelf;
-    private final ReadingTracker tracker;
+    private VirtualBookshelf bookshelf;
+    private ReadingTracker tracker;
     private final RecommendationSystem rec;
     private final Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/bookshelf.json";
 
     // EFFECTS: Initializes the BookBuddyApp instance with an empty bookshelf, journal,
     //          tracker, recommendation system, and initializes input scanner
-    public BookBuddyApp() {
+    public BookBuddyApp() throws FileNotFoundException {
         bookshelf = new VirtualBookshelf();
         tracker = new ReadingTracker();
         rec = new RecommendationSystem(bookshelf);
         input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // MODIFIES: this
@@ -39,7 +48,9 @@ public class BookBuddyApp {
                 + "\n1. Access your virtual bookshelf"
                 + "\n2. Open reading tracker"
                 + "\n3. Access your reading journal"
-                + "\n4. Get a book recommendation");
+                + "\n4. Get a book recommendation"
+                + "\n5. Save bookshelf"
+                + "\n6. Load bookshelf");
     }
 
     // REQUIRES: integer input that matches one of the valid options
@@ -60,6 +71,12 @@ public class BookBuddyApp {
                 break;
             case 4:
                 getRecommendation();
+                break;
+            case 5:
+                saveBookshelf();
+                break;
+            case 6:
+                loadBookshelf();
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
@@ -139,6 +156,28 @@ public class BookBuddyApp {
                 break;
             default:
                 System.out.println("invalid option");
+        }
+    }
+
+
+    private void loadBookshelf() {
+        try {
+            bookshelf = jsonReader.read();
+            System.out.println("Loading bookshelf: " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to load file: " + JSON_STORE);
+        }
+
+    }
+
+    private void saveBookshelf() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(bookshelf);
+            jsonWriter.close();
+            System.out.println("Saved bookshelf to: " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found, unable to save:  " + JSON_STORE);
         }
     }
 
