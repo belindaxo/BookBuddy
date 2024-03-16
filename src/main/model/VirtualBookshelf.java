@@ -174,8 +174,8 @@ public class VirtualBookshelf implements Writeable {
     public int getPagesLeft() {
         return this.tracker.getPagesLeft();
     }
+
+    public String getGoalSummary() {
+        return this.tracker.goalSummary();
+    }
 }
-
-
-
-

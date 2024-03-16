@@ -12,7 +12,7 @@ import persistence.JsonWriter;
 // BookBuddy application
 public class BookBuddyApp {
     private VirtualBookshelf bookshelf;
-    private ReadingTracker tracker;
+//    private ReadingTracker tracker;
     private final RecommendationSystem rec;
     private final Scanner input;
     private JsonWriter jsonWriter;
@@ -23,7 +23,7 @@ public class BookBuddyApp {
     //          tracker, recommendation system, and initializes input scanner
     public BookBuddyApp() throws FileNotFoundException {
         bookshelf = new VirtualBookshelf();
-        tracker = new ReadingTracker();
+//        tracker = new ReadingTracker();
         rec = new RecommendationSystem(bookshelf);
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -56,6 +56,7 @@ public class BookBuddyApp {
     // REQUIRES: integer input that matches one of the valid options
     // MODIFIES: this, bookshelf, journal, tracker, or rec depending on user input
     // EFFECTS: processes user main menu selection, returns true to continue loop, false to exit
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public boolean processUserInput() {
         int option = input.nextInt();
         input.nextLine();
@@ -211,13 +212,13 @@ public class BookBuddyApp {
     public void logPages() {
         System.out.println("How many pages have you read?");
         int pages = input.nextInt();
-        tracker.addPagesRead(pages);
+        bookshelf.addPagesRead(pages);
         System.out.println(pages + " pages have been added.");
     }
 
     // EFFECTS: displays summary of progress for current reading goal
     public void viewGoalSummary() {
-        System.out.println(tracker.goalSummary());
+        System.out.println(bookshelf.getGoalSummary());
     }
 
     // REQUIRES: valid integer input of number of pages read
@@ -226,7 +227,7 @@ public class BookBuddyApp {
     public void addGoal() {
         System.out.println("How many pages would you like read?");
         int goal = input.nextInt();
-        tracker.setReadingGoal(goal);
+        bookshelf.setReadingGoal(goal);
         System.out.println("A new reading goal of " + goal + " pages has been set.");
     }
 

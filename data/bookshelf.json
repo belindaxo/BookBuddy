@@ -17,10 +17,19 @@
             "rating": "THREE_STARS",
             "title": "erwer",
             "status": "unread"
+        },
+        {
+            "entry": {"content": "good"},
+            "pageCount": 500,
+            "author": "sad",
+            "genre": "fic",
+            "rating": "UNRATED",
+            "title": "heiii",
+            "status": "unread"
         }
     ],
     "tracker": {
-        "pages": 0,
-        "goal": 0
+        "pages": 300,
+        "goal": 500
     }
 }
