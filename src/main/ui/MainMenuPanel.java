@@ -24,13 +24,21 @@ public class MainMenuPanel extends JPanel {
 
     private JPanel createTitlePanel() {
         JPanel titlePanel = new JPanel();
-        titlePanel.setLayout(new FlowLayout());
-        JLabel titleLabel = new JLabel("Welcome to BookBuddy!");
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+        JLabel titleLabel = new JLabel("BookBuddy");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        titlePanel.add(titleLabel);
-        titlePanel.setBackground(new Color(26, 67, 76));
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setForeground(new Color(255, 254, 255));
-        titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
+
+        JLabel subtitleLabel = new JLabel("your personal library assistant");
+        subtitleLabel.setFont(new Font("Arial", Font.ITALIC, 18));
+        subtitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        subtitleLabel.setForeground(new Color(255, 254, 255));
+        titlePanel.add(titleLabel);
+        titlePanel.add(subtitleLabel);
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        titlePanel.setBackground(new Color(26, 67, 76));
+
         return titlePanel;
     }
 
