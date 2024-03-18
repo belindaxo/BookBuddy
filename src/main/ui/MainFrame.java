@@ -7,37 +7,41 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// Represents the main frame of the BookBuddy application
 public class MainFrame extends JFrame {
-    private MainMenuPanel mainMenuPanel;
     private VirtualBookshelf bookshelf;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/bookshelf.json";
 
+    // EFFECTS: constructs the main frame of the application
     public MainFrame() {
         setTitle("BookBuddy");
         setSize(new Dimension(400, 250));
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        mainMenuPanel = new MainMenuPanel(
+
+        bookshelf = new VirtualBookshelf();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+
+        MainMenuPanel mainMenuPanel = new MainMenuPanel(
                 this::onLoadButtonClicked,
                 this::onCreateButtonClicked
         );
         setContentPane(mainMenuPanel);
-        bookshelf = new VirtualBookshelf();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads bookshelf from file
     private void onLoadButtonClicked(ActionEvent e) {
         try {
             bookshelf = jsonReader.read();
             System.out.println("Loading bookshelf: " + JSON_STORE);
-            setContentPane(new HomePagePanel(
+            setContentPane(new HomePanel(
                     this::accessBookshelf,
                     this::openReadingTracker,
                     this::accessReadingJournal,
@@ -50,12 +54,14 @@ public class MainFrame extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new bookshelf
     private void onCreateButtonClicked(ActionEvent e) {
         bookshelf = new VirtualBookshelf();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         System.out.println("New bookshelf created");
-        setContentPane(new HomePagePanel(
+        setContentPane(new HomePanel(
                 this::accessBookshelf,
                 this::openReadingTracker,
                 this::accessReadingJournal,
@@ -65,6 +71,7 @@ public class MainFrame extends JFrame {
         revalidate();
     }
 
+    //TODO: Implement the following methods
     private void accessBookshelf(ActionEvent e) {
         System.out.println("Accessing bookshelf...");
         // Add your code here to access the bookshelf
