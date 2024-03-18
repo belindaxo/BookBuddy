@@ -3,7 +3,6 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.Map;
 
 // Represents the home page of BookBuddy application
 public class HomePanel extends JPanel {
@@ -11,11 +10,13 @@ public class HomePanel extends JPanel {
     private JButton trackerButton;
     private JButton journalButton;
     private JButton bookRecButton;
+    private final UniversalStyler styler;
 
     // EFFECTS: constructs a home page panel with buttons to access bookshelf, reading tracker, reading journal,
     //          and book recommendation features
     public HomePanel(ActionListener bookshelfAction, ActionListener trackerAction,
                      ActionListener journalAction, ActionListener bookRecAction) {
+        this.styler = new UniversalStyler();
         initPanel(bookshelfAction, trackerAction, journalAction, bookRecAction);
     }
 
@@ -40,25 +41,12 @@ public class HomePanel extends JPanel {
 
         JLabel titleLabel = new JLabel("BookBuddy");
         JLabel subtitleLabel = new JLabel("What would you like to do today?");
-        styleTitleLabel(titleLabel, subtitleLabel);
+        styler.styleTitleLabel(titleLabel, subtitleLabel);
 
         titlePanel.add(titleLabel);
         titlePanel.add(subtitleLabel);
 
         return titlePanel;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: styles the title and subtitle labels
-    private void styleTitleLabel(JLabel titleLabel, JLabel subtitleLabel) {
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setForeground(new Color(255, 254, 255));
-
-        subtitleLabel.setFont(new Font("Arial", Font.ITALIC, 18));
-        subtitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        subtitleLabel.setForeground(new Color(255, 254, 255));
-        subtitleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
     }
 
     // MODIFIES: this
@@ -98,44 +86,14 @@ public class HomePanel extends JPanel {
         journalButton = new JButton("Access your reading journal");
         bookRecButton = new JButton("Get a book recommendation");
 
-        styleAllButtons();
+        styler.styleButton(bookshelfButton);
+        styler.styleButton(trackerButton);
+        styler.styleButton(journalButton);
+        styler.styleButton(bookRecButton);
 
-        addActionsToButtons(bookshelfAction, trackerAction, journalAction, bookRecAction);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: styles all buttons
-    private void styleAllButtons() {
-        JButton[] buttons = {bookshelfButton, trackerButton, journalButton, bookRecButton};
-        for (JButton button : buttons) {
-            styleButton(button);
-        }
-    }
-
-    // MODIFIES: button
-    // EFFECTS: styles the given button
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.BOLD, 16));
-        button.setBackground(new Color(194, 243, 78));
-        button.setForeground(new Color(77, 99, 26));
-        button.setOpaque(true);
-        button.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
-        button.setFocusPainted(false);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds actions to the buttons
-    private void addActionsToButtons(ActionListener bookshelfAction, ActionListener trackerAction,
-                                     ActionListener journalAction, ActionListener bookRecAction) {
-        Map<JButton, ActionListener> buttonActions = Map.of(
-                bookshelfButton, bookshelfAction,
-                trackerButton, trackerAction,
-                journalButton, journalAction,
-                bookRecButton, bookRecAction
-        );
-
-        for (JButton button : buttonActions.keySet()) {
-            button.addActionListener(buttonActions.get(button));
-        }
+        bookshelfButton.addActionListener(bookshelfAction);
+        trackerButton.addActionListener(trackerAction);
+        journalButton.addActionListener(journalAction);
+        bookRecButton.addActionListener(bookRecAction);
     }
 }

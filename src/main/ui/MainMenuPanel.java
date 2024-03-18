@@ -10,11 +10,13 @@ public class MainMenuPanel extends JPanel {
     private JButton createButton;
     private final ActionListener loadAction;
     private final ActionListener createAction;
+    private final UniversalStyler styler;
 
     // EFFECTS: constructs the main menu panel with buttons to load saved bookshelf and create new bookshelf
     public MainMenuPanel(ActionListener loadAction, ActionListener createAction) {
         this.loadAction = loadAction;
         this.createAction = createAction;
+        this.styler = new UniversalStyler();
         initPanel();
     }
 
@@ -36,24 +38,12 @@ public class MainMenuPanel extends JPanel {
 
         JLabel titleLabel = new JLabel("BookBuddy");
         JLabel subtitleLabel = new JLabel("your personal library assistant");
-        styleTitleLabel(titleLabel, subtitleLabel);
+        styler.styleTitleLabel(titleLabel, subtitleLabel);
 
         titlePanel.add(titleLabel);
         titlePanel.add(subtitleLabel);
 
         return titlePanel;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: styles the title and subtitle labels
-    private void styleTitleLabel(JLabel titleLabel, JLabel subtitleLabel) {
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        titleLabel.setForeground(new Color(255, 254, 255));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        subtitleLabel.setFont(new Font("Arial", Font.ITALIC, 18));
-        subtitleLabel.setForeground(new Color(255, 254, 255));
-        subtitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     // MODIFIES: this
@@ -90,18 +80,7 @@ public class MainMenuPanel extends JPanel {
         loadButton.addActionListener(loadAction);
         createButton.addActionListener(createAction);
 
-        styleButton(loadButton);
-        styleButton(createButton);
-    }
-
-    // MODIFIES: button
-    // EFFECTS: styles the button
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.BOLD, 16));
-        button.setBackground(new Color(194, 243, 78));
-        button.setForeground(new Color(77, 99, 26));
-        button.setOpaque(true);
-        button.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
-        button.setFocusPainted(false);
+        styler.styleButton(loadButton);
+        styler.styleButton(createButton);
     }
 }
