@@ -2,6 +2,7 @@ package ui;
 
 import model.Book;
 import model.VirtualBookshelf;
+import model.Rating;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -345,12 +346,12 @@ public class MainFrame extends JFrame {
         }
     }
 
-    // EFFECTS: gets unique authors from the bookshelf
+    // EFFECTS: returns unique authors from the bookshelf
     private String[] getUniqueAuthors() {
         return bookshelf.getBooks().stream().map(Book::getAuthor).distinct().toArray(String[]::new);
     }
 
-    // EFFECTS: gets unique genres from the bookshelf
+    // EFFECTS: returns unique genres from the bookshelf
     private String[] getUniqueGenres() {
         return bookshelf.getBooks().stream().map(Book::getGenre).distinct().toArray(String[]::new);
     }
@@ -359,7 +360,62 @@ public class MainFrame extends JFrame {
     // EFFECTS: rates a book
     private void rateAction(ActionEvent e) {
         System.out.println("Rating a book...");
-        //TODO: implement rateAction
+        Book selectedBook = getSelectedBook();
+        if (selectedBook != null) {
+            int rating = getRating();
+            if (rating != -1) {
+                updateRating(selectedBook, rating);
+            }
+        }
+        handleNextAction(getNextRatingAction());
+    }
+
+    private Book getSelectedBook() {
+        return (Book) JOptionPane.showInputDialog(this, "Select a book to rate:",
+                "Rate a Book", JOptionPane.QUESTION_MESSAGE, null,
+                bookshelf.getBooks().toArray(), bookshelf.getBooks().get(0));
+    }
+
+    private int getRating() {
+        String rating = (String) JOptionPane.showInputDialog(this,
+                "Select a rating for the book:", "Rate a Book", JOptionPane.QUESTION_MESSAGE,
+                null, new String[]{"1", "2", "3", "4", "5"}, "1");
+        return rating != null ? Integer.parseInt(rating) : -1;
+    }
+
+    private void updateRating(Book selectedBook, int rating) {
+        Rating bookRating;
+        switch (rating) {
+            case 1:
+                bookRating = Rating.ONE_STAR;
+                break;
+            case 2:
+                bookRating = Rating.TWO_STARS;
+                break;
+            case 3:
+                bookRating = Rating.THREE_STARS;
+                break;
+            case 4:
+                bookRating = Rating.FOUR_STARS;
+                break;
+            case 5:
+                bookRating = Rating.FIVE_STARS;
+                break;
+            default:
+                bookRating = Rating.UNRATED;
+        }
+        selectedBook.setRating(bookRating);
+    }
+
+    private int getNextRatingAction() {
+        return JOptionPane.showOptionDialog(this,
+                "What would you like to do next?",
+                "Next Action",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new Object[]{"Add another rating", "View bookshelf", "Exit"},
+                null);
     }
 
     // MODIFIES: this
