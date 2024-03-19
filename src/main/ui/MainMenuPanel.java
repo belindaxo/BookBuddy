@@ -53,22 +53,13 @@ public class MainMenuPanel extends JPanel {
         buttonPanel.setLayout(new GridBagLayout());
         buttonPanel.setBackground(new Color(26, 67, 76));
 
-        GridBagConstraints gbc = createButtonConstraints();
+        GridBagConstraints gbc = styler.createButtonConstraints();
         createButtons();
 
         buttonPanel.add(loadButton, gbc);
         buttonPanel.add(createButton, gbc);
 
         return buttonPanel;
-    }
-
-    // EFFECTS: creates constraints for the buttons
-    private GridBagConstraints createButtonConstraints() {
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 50, 10, 50);
-        return gbc;
     }
 
     // MODIFIES: this

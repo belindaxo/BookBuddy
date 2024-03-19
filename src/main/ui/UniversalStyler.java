@@ -30,4 +30,13 @@ public class UniversalStyler {
         button.setFocusPainted(false);
     }
 
+    // EFFECTS: creates constraints for buttons
+    public GridBagConstraints createButtonConstraints() {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 50, 10, 50);
+        return gbc;
+    }
+
 }

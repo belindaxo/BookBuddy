@@ -55,7 +55,7 @@ public class HomePanel extends JPanel {
                                      ActionListener journalAction, ActionListener bookRecAction) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = createButtonConstraints();
+        GridBagConstraints gbc = styler.createButtonConstraints();
         buttonPanel.setBackground(new Color(26, 67, 76));
 
         createButtons(bookshelfAction, trackerAction, journalAction, bookRecAction);
@@ -66,15 +66,6 @@ public class HomePanel extends JPanel {
         buttonPanel.add(bookRecButton, gbc);
 
         return buttonPanel;
-    }
-
-    // EFFECTS: creates constraints for the buttons
-    private GridBagConstraints createButtonConstraints() {
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 50, 10, 50);
-        return gbc;
     }
 
     // MODIFIES: this

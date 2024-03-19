@@ -178,4 +178,8 @@ public class VirtualBookshelf implements Writeable {
     public String getGoalSummary() {
         return this.tracker.goalSummary();
     }
+
+    public void removeBook(Book book) {
+        this.books.remove(book);
+    }
 }
