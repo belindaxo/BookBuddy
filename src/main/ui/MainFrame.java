@@ -195,7 +195,9 @@ public class MainFrame extends JFrame {
         JTable table = createTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
         JButton deleteButton = createDeleteButton(table, tableModel);
-        JPanel panel = createPanel(scrollPane, deleteButton);
+        JButton returnToBookshelfButton = createReturnToBookshelfButton();
+        JButton returnToHomeButton = createReturnToHomeButton();
+        JPanel panel = createPanel(scrollPane, deleteButton, returnToBookshelfButton, returnToHomeButton);
         panel.add(createFilterPanel(tableModel), BorderLayout.NORTH);
         setContentPane(panel);
         pack();
@@ -268,12 +270,35 @@ public class MainFrame extends JFrame {
         return deleteButton;
     }
 
+    // EFFECTS: creates a button to return to the bookshelf panel
+    private JButton createReturnToBookshelfButton() {
+        JButton returnToBookshelfButton = new JButton("Return to Bookshelf");
+        styler.styleButton(returnToBookshelfButton);
+        returnToBookshelfButton.addActionListener(e -> handleBookshelfPanelOption());
+        return returnToBookshelfButton;
+    }
+
+    // EFFECTS: creates a button to return to the home panel
+    private JButton createReturnToHomeButton() {
+        JButton returnToHomeButton = new JButton("Return to Home");
+        styler.styleButton(returnToHomeButton);
+        returnToHomeButton.addActionListener(e -> handleHomePanelOption());
+        return returnToHomeButton;
+    }
+
     // EFFECTS: creates a panel for the table
-    private JPanel createPanel(JScrollPane scrollPane, JButton deleteButton) {
+    private JPanel createPanel(JScrollPane scrollPane, JButton deleteButton, JButton returnToBookshelfButton,
+                               JButton returnToHomeButton) {
         JPanel panel = new JPanel(new BorderLayout());
 
         panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(deleteButton, BorderLayout.SOUTH);
+
+        JPanel actionButtonPanel = new JPanel();
+        actionButtonPanel.add(deleteButton);
+        actionButtonPanel.add(returnToBookshelfButton);
+        actionButtonPanel.add(returnToHomeButton);
+
+        panel.add(actionButtonPanel, BorderLayout.SOUTH);
 
         return panel;
     }
@@ -370,12 +395,29 @@ public class MainFrame extends JFrame {
         handleNextAction(getNextRatingAction());
     }
 
+    // EFFECTS: gets the selected book
     private Book getSelectedBook() {
-        return (Book) JOptionPane.showInputDialog(this, "Select a book to rate:",
-                "Rate a Book", JOptionPane.QUESTION_MESSAGE, null,
-                bookshelf.getBooks().toArray(), bookshelf.getBooks().get(0));
+        ArrayList<Book> books = bookshelf.getBooks();
+        String[] bookDesc = new String[books.size()];
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
+            bookDesc[i] = book.getTitle() + " by " + book.getAuthor() + ", " + book.getRating();
+        }
+        String selectedBook = (String) JOptionPane.showInputDialog(
+                this, "Select a book to rate:", "Rate a Book",
+                JOptionPane.QUESTION_MESSAGE, null, bookDesc, bookDesc[0]);
+
+        if (selectedBook != null) {
+            for (Book book : books) {
+                if (selectedBook.contains(book.getTitle()) && selectedBook.contains(book.getAuthor())) {
+                    return book;
+                }
+            }
+        }
+        return null;
     }
 
+    // EFFECTS: gets the rating for a book
     private int getRating() {
         String rating = (String) JOptionPane.showInputDialog(this,
                 "Select a rating for the book:", "Rate a Book", JOptionPane.QUESTION_MESSAGE,
@@ -383,6 +425,8 @@ public class MainFrame extends JFrame {
         return rating != null ? Integer.parseInt(rating) : -1;
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates the rating of a book
     private void updateRating(Book selectedBook, int rating) {
         Rating bookRating;
         switch (rating) {
@@ -407,16 +451,15 @@ public class MainFrame extends JFrame {
         selectedBook.setRating(bookRating);
     }
 
+    // EFFECTS: gets the next action to be performed
     private int getNextRatingAction() {
         return JOptionPane.showOptionDialog(this,
-                "What would you like to do next?",
-                "Next Action",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                new Object[]{"Add another rating", "View bookshelf", "Exit"},
-                null);
+                "What would you like to do next?", "Next Action",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                new Object[]{"Add another rating", "View bookshelf", "Exit"}, null);
     }
+
+
 
     // MODIFIES: this
     // EFFECTS: updates the status of a book
