@@ -7,14 +7,12 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.function.Function;
 
 // Represents the main frame of the BookBuddy application
 public class MainFrame extends JFrame {
@@ -30,6 +28,12 @@ public class MainFrame extends JFrame {
         setSize(new Dimension(400, 250));
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                handleSaveOptions();
+            }
+        });
         setLocationRelativeTo(null);
 
         this.bookshelf = new VirtualBookshelf();
@@ -50,6 +54,7 @@ public class MainFrame extends JFrame {
         try {
             bookshelf = jsonReader.read();
             System.out.println("Loading bookshelf: " + JSON_STORE);
+
             setContentPane(new HomePanel(
                     this::accessBookshelf,
                     this::openReadingTracker,
@@ -103,8 +108,7 @@ public class MainFrame extends JFrame {
             while (continueAdding) {
                 Book newBook = getBookDetails();
                 addBookToBookshelf(newBook);
-                addBookMessage(newBook);
-                int option = getNextAction();
+                int option = getNextAction(newBook);
                 continueAdding = handleNextAction(option);
             }
         }
@@ -127,21 +131,17 @@ public class MainFrame extends JFrame {
         bookshelf.addBook(newBook);
     }
 
-    // EFFECTS: displays a message indicating that a book has been added to the bookshelf
-    private void addBookMessage(Book book) {
-        JOptionPane.showMessageDialog(this, book.getTitle() + " by " + book.getAuthor()
-                + " has been added to your bookshelf!");
-    }
-
     // EFFECTS: gets the next action to be performed
-    private int getNextAction() {
+    private int getNextAction(Book newBook) {
+        String confirmation = newBook.getTitle() + " by " + newBook.getAuthor()
+                + " has been added to your bookshelf!";
         return JOptionPane.showOptionDialog(this,
-                "What would you like to do next?",
+                confirmation + "\nWhat would you like to do next?",
                 "Next Action",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
-                new Object[]{"Add another book", "View bookshelf", "Exit"},
+                new Object[]{"Add another book", "Return to bookshelf", "Return to home"},
                 null);
     }
 
@@ -151,9 +151,11 @@ public class MainFrame extends JFrame {
             case 0:
                 return true;
             case 1:
-                return handleBookshelfPanelOption();
+                handleBookshelfPanelOption();
+                return false;
             case 2:
-                return handleHomePanelOption();
+                handleHomePanelOption();
+                return false;
             default:
                 return false;
         }
@@ -161,7 +163,8 @@ public class MainFrame extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: handles the bookshelf panel option
-    private boolean handleBookshelfPanelOption() {
+    private void handleBookshelfPanelOption() {
+//        handleSaveOptions();
         setContentPane(new BookshelfPanel(
                 this::addAction,
                 this::viewAction,
@@ -170,12 +173,12 @@ public class MainFrame extends JFrame {
         ));
         pack();
         revalidate();
-        return false;
     }
 
     // MODIFIES: this
     // EFFECTS: handles the home panel option
-    private boolean handleHomePanelOption() {
+    private void handleHomePanelOption() {
+//        handleSaveOptions();
         setContentPane(new HomePanel(
                 this::accessBookshelf,
                 this::openReadingTracker,
@@ -184,7 +187,51 @@ public class MainFrame extends JFrame {
         ));
         pack();
         revalidate();
-        return false;
+    }
+
+    public void handleSaveOptions() {
+        int saveOptions = getSaveOptions();
+        switch (saveOptions) {
+            case 0:
+                saveChanges();
+                break;
+            case 1:
+                deleteChanges();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private int getSaveOptions() {
+        return JOptionPane.showOptionDialog(null,
+                "Would you like to save changes to your bookshelf?",
+                "Save or Delete Changes",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new Object[]{"Save changes", "Discard changes", "Cancel"},
+                null);
+    }
+
+    private void saveChanges() {
+        try {
+            System.out.println("Saving changes to: " + JSON_STORE);
+            jsonWriter.open();
+            jsonWriter.write(bookshelf);
+            jsonWriter.close();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error: Unable to save changes to bookshelf");
+        }
+    }
+
+    private void deleteChanges() {
+        try {
+            System.out.println("Deleting changes to: " + JSON_STORE);
+            bookshelf = jsonReader.read();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error: Unable to delete changes to bookshelf");
+        }
     }
 
     // MODIFIES: this
@@ -204,7 +251,6 @@ public class MainFrame extends JFrame {
         revalidate();
     }
 
-    // EFFECTS: creates a table model for the bookshelf
     private DefaultTableModel createTableModel() {
         DefaultTableModel tableModel = new DefaultTableModel(new Object[]{
                 "Title", "Author", "Genre", "Page Count"}, 0);
@@ -217,35 +263,30 @@ public class MainFrame extends JFrame {
         return tableModel;
     }
 
-    // EFFECTS: creates a table for the bookshelf
     private JTable createTable(DefaultTableModel tableModel) {
         JTable table = new JTable(tableModel);
-        table.addMouseListener(createMouseListener(table, tableModel));
+        table.getModel().addTableModelListener(createTableModelListener(table, tableModel));
         return table;
     }
 
-    // EFFECTS: creates a mouse listener for the table
-    private MouseAdapter createMouseListener(JTable table, DefaultTableModel tableModel) {
-        return new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int row = table.rowAtPoint(e.getPoint());
-                int col = table.columnAtPoint(e.getPoint());
-                Book book = bookshelf.getBooks().get(row);
-                switch (col) {
-                    case 0:
-                        book.setTitle((String) tableModel.getValueAt(row, col));
-                        break;
-                    case 1:
-                        book.setAuthor((String) tableModel.getValueAt(row, col));
-                        break;
-                    case 2:
-                        book.setGenre((String) tableModel.getValueAt(row, col));
-                        break;
-                    case 3:
-                        book.setPageCount(Integer.parseInt((String) tableModel.getValueAt(row, col)));
-                        break;
-                }
+    private TableModelListener createTableModelListener(JTable table, DefaultTableModel tableModel) {
+        return e -> {
+            int row = e.getFirstRow();
+            int col = e.getColumn();
+            Book book = bookshelf.getBooks().get(row);
+            switch (col) {
+                case 0:
+                    book.setTitle((String) tableModel.getValueAt(row, col));
+                    break;
+                case 1:
+                    book.setAuthor((String) tableModel.getValueAt(row, col));
+                    break;
+                case 2:
+                    book.setGenre((String) tableModel.getValueAt(row, col));
+                    break;
+                case 3:
+                    book.setPageCount(Integer.parseInt((String) tableModel.getValueAt(row, col)));
+                    break;
             }
         };
     }
@@ -257,7 +298,7 @@ public class MainFrame extends JFrame {
 
     // EFFECTS: creates a delete button for the table
     private JButton createDeleteButton(JTable table, DefaultTableModel tableModel) {
-        JButton deleteButton = new JButton("Delete Book");
+        JButton deleteButton = new JButton("Delete selected book");
         styler.styleButton(deleteButton);
         deleteButton.addActionListener(e -> {
             int row = table.getSelectedRow();
@@ -272,7 +313,7 @@ public class MainFrame extends JFrame {
 
     // EFFECTS: creates a button to return to the bookshelf panel
     private JButton createReturnToBookshelfButton() {
-        JButton returnToBookshelfButton = new JButton("Return to Bookshelf");
+        JButton returnToBookshelfButton = new JButton("Return to bookshelf");
         styler.styleButton(returnToBookshelfButton);
         returnToBookshelfButton.addActionListener(e -> handleBookshelfPanelOption());
         return returnToBookshelfButton;
@@ -280,7 +321,7 @@ public class MainFrame extends JFrame {
 
     // EFFECTS: creates a button to return to the home panel
     private JButton createReturnToHomeButton() {
-        JButton returnToHomeButton = new JButton("Return to Home");
+        JButton returnToHomeButton = new JButton("Return to home");
         styler.styleButton(returnToHomeButton);
         returnToHomeButton.addActionListener(e -> handleHomePanelOption());
         return returnToHomeButton;
@@ -342,32 +383,30 @@ public class MainFrame extends JFrame {
     // EFFECTS: applies filters to the bookshelf
     private void applyFilters(JComboBox<String> authorBox, JComboBox<String> genreBox, JComboBox<String> lengthBox,
                               JComboBox<String> statusBox, DefaultTableModel tableModel) {
-        String author = (String) genreBox.getSelectedItem();
+        String author = (String) authorBox.getSelectedItem();
         String genre = (String) genreBox.getSelectedItem();
         String length = (String) lengthBox.getSelectedItem();
         String status = (String) statusBox.getSelectedItem();
 
         ArrayList<Book> filteredBooks = new ArrayList<>(bookshelf.getBooks());
 
-        applyFilter(author, filteredBooks, bookshelf::getBooksByAuthor);
-        applyFilter(genre, filteredBooks, bookshelf::getBooksByGenre);
-        applyFilter(length, filteredBooks, bookshelf::getBooksByPageCount);
-        applyFilter(status, filteredBooks, bookshelf::getBooksByStatus);
+        if (author != null && !author.equals("Any")) {
+            filteredBooks.retainAll(bookshelf.getBooksByAuthor(author));
+        }
+        if (genre != null && !genre.equals("Any")) {
+            filteredBooks.retainAll(bookshelf.getBooksByGenre(genre));
+        }
+        if (length != null && !length.equals("Any")) {
+            filteredBooks.retainAll(bookshelf.getBooksByPageCount(length));
+        }
+        if (status != null && !status.equals("Any")) {
+            filteredBooks.retainAll(bookshelf.getBooksByStatus(status));
+        }
 
         tableModel.setRowCount(0);
         for (Book book : filteredBooks) {
             tableModel.addRow(new Object[]{
                     book.getTitle(), book.getAuthor(), book.getGenre(), book.getPageCount()});
-        }
-    }
-
-    // EFFECTS: applies specified filtering method to specified value
-    private void applyFilter(String filterValue, ArrayList<Book> filteredBooks,
-                             Function<String, ArrayList<Book>> filterMethod) {
-        if (filterValue != null) {
-            if (!filterValue.equals("Any")) {
-                filteredBooks.retainAll(filterMethod.apply(filterValue));
-            }
         }
     }
 
@@ -385,23 +424,30 @@ public class MainFrame extends JFrame {
     // EFFECTS: rates a book
     private void rateAction(ActionEvent e) {
         System.out.println("Rating a book...");
-        Book selectedBook = getSelectedBook();
-        if (selectedBook != null) {
-            int rating = getRating();
-            if (rating != -1) {
-                updateRating(selectedBook, rating);
+        boolean continueRating = true;
+        while (continueRating) {
+            Book selectedBook = getSelectedBookToRate();
+            if (selectedBook != null) {
+                int rating = getRating();
+                if (rating != -1) {
+                    updateRating(selectedBook, rating);
+                    int nextAction = getNextRatingAction(selectedBook);
+                    continueRating = handleNextAction(nextAction);
+                }
+            } else {
+                System.out.println("No book selected");
+                continueRating = false;
             }
         }
-        handleNextAction(getNextRatingAction());
     }
 
     // EFFECTS: gets the selected book
-    private Book getSelectedBook() {
+    private Book getSelectedBookToRate() {
         ArrayList<Book> books = bookshelf.getBooks();
         String[] bookDesc = new String[books.size()];
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            bookDesc[i] = book.getTitle() + " by " + book.getAuthor() + ", " + book.getRating();
+            bookDesc[i] = book.getTitle() + " by " + book.getAuthor() + ": " + displayRating(book.getRating());
         }
         String selectedBook = (String) JOptionPane.showInputDialog(
                 this, "Select a book to rate:", "Rate a Book",
@@ -415,14 +461,6 @@ public class MainFrame extends JFrame {
             }
         }
         return null;
-    }
-
-    // EFFECTS: gets the rating for a book
-    private int getRating() {
-        String rating = (String) JOptionPane.showInputDialog(this,
-                "Select a rating for the book:", "Rate a Book", JOptionPane.QUESTION_MESSAGE,
-                null, new String[]{"1", "2", "3", "4", "5"}, "1");
-        return rating != null ? Integer.parseInt(rating) : -1;
     }
 
     // MODIFIES: this
@@ -451,21 +489,106 @@ public class MainFrame extends JFrame {
         selectedBook.setRating(bookRating);
     }
 
-    // EFFECTS: gets the next action to be performed
-    private int getNextRatingAction() {
-        return JOptionPane.showOptionDialog(this,
-                "What would you like to do next?", "Next Action",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                new Object[]{"Add another rating", "View bookshelf", "Exit"}, null);
+    // EFFECTS: displays the rating of a book using stars
+    private String displayRating(Rating rating) {
+        switch (rating) {
+            case ONE_STAR:
+                return "★☆☆☆☆";
+            case TWO_STARS:
+                return "★★☆☆☆";
+            case THREE_STARS:
+                return "★★★☆☆";
+            case FOUR_STARS:
+                return "★★★★☆";
+            case FIVE_STARS:
+                return "★★★★★";
+            default:
+                return "☆☆☆☆☆";
+        }
     }
 
+    // EFFECTS: gets the rating for a book
+    private int getRating() {
+        String rating = (String) JOptionPane.showInputDialog(this,
+                "Select a rating for the book:", "Rate a Book", JOptionPane.QUESTION_MESSAGE,
+                null, new String[]{"1", "2", "3", "4", "5"}, "1");
+        return rating != null ? Integer.parseInt(rating) : -1;
+    }
 
+    // EFFECTS: gets the next action to be performed
+    private int getNextRatingAction(Book selectedBook) {
+        String confirmation = "Rating for " + selectedBook.getTitle()
+                + " has been updated to: " + displayRating(selectedBook.getRating());
+        return JOptionPane.showOptionDialog(this,
+                confirmation + "\nWhat would you like to do next?", "Next Action",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                new Object[]{"Add another rating", "Return to bookshelf", "Return to home"}, null);
+    }
 
     // MODIFIES: this
     // EFFECTS: updates the status of a book
     private void updateAction(ActionEvent e) {
         System.out.println("Updating book status...");
-        //TODO: implement updateAction
+        boolean continueUpdating = true;
+        while (continueUpdating) {
+            Book selectedBook = getSelectedBookToUpdate();
+            if (selectedBook != null) {
+                String status = getStatus();
+                if (status != null) {
+                    updateBookStatus(selectedBook, status);
+                    int nextAction = getNextStatusAction(selectedBook);
+                    continueUpdating = handleNextAction(nextAction);
+                }
+            } else {
+                System.out.println("No book selected");
+                continueUpdating = false;
+            }
+        }
+    }
+
+    private Book getSelectedBookToUpdate() {
+        ArrayList<Book> books = bookshelf.getBooks();
+        String[] bookDesc = new String[books.size()];
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
+            bookDesc[i] = book.getTitle() + " by " + book.getAuthor() + ": " + book.getStatus();
+        }
+        String selectedBook = (String) JOptionPane.showInputDialog(
+                this, "Select a book:", "Update Book Status",
+                JOptionPane.QUESTION_MESSAGE, null, bookDesc, bookDesc[0]);
+
+        if (selectedBook != null) {
+            for (Book book : books) {
+                if (selectedBook.contains(book.getTitle()) && selectedBook.contains(book.getAuthor())) {
+                    return book;
+                }
+            }
+        }
+        return null;
+    }
+
+    // EFFECTS: gets the status for a book
+    private String getStatus() {
+        String[] options = {"Read", "In Progress", "Unread"};
+        return (String) JOptionPane.showInputDialog(this,
+                "Select a status:", "Update Book Status",
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates the status of the book
+    public void updateBookStatus(Book book, String status) {
+        book.setStatus(status);
+    }
+
+    // EFFECTS: gets the next status action to be performed
+    private int getNextStatusAction(Book selectedBook) {
+        String confirmation = "Status for " + selectedBook.getTitle() + " has been updated to: "
+                + selectedBook.getStatus();
+        return JOptionPane.showOptionDialog(this,
+                confirmation + "\nWhat would you like to do next?", "Next Action",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                new Object[]{"Update another book's status", "Return to bookshelf", "Return to home"}, null);
     }
 
     // MODIFIES: this
