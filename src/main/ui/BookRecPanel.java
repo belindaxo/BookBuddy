@@ -8,12 +8,14 @@ public class BookRecPanel extends JPanel {
     private final UniversalStyler styler;
 
 
-    public BookRecPanel(ActionListener recByGenreAction, ActionListener recByPageCount, ActionListener randomRecAction, ActionListener returnHomeAction) {
+    public BookRecPanel(ActionListener recByGenreAction, ActionListener recByPageCount,
+                        ActionListener randomRecAction, ActionListener returnHomeAction) {
         this.styler = new UniversalStyler();
         initPanel(recByGenreAction, recByPageCount, randomRecAction, returnHomeAction);
     }
 
-    private void initPanel(ActionListener recByGenreAction, ActionListener recByPageCount, ActionListener randomRecAction, ActionListener returnHomeAction) {
+    private void initPanel(ActionListener recByGenreAction, ActionListener recByPageCount,
+                           ActionListener randomRecAction, ActionListener returnHomeAction) {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(600, 400));
         this.add(createTitlePanel(), BorderLayout.NORTH);
@@ -37,7 +39,8 @@ public class BookRecPanel extends JPanel {
         return titlePanel;
     }
 
-    private JPanel createButtonPanel(ActionListener recByGenreAction, ActionListener recByPageCount, ActionListener randomRecAction, ActionListener returnHomeAction) {
+    private JPanel createButtonPanel(ActionListener recByGenreAction, ActionListener recByPageCount,
+                                     ActionListener randomRecAction, ActionListener returnHomeAction) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
         buttonPanel.setBackground(new Color(26, 67, 76));
@@ -48,10 +51,7 @@ public class BookRecPanel extends JPanel {
         JButton randomRecButton = new JButton("Surprise me!");
         JButton returnHomeButton = new JButton("Return to home");
 
-        styler.styleButton(recByGenreButton);
-        styler.styleButton(recByPageCountButton);
-        styler.styleButton(randomRecButton);
-        styler.styleButton(returnHomeButton);
+        styler.styleAllButtons(recByGenreButton, recByPageCountButton, randomRecButton, returnHomeButton);
 
         recByGenreButton.addActionListener(recByGenreAction);
         recByPageCountButton.addActionListener(recByPageCount);

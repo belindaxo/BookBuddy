@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class BookshelfPanel extends JPanel {
     private final UniversalStyler styler;
 
-    // EFFECTS: constructs the bookshelf panel with buttons to add, view, rate, and update books
+    // EFFECTS: constructs the bookshelf panel with buttons to add, view, rate, and update books and return to home
     public BookshelfPanel(ActionListener addAction, ActionListener viewAction,
                           ActionListener rateAction, ActionListener updateAction, ActionListener returnHomeAction) {
         this.styler = new UniversalStyler();
@@ -45,7 +45,7 @@ public class BookshelfPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a panel with buttons to add, view, rate, and update books
+    // EFFECTS: creates a panel with buttons to add, view, rate, and update books and return to home
     private JPanel createButtonPanel(ActionListener addAction, ActionListener viewAction, ActionListener rateAction,
                                      ActionListener updateAction, ActionListener returnHomeAction) {
         JPanel buttonPanel = new JPanel();
@@ -59,11 +59,7 @@ public class BookshelfPanel extends JPanel {
         JButton updateButton = new JButton("Update book status");
         JButton returnHomeButton = new JButton("Return to home");
 
-        styler.styleButton(addButton);
-        styler.styleButton(viewButton);
-        styler.styleButton(rateButton);
-        styler.styleButton(updateButton);
-        styler.styleButton(returnHomeButton);
+        styler.styleAllButtons(addButton, viewButton, rateButton, updateButton, returnHomeButton);
 
         addButton.addActionListener(addAction);
         viewButton.addActionListener(viewAction);
@@ -79,4 +75,5 @@ public class BookshelfPanel extends JPanel {
 
         return buttonPanel;
     }
+
 }

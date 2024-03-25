@@ -4,16 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-// Represents the panel that contains the reading tracker
+// Represents the reading tracker panel of the application
 public class ReadingTrackerPanel extends JPanel {
     private final UniversalStyler styler;
 
+    // EFFECTS: constructs the reading tracker panel with buttons to set goal, log pages, view summary, and return home
     public ReadingTrackerPanel(ActionListener setGoalAction, ActionListener logPagesAction,
                                ActionListener viewSummaryAction, ActionListener returnHomeAction) {
         this.styler = new UniversalStyler();
         initPanel(setGoalAction, logPagesAction, viewSummaryAction, returnHomeAction);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the reading tracker panel with title and buttons
     private void initPanel(ActionListener setGoalAction, ActionListener logPagesAction,
                            ActionListener viewSummaryAction, ActionListener returnHomeAction) {
         this.setLayout(new BorderLayout());
@@ -23,6 +26,8 @@ public class ReadingTrackerPanel extends JPanel {
                 BorderLayout.CENTER);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a panel with the title and subtitle of the panel
     private JPanel createTitlePanel() {
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
@@ -39,6 +44,8 @@ public class ReadingTrackerPanel extends JPanel {
         return titlePanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a panel with buttons to set goal, log pages, view summary, and return home
     private JPanel createButtonPanel(ActionListener setGoalAction, ActionListener logPagesAction,
                                      ActionListener viewSummaryAction, ActionListener returnHomeAction) {
         JPanel buttonPanel = new JPanel();
@@ -51,10 +58,7 @@ public class ReadingTrackerPanel extends JPanel {
         JButton viewSummaryButton = new JButton("View goal summary");
         JButton returnHomeButton = new JButton("Return to home");
 
-        styler.styleButton(setGoalButton);
-        styler.styleButton(logPagesButton);
-        styler.styleButton(viewSummaryButton);
-        styler.styleButton(returnHomeButton);
+        styler.styleAllButtons(setGoalButton, logPagesButton, viewSummaryButton, returnHomeButton);
 
         setGoalButton.addActionListener(setGoalAction);
         logPagesButton.addActionListener(logPagesAction);

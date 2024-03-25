@@ -30,6 +30,14 @@ public class UniversalStyler {
         button.setFocusPainted(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS: styles all buttons in the panel
+    public void styleAllButtons(JButton... buttons) {
+        for (JButton button : buttons) {
+            styleButton(button);
+        }
+    }
+
     // EFFECTS: creates constraints for buttons
     public GridBagConstraints createButtonConstraints() {
         GridBagConstraints gbc = new GridBagConstraints();

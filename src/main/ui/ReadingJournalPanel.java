@@ -4,15 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+// Represents the reading journal panel of the application
 public class ReadingJournalPanel extends JPanel {
     private final UniversalStyler styler;
 
+    // EFFECTS: constructs the reading journal panel with buttons to edit an entry, view journal, and return to home
     public ReadingJournalPanel(ActionListener editEntryAction, ActionListener viewJournalAction,
                                ActionListener returnHomeAction) {
         this.styler = new UniversalStyler();
         initPanel(editEntryAction, viewJournalAction, returnHomeAction);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the reading journal panel with title and buttons
     private void initPanel(ActionListener editEntryAction, ActionListener viewJournalAction,
                            ActionListener returnHomeAction) {
         this.setLayout(new BorderLayout());
@@ -21,6 +25,8 @@ public class ReadingJournalPanel extends JPanel {
         this.add(createButtonPanel(editEntryAction, viewJournalAction, returnHomeAction), BorderLayout.CENTER);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a panel with the title and subtitle of the panel
     private JPanel createTitlePanel() {
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
@@ -37,6 +43,8 @@ public class ReadingJournalPanel extends JPanel {
         return titlePanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a panel with buttons to edit an entry, view journal, and return to home
     private JPanel createButtonPanel(ActionListener editEntryAction, ActionListener viewJournalAction,
                                      ActionListener returnHomeAction) {
         JPanel buttonPanel = new JPanel();
@@ -48,9 +56,7 @@ public class ReadingJournalPanel extends JPanel {
         JButton viewJournalButton = new JButton("View journal");
         JButton returnHomeButton = new JButton("Return to home");
 
-        styler.styleButton(editEntryButton);
-        styler.styleButton(viewJournalButton);
-        styler.styleButton(returnHomeButton);
+        styler.styleAllButtons(editEntryButton, viewJournalButton, returnHomeButton);
 
         editEntryButton.addActionListener(editEntryAction);
         viewJournalButton.addActionListener(viewJournalAction);
