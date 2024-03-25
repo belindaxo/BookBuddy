@@ -7,7 +7,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -692,38 +691,54 @@ public class MainFrame extends JFrame {
     private void editEntryAction(ActionEvent e) {
         Book selectedBook = getSelectedBookToUpdate();
         if (selectedBook != null) {
-            JTextPane textPane = new JTextPane();
-            textPane.setText(selectedBook.getEntry().getContent());
+            JTextPane textPane = createTextPane(selectedBook);
             JScrollPane scrollPane = new JScrollPane(textPane);
-            JPanel panel = new JPanel(new BorderLayout());
-            panel.add(scrollPane, BorderLayout.CENTER);
-            panel.setPreferredSize(new Dimension(600, 400));
-
-            JButton saveButton = new JButton("Save");
-            saveButton.addActionListener(saveEvent -> {
-                selectedBook.getEntry().setContent(textPane.getText());
-
-                int option = JOptionPane.showOptionDialog(this,
-                        "Entry for " + selectedBook.getTitle() + " has been saved."
-                                + "\nWhat would you like to do next?",
-                        "Next Action",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        new Object[]{"Return to journal", "Return to home"},
-                        null);
-
-                if (option == JOptionPane.YES_OPTION) {
-                    accessReadingJournal(null);
-                } else if (option == JOptionPane.NO_OPTION) {
-                    handleHomePanelOption();
-                }
-            });
+            JPanel panel = createEntryPanel(scrollPane);
+            JButton saveButton = createSaveButton(selectedBook, textPane);
             panel.add(saveButton, BorderLayout.SOUTH);
-
             setContentPane(panel);
             pack();
             revalidate();
+        }
+    }
+
+    private JTextPane createTextPane(Book selectedBook) {
+        JTextPane textPane = new JTextPane();
+        textPane.setText(selectedBook.getEntry().getContent());
+        textPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        return textPane;
+    }
+
+    private JPanel createEntryPanel(JScrollPane scrollPane) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.setPreferredSize(new Dimension(600, 600));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        return panel;
+    }
+
+    private JButton createSaveButton(Book selectedBook, JTextPane textPane) {
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(e -> saveEntryAction(selectedBook, textPane));
+        return saveButton;
+    }
+
+    private void saveEntryAction(Book selectedBook, JTextPane textPane) {
+        selectedBook.getEntry().setContent(textPane.getText());
+        int option = JOptionPane.showOptionDialog(this,
+                "Entry for " + selectedBook.getTitle() + " has been saved."
+                        + "\nWhat would you like to do next?",
+                "Next Action",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new Object[]{"Return to journal", "Return to home"},
+                null);
+
+        if (option == JOptionPane.YES_OPTION) {
+            accessReadingJournal(null);
+        } else if (option == JOptionPane.NO_OPTION) {
+            handleHomePanelOption();
         }
     }
 
