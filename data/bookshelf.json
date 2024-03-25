@@ -1,71 +1,15 @@
 {
-    "books": [
-        {
-            "entry": {"content": "dsfdsf"},
-            "pageCount": 144,
-            "author": "dsfsdf",
-            "genre": "dkfg",
-            "rating": "FIVE_STARS",
-            "title": "Hello",
-            "status": "unread"
-        },
-        {
-            "entry": {"content": ""},
-            "pageCount": 324,
-            "author": "ewrwe",
-            "genre": "sdfsdf",
-            "rating": "FIVE_STARS",
-            "title": "goodness me",
-            "status": "unread"
-        },
-        {
-            "entry": {"content": ""},
-            "pageCount": 450,
-            "author": "dsad",
-            "genre": "fiction",
-            "rating": "FIVE_STARS",
-            "title": "Wow",
-            "status": "unread"
-        },
-        {
-            "entry": {"content": ""},
-            "pageCount": 3,
-            "author": "sdf",
-            "genre": "sdf",
-            "rating": "UNRATED",
-            "title": "pls god work",
-            "status": "unread"
-        },
-        {
-            "entry": {"content": ""},
-            "pageCount": 400,
-            "author": "testing",
-            "genre": "sdf",
-            "rating": "UNRATED",
-            "title": "testing",
-            "status": "Read"
-        },
-        {
-            "entry": {"content": ""},
-            "pageCount": 34,
-            "author": "dfgdfg",
-            "genre": "fsdf",
-            "rating": "ONE_STAR",
-            "title": "HELP ME",
-            "status": "unread"
-        },
-        {
-            "entry": {"content": ""},
-            "pageCount": 123,
-            "author": "test",
-            "genre": "test",
-            "rating": "FIVE_STARS",
-            "title": "test",
-            "status": "In Progress"
-        }
-    ],
+    "books": [{
+        "entry": {"content": "TItle\r\n\r\nWow so cool]\r\n\r\nwhat the fuck\r\n\r\nxoxo gopiss girl"},
+        "pageCount": 123,
+        "author": "a",
+        "genre": "a",
+        "rating": "UNRATED",
+        "title": "a",
+        "status": "unread"
+    }],
     "tracker": {
-        "pages": 300,
-        "goal": 500
+        "pages": 0,
+        "goal": 0
     }
 }

@@ -7,6 +7,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -577,7 +578,7 @@ public class MainFrame extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: updates the status of the book
-    public void updateBookStatus(Book book, String status) {
+    private void updateBookStatus(Book book, String status) {
         book.setStatus(status);
     }
 
@@ -595,14 +596,139 @@ public class MainFrame extends JFrame {
     // EFFECTS: opens the reading tracker
     private void openReadingTracker(ActionEvent e) {
         System.out.println("Opening reading tracker...");
-        //TODO: implement openReadingTracker
+        setContentPane(new ReadingTrackerPanel(
+                this::setGoalAction,
+                this::logPagesAction,
+                this::viewSummaryAction
+        ));
+        pack();
+        revalidate();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the reading goal
+    private void setGoalAction(ActionEvent e) {
+        System.out.println("Setting reading goal...");
+        String goalInput = JOptionPane.showInputDialog(this,
+                "Enter your reading goal (number of pages):");
+        if (goalInput != null && !goalInput.isEmpty()) {
+            try {
+                int goal = Integer.parseInt(goalInput);
+                bookshelf.setReadingGoal(goal);
+                JOptionPane.showMessageDialog(this, "Reading goal set to: " + goal + " pages");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid input. Please enter a number.");
+            }
+        }
+        getNextTrackerAction();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: logs the number of pages read
+    private void logPagesAction(ActionEvent e) {
+        System.out.println("Logging pages read...");
+        String logInput = JOptionPane.showInputDialog(this,
+                "Enter the number of pages read:");
+        if (logInput != null && !logInput.isEmpty()) {
+            try {
+                int pages = Integer.parseInt(logInput);
+                bookshelf.addPagesRead(pages);
+                JOptionPane.showMessageDialog(this, "Pages read logged: " + pages + " pages");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid input. Please enter a number.");
+            }
+        }
+        getNextTrackerAction();
+    }
+
+    // EFFECTS: views the goal summary
+    private void viewSummaryAction(ActionEvent e) {
+        String goalSummary = bookshelf.getGoalSummary();
+        JOptionPane.showMessageDialog(this, goalSummary);
+        getNextTrackerAction();
+    }
+
+    private void getNextTrackerAction() {
+        int option = JOptionPane.showOptionDialog(this,
+                "What would you like to do next?",
+                "Next Action",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new Object[]{"Return to home", "Stay on tracker panel"},
+                null);
+
+        if (option == JOptionPane.YES_OPTION) {
+            handleHomePanelOption();
+        } else if (option == JOptionPane.NO_OPTION) {
+            handleTrackerPanelOption();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles the tracker panel option
+    private void handleTrackerPanelOption() {
+        setContentPane(new ReadingTrackerPanel(
+                this::setGoalAction,
+                this::logPagesAction,
+                this::viewSummaryAction
+        ));
+        pack();
+        revalidate();
     }
 
     // MODIFIES: this
     // EFFECTS: accesses the reading journal
     private void accessReadingJournal(ActionEvent e) {
         System.out.println("Accessing reading journal...");
-        //TODO: implement accessReadingJournal
+        setContentPane(new ReadingJournalPanel(
+                this::editEntryAction,
+                this::viewJournalAction
+        ));
+        pack();
+        revalidate();
+    }
+
+    private void editEntryAction(ActionEvent e) {
+        Book selectedBook = getSelectedBookToUpdate();
+        if (selectedBook != null) {
+            JTextPane textPane = new JTextPane();
+            textPane.setText(selectedBook.getEntry().getContent());
+            JScrollPane scrollPane = new JScrollPane(textPane);
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(scrollPane, BorderLayout.CENTER);
+            panel.setPreferredSize(new Dimension(600, 400));
+
+            JButton saveButton = new JButton("Save");
+            saveButton.addActionListener(saveEvent -> {
+                selectedBook.getEntry().setContent(textPane.getText());
+
+                int option = JOptionPane.showOptionDialog(this,
+                        "Entry for " + selectedBook.getTitle() + " has been saved."
+                                + "\nWhat would you like to do next?",
+                        "Next Action",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        new Object[]{"Return to journal", "Return to home"},
+                        null);
+
+                if (option == JOptionPane.YES_OPTION) {
+                    accessReadingJournal(null);
+                } else if (option == JOptionPane.NO_OPTION) {
+                    handleHomePanelOption();
+                }
+            });
+            panel.add(saveButton, BorderLayout.SOUTH);
+
+            setContentPane(panel);
+            pack();
+            revalidate();
+        }
+    }
+
+    private void viewJournalAction(ActionEvent e) {
+        //TODO
     }
 
     // MODIFIES: this
