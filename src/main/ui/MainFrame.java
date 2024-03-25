@@ -95,7 +95,8 @@ public class MainFrame extends JFrame {
                 this::addAction,
                 this::viewAction,
                 this::rateAction,
-                this::updateAction
+                this::updateAction,
+                this::returnHomeAction
         ));
         pack();
         revalidate();
@@ -171,7 +172,8 @@ public class MainFrame extends JFrame {
                 this::addAction,
                 this::viewAction,
                 this::rateAction,
-                this::updateAction
+                this::updateAction,
+                this::returnHomeAction
         ));
         pack();
         revalidate();
@@ -180,7 +182,6 @@ public class MainFrame extends JFrame {
     // MODIFIES: this
     // EFFECTS: handles the home panel option
     private void handleHomePanelOption() {
-//        handleSaveOptions();
         setContentPane(new HomePanel(
                 this::accessBookshelf,
                 this::openReadingTracker,
@@ -601,7 +602,8 @@ public class MainFrame extends JFrame {
         setContentPane(new ReadingTrackerPanel(
                 this::setGoalAction,
                 this::logPagesAction,
-                this::viewSummaryAction
+                this::viewSummaryAction,
+                this::returnHomeAction
         ));
         pack();
         revalidate();
@@ -674,7 +676,8 @@ public class MainFrame extends JFrame {
         setContentPane(new ReadingTrackerPanel(
                 this::setGoalAction,
                 this::logPagesAction,
-                this::viewSummaryAction
+                this::viewSummaryAction,
+                this::returnHomeAction
         ));
         pack();
         revalidate();
@@ -686,7 +689,8 @@ public class MainFrame extends JFrame {
         System.out.println("Accessing reading journal...");
         setContentPane(new ReadingJournalPanel(
                 this::editEntryAction,
-                this::viewJournalAction
+                this::viewJournalAction,
+                this::returnHomeAction
         ));
         pack();
         revalidate();
@@ -832,7 +836,36 @@ public class MainFrame extends JFrame {
     // EFFECTS: gets a book recommendation
     private void getBookRecommendation(ActionEvent e) {
         System.out.println("Getting book recommendation...");
-        //TODO: implement getBookRecommendation
+        setContentPane(new BookRecPanel(
+                this::recByGenreAction,
+                this::recByPageCountAction,
+                this::randomRecAction,
+                this::returnHomeAction
+        ));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: recommends a book by genre
+    private void recByGenreAction(ActionEvent e) {
+        //TODO: Implement this method
+    }
+
+    // MODIFIES: this
+    // EFFECTS: recommends a book by page count
+    private void recByPageCountAction(ActionEvent e) {
+        //TODO: Implement this method
+    }
+
+    // MODIFIES: this
+    // EFFECTS: recommends a random book
+    private void randomRecAction(ActionEvent e) {
+        //TODO: Implement this method
+    }
+
+    // MODIFIES: this
+    // EFFECTS: returns to the home panel
+    private void returnHomeAction(ActionEvent e) {
+        handleHomePanelOption();
     }
 
     // EFFECTS: runs the application
