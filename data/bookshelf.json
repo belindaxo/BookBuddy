@@ -1,12 +1,12 @@
 {
     "books": [{
-        "entry": {"content": "TItle\r\n\r\nWow so cool]\r\n\r\nwhat the fuck\r\n\r\nxoxo gopiss girl"},
+        "entry": {"content": "TItle\r\n\r\nWow so cool]\r\n\r\nwhat the fuck\r\n\r\nxoxo gopiss girl\r\n\r\nHello!!!!\r\n\r\nOk  word thats a bit better innit"},
         "pageCount": 123,
         "author": "a",
         "genre": "a",
-        "rating": "UNRATED",
+        "rating": "THREE_STARS",
         "title": "a",
-        "status": "unread"
+        "status": "Read"
     }],
     "tracker": {
         "pages": 0,
