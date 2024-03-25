@@ -1,6 +1,7 @@
 package ui;
 
 import model.Book;
+import model.JournalEntry;
 import model.VirtualBookshelf;
 import model.Rating;
 import persistence.JsonReader;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 // Represents the main frame of the BookBuddy application
 public class MainFrame extends JFrame {
@@ -493,17 +495,17 @@ public class MainFrame extends JFrame {
     private String displayRating(Rating rating) {
         switch (rating) {
             case ONE_STAR:
-                return "★☆☆☆☆";
+                return "* - - - -";
             case TWO_STARS:
-                return "★★☆☆☆";
+                return "* * - - -";
             case THREE_STARS:
-                return "★★★☆☆";
+                return "* * * -";
             case FOUR_STARS:
-                return "★★★★☆";
+                return "* * * * -";
             case FIVE_STARS:
-                return "★★★★★";
+                return "* * * * *";
             default:
-                return "☆☆☆☆☆";
+                return "- - - - -";
         }
     }
 
@@ -546,6 +548,7 @@ public class MainFrame extends JFrame {
         }
     }
 
+    // EFFECTS: gets the selected book to update
     private Book getSelectedBookToUpdate() {
         ArrayList<Book> books = bookshelf.getBooks();
         String[] bookDesc = new String[books.size()];
@@ -647,6 +650,7 @@ public class MainFrame extends JFrame {
         getNextTrackerAction();
     }
 
+    // EFFECTS: gets the next action to be performed
     private void getNextTrackerAction() {
         int option = JOptionPane.showOptionDialog(this,
                 "What would you like to do next?",
@@ -688,6 +692,8 @@ public class MainFrame extends JFrame {
         revalidate();
     }
 
+    // MODIFIES: this
+    // EFFECTS: allows user to edit an entry in the reading journal
     private void editEntryAction(ActionEvent e) {
         Book selectedBook = getSelectedBookToUpdate();
         if (selectedBook != null) {
@@ -702,6 +708,7 @@ public class MainFrame extends JFrame {
         }
     }
 
+    // EFFECTS: creates a text pane for the entry
     private JTextPane createTextPane(Book selectedBook) {
         JTextPane textPane = new JTextPane();
         textPane.setText(selectedBook.getEntry().getContent());
@@ -709,20 +716,26 @@ public class MainFrame extends JFrame {
         return textPane;
     }
 
+    // EFFECTS: creates an entry panel
     private JPanel createEntryPanel(JScrollPane scrollPane) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(scrollPane, BorderLayout.CENTER);
         panel.setPreferredSize(new Dimension(600, 600));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        panel.setBackground(new Color(26, 67, 76));
         return panel;
     }
 
+    // EFFECTS: creates a save button for the entry
     private JButton createSaveButton(Book selectedBook, JTextPane textPane) {
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> saveEntryAction(selectedBook, textPane));
+        styler.styleButton(saveButton);
         return saveButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves the entry for a book
     private void saveEntryAction(Book selectedBook, JTextPane textPane) {
         selectedBook.getEntry().setContent(textPane.getText());
         int option = JOptionPane.showOptionDialog(this,
@@ -742,8 +755,77 @@ public class MainFrame extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: views the reading journal
     private void viewJournalAction(ActionEvent e) {
-        //TODO
+        List<JournalEntry> allEntries = bookshelf.getAllEntries();
+        StringBuilder allEntriesText = getAllEntriesText(allEntries);
+
+        JTextArea textArea = createTextArea(allEntriesText.toString());
+        JScrollPane scrollPane = new JScrollPane(
+                textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setPreferredSize(new Dimension(600, 400));
+
+        JButton returnToJournalButton = createJournalButton("Return to journal", this::accessReadingJournal);
+        JButton returnToHomeButton = createJournalButton("Return to home", event -> handleHomePanelOption());
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(returnToJournalButton);
+        buttonPanel.add(returnToHomeButton);
+        buttonPanel.setBackground(new Color(26, 67, 76));
+
+        JPanel panel = createJournalPanel(scrollPane, buttonPanel);
+
+        setContentPane(panel);
+        pack();
+        revalidate();
+    }
+
+    // EFFECTS: gets all entries in the reading journal as a string builder
+    private StringBuilder getAllEntriesText(List<JournalEntry> allEntries) {
+        StringBuilder allEntriesText = new StringBuilder();
+        for (Book b: bookshelf.getBooks()) {
+            JournalEntry entry = b.getEntry();
+            allEntriesText.append("Book: ").append(b.getTitle()).append(" by ").append(b.getAuthor()).append("\n");
+            allEntriesText.append("Content: ").append("\n").append(entry.getContent()).append("\n");
+        }
+        return allEntriesText;
+    }
+
+    // EFFECTS: creates a text area for the reading journal
+    private JTextArea createTextArea(String text) {
+        JTextArea textArea = new JTextArea(text);
+        textArea.setEditable(false);
+        textArea.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        textArea.setLineWrap(true);
+        return textArea;
+    }
+
+    // EFFECTS: creates a button for the reading journal
+    private JButton createJournalButton(String text, ActionListener action) {
+        JButton button = new JButton(text);
+        button.addActionListener(action);
+        styler.styleButton(button);
+        return button;
+    }
+
+    // EFFECTS: creates a button panel for the reading journal
+    private JPanel createJournalButtonPanel(JButton returnToJournalButton, JButton returnToHomeButton) {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(26, 67, 76));
+        buttonPanel.add(returnToJournalButton);
+        buttonPanel.add(returnToHomeButton);
+        return buttonPanel;
+    }
+
+    // EFFECTS: creates a journal panel
+    private JPanel createJournalPanel(JScrollPane scrollPane, JPanel buttonPanel) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.PAGE_END);
+        panel.setBackground(new Color(26, 67, 76));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        return panel;
     }
 
     // MODIFIES: this
