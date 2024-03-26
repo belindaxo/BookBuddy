@@ -24,6 +24,17 @@ public class MainFrame extends JFrame {
 
     // EFFECTS: constructs the main frame of the application
     public MainFrame() {
+        createMainFrame();
+        this.bookshelf = new VirtualBookshelf();
+        this.jsonWriter = new JsonWriter(JSON_STORE);
+        this.jsonReader = new JsonReader(JSON_STORE);
+        this.styler = new UniversalStyler();
+        setContentToMainMenuPanel();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the main frame
+    private void createMainFrame() {
         setTitle("BookBuddy");
         setSize(new Dimension(400, 250));
         setResizable(false);
@@ -35,17 +46,23 @@ public class MainFrame extends JFrame {
             }
         });
         setLocationRelativeTo(null);
+    }
 
-        this.bookshelf = new VirtualBookshelf();
-        this.jsonWriter = new JsonWriter(JSON_STORE);
-        this.jsonReader = new JsonReader(JSON_STORE);
-        this.styler = new UniversalStyler();
-
-        MainMenuPanel mainMenuPanel = new MainMenuPanel(
+    // MODIFIES: this
+    // EFFECTS: creates the main menu panel
+    private MainMenuPanel createMainMenuPanel() {
+        return new MainMenuPanel(
                 this::onLoadButtonClicked,
                 this::onCreateButtonClicked
         );
-        setContentPane(mainMenuPanel);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the content to the main menu panel
+    private void setContentToMainMenuPanel() {
+        setContentPane(createMainMenuPanel());
+        pack();
+        revalidate();
     }
 
     // MODIFIES: this
@@ -54,15 +71,7 @@ public class MainFrame extends JFrame {
         try {
             bookshelf = jsonReader.read();
             System.out.println("Loading bookshelf: " + JSON_STORE);
-
-            setContentPane(new HomePanel(
-                    this::accessBookshelf,
-                    this::openReadingTracker,
-                    this::accessReadingJournal,
-                    this::getBookRecommendation
-            ));
-            pack();
-            revalidate();
+            setContentToHomePanel();
         } catch (IOException ex) {
             System.out.println("Unable to load file: " + JSON_STORE);
         }
@@ -75,12 +84,106 @@ public class MainFrame extends JFrame {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         System.out.println("New bookshelf created");
-        setContentPane(new HomePanel(
+        setContentToHomePanel();
+    }
+
+    // PANEL GETTERS + SETTERS:
+    // 1. HomePanel
+    // MODIFIES: this
+    // EFFECTS: creates a new home panel
+    private HomePanel createHomePanel() {
+        return new HomePanel(
                 this::accessBookshelf,
-                this::openReadingTracker,
+                this::accessReadingTracker,
                 this::accessReadingJournal,
                 this::getBookRecommendation
-        ));
+        );
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the content to the home panel
+    private void setContentToHomePanel() {
+        setContentPane(createHomePanel());
+        pack();
+        revalidate();
+    }
+
+    // 2. BookshelfPanel
+    // MODIFIES: this
+    // EFFECTS: creates a new bookshelf panel
+    private BookshelfPanel createBookshelfPanel() {
+        return new BookshelfPanel(
+                this::addAction,
+                this::viewAction,
+                this::rateAction,
+                this::updateAction,
+                this::returnHomeAction
+        );
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the content to the bookshelf panel
+    private void setContentToBookshelfPanel() {
+        setContentPane(createBookshelfPanel());
+        pack();
+        revalidate();
+    }
+
+    // 3. ReadingTrackerPanel
+    // MODIFIES: this
+    // EFFECTS: creates a new reading tracker panel
+    private ReadingTrackerPanel createReadingTrackerPanel() {
+        return new ReadingTrackerPanel(
+                this::setGoalAction,
+                this::logPagesAction,
+                this::viewSummaryAction,
+                this::returnHomeAction
+        );
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the content to the reading tracker panel
+    private void setContentToTrackerPanel() {
+        setContentPane(createReadingTrackerPanel());
+        pack();
+        revalidate();
+    }
+
+    // 4. ReadingJournalPanel
+    // MODIFIES: this
+    // EFFECTS: creates a new reading journal panel
+    private ReadingJournalPanel createReadingJournalPanel() {
+        return new ReadingJournalPanel(
+                this::editEntryAction,
+                this::viewJournalAction,
+                this::returnHomeAction
+        );
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the content to the reading journal panel
+    private void setContentToJournalPanel() {
+        setContentPane(createReadingJournalPanel());
+        pack();
+        revalidate();
+    }
+
+    // 5. BookRecPanel
+    // MODIFIES: this
+    // EFFECTS: creates a new book recommendation panel
+    private BookRecPanel createBookRecPanel() {
+        return new BookRecPanel(
+                this::recByGenreAction,
+                this::recByPageCountAction,
+                this::randomRecAction,
+                this::returnHomeAction
+        );
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the content to the book recommendation panel
+    private void setContentToBookRecPanel() {
+        setContentPane(createBookRecPanel());
         pack();
         revalidate();
     }
@@ -89,15 +192,7 @@ public class MainFrame extends JFrame {
     // EFFECTS: accesses the bookshelf
     private void accessBookshelf(ActionEvent e) {
         System.out.println("Accessing bookshelf...");
-        setContentPane(new BookshelfPanel(
-                this::addAction,
-                this::viewAction,
-                this::rateAction,
-                this::updateAction,
-                this::returnHomeAction
-        ));
-        pack();
-        revalidate();
+        setContentToBookshelfPanel();
     }
 
     // MODIFIES: this
@@ -109,8 +204,8 @@ public class MainFrame extends JFrame {
             while (continueAdding) {
                 Book newBook = getBookDetails();
                 addBookToBookshelf(newBook);
-                int option = getNextAction(newBook);
-                continueAdding = handleNextAction(option);
+                int option = getNextAddAction(newBook);
+                continueAdding = handleNextAddAction(option);
             }
         }
     }
@@ -133,7 +228,7 @@ public class MainFrame extends JFrame {
     }
 
     // EFFECTS: gets the next action to be performed
-    private int getNextAction(Book newBook) {
+    private int getNextAddAction(Book newBook) {
         String confirmation = newBook.getTitle() + " by " + newBook.getAuthor()
                 + " has been added to your bookshelf!";
         return JOptionPane.showOptionDialog(this,
@@ -146,16 +241,16 @@ public class MainFrame extends JFrame {
                 null);
     }
 
-    // EFFECTS: handles the next action to be performed
-    private boolean handleNextAction(int option) {
+    // EFFECTS: handles the next action selected
+    private boolean handleNextAddAction(int option) {
         switch (option) {
             case 0:
                 return true;
             case 1:
-                handleBookshelfPanelOption();
+                setContentToBookshelfPanel();
                 return false;
             case 2:
-                handleHomePanelOption();
+                setContentToHomePanel();
                 return false;
             default:
                 return false;
@@ -163,33 +258,7 @@ public class MainFrame extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: handles the bookshelf panel option
-    private void handleBookshelfPanelOption() {
-//        handleSaveOptions();
-        setContentPane(new BookshelfPanel(
-                this::addAction,
-                this::viewAction,
-                this::rateAction,
-                this::updateAction,
-                this::returnHomeAction
-        ));
-        pack();
-        revalidate();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: handles the home panel option
-    private void handleHomePanelOption() {
-        setContentPane(new HomePanel(
-                this::accessBookshelf,
-                this::openReadingTracker,
-                this::accessReadingJournal,
-                this::getBookRecommendation
-        ));
-        pack();
-        revalidate();
-    }
-
+    // EFFECTS: handles the save action selected
     public void handleSaveOptions() {
         int saveOptions = getSaveOptions();
         switch (saveOptions) {
@@ -204,6 +273,7 @@ public class MainFrame extends JFrame {
         }
     }
 
+    // EFFECTS: gets the save options
     private int getSaveOptions() {
         return JOptionPane.showOptionDialog(null,
                 "Would you like to save changes to your bookshelf?",
@@ -215,6 +285,8 @@ public class MainFrame extends JFrame {
                 null);
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves changes to the bookshelf
     private void saveChanges() {
         try {
             System.out.println("Saving changes to: " + JSON_STORE);
@@ -226,6 +298,8 @@ public class MainFrame extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: deletes changes to the bookshelf
     private void deleteChanges() {
         try {
             System.out.println("Deleting changes to: " + JSON_STORE);
@@ -316,7 +390,7 @@ public class MainFrame extends JFrame {
     private JButton createReturnToBookshelfButton() {
         JButton returnToBookshelfButton = new JButton("Return to bookshelf");
         styler.styleButton(returnToBookshelfButton);
-        returnToBookshelfButton.addActionListener(e -> handleBookshelfPanelOption());
+        returnToBookshelfButton.addActionListener(e -> setContentToBookshelfPanel());
         return returnToBookshelfButton;
     }
 
@@ -324,7 +398,7 @@ public class MainFrame extends JFrame {
     private JButton createReturnToHomeButton() {
         JButton returnToHomeButton = new JButton("Return to home");
         styler.styleButton(returnToHomeButton);
-        returnToHomeButton.addActionListener(e -> handleHomePanelOption());
+        returnToHomeButton.addActionListener(e -> setContentToHomePanel());
         return returnToHomeButton;
     }
 
@@ -433,7 +507,7 @@ public class MainFrame extends JFrame {
                 if (rating != -1) {
                     updateRating(selectedBook, rating);
                     int nextAction = getNextRatingAction(selectedBook);
-                    continueRating = handleNextAction(nextAction);
+                    continueRating = handleNextAddAction(nextAction);
                 }
             } else {
                 System.out.println("No book selected");
@@ -532,13 +606,13 @@ public class MainFrame extends JFrame {
         System.out.println("Updating book status...");
         boolean continueUpdating = true;
         while (continueUpdating) {
-            Book selectedBook = getSelectedBookToUpdate();
+            Book selectedBook = getSelectedBook();
             if (selectedBook != null) {
                 String status = getStatus();
                 if (status != null) {
                     updateBookStatus(selectedBook, status);
                     int nextAction = getNextStatusAction(selectedBook);
-                    continueUpdating = handleNextAction(nextAction);
+                    continueUpdating = handleNextAddAction(nextAction);
                 }
             } else {
                 System.out.println("No book selected");
@@ -547,8 +621,8 @@ public class MainFrame extends JFrame {
         }
     }
 
-    // EFFECTS: gets the selected book to update
-    private Book getSelectedBookToUpdate() {
+    // EFFECTS: gets the selected book
+    private Book getSelectedBook() {
         ArrayList<Book> books = bookshelf.getBooks();
         String[] bookDesc = new String[books.size()];
         for (int i = 0; i < books.size(); i++) {
@@ -595,16 +669,9 @@ public class MainFrame extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: opens the reading tracker
-    private void openReadingTracker(ActionEvent e) {
+    private void accessReadingTracker(ActionEvent e) {
         System.out.println("Opening reading tracker...");
-        setContentPane(new ReadingTrackerPanel(
-                this::setGoalAction,
-                this::logPagesAction,
-                this::viewSummaryAction,
-                this::returnHomeAction
-        ));
-        pack();
-        revalidate();
+        setContentToTrackerPanel();
     }
 
     // MODIFIES: this
@@ -662,42 +729,31 @@ public class MainFrame extends JFrame {
                 null);
 
         if (option == JOptionPane.YES_OPTION) {
-            handleHomePanelOption();
+            setContentToHomePanel();
         } else if (option == JOptionPane.NO_OPTION) {
-            handleTrackerPanelOption();
+            setContentToTrackerPanel();
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: handles the tracker panel option
-    private void handleTrackerPanelOption() {
-        setContentPane(new ReadingTrackerPanel(
-                this::setGoalAction,
-                this::logPagesAction,
-                this::viewSummaryAction,
-                this::returnHomeAction
-        ));
-        pack();
-        revalidate();
-    }
+
 
     // MODIFIES: this
     // EFFECTS: accesses the reading journal
     private void accessReadingJournal(ActionEvent e) {
         System.out.println("Accessing reading journal...");
-        setContentPane(new ReadingJournalPanel(
-                this::editEntryAction,
-                this::viewJournalAction,
-                this::returnHomeAction
-        ));
-        pack();
-        revalidate();
+        setContentToJournalPanel();
     }
+
+
 
     // MODIFIES: this
     // EFFECTS: allows user to edit an entry in the reading journal
     private void editEntryAction(ActionEvent e) {
-        Book selectedBook = getSelectedBookToUpdate();
+        setEntryPanel();
+    }
+
+    private void setEntryPanel() {
+        Book selectedBook = getSelectedBook();
         if (selectedBook != null) {
             JTextPane textPane = createTextPane(selectedBook);
             JScrollPane scrollPane = new JScrollPane(textPane);
@@ -751,15 +807,19 @@ public class MainFrame extends JFrame {
                 null);
 
         if (option == JOptionPane.YES_OPTION) {
-            accessReadingJournal(null);
+            setContentToJournalPanel();
         } else if (option == JOptionPane.NO_OPTION) {
-            handleHomePanelOption();
+            setContentToHomePanel();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: views the reading journal
     private void viewJournalAction(ActionEvent e) {
+        setContentToJournalViewPanel();
+    }
+
+    private JPanel createViewJournalPanel() {
         List<JournalEntry> allEntries = bookshelf.getAllEntries();
         StringBuilder allEntriesText = getAllEntriesText(allEntries);
 
@@ -768,17 +828,19 @@ public class MainFrame extends JFrame {
                 textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setPreferredSize(new Dimension(600, 400));
 
-        JButton returnToJournalButton = createJournalButton("Return to journal", this::accessReadingJournal);
-        JButton returnToHomeButton = createJournalButton("Return to home", event -> handleHomePanelOption());
+        JButton returnToJournalButton = createJournalButton("Return to journal", e1 -> setContentToJournalPanel());
+        JButton returnToHomeButton = createJournalButton("Return to home", e2 -> setContentToHomePanel());
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(returnToJournalButton);
         buttonPanel.add(returnToHomeButton);
         buttonPanel.setBackground(new Color(26, 67, 76));
 
-        JPanel panel = createJournalPanel(scrollPane, buttonPanel);
+        return createJournalPanel(scrollPane, buttonPanel);
+    }
 
-        setContentPane(panel);
+    private void setContentToJournalViewPanel() {
+        setContentPane(createViewJournalPanel());
         pack();
         revalidate();
     }
@@ -834,15 +896,14 @@ public class MainFrame extends JFrame {
     // EFFECTS: gets a book recommendation
     private void getBookRecommendation(ActionEvent e) {
         System.out.println("Getting book recommendation...");
-        setContentPane(new BookRecPanel(
-                this::recByGenreAction,
-                this::recByPageCountAction,
-                this::randomRecAction,
-                this::returnHomeAction
-        ));
-        pack();
-        revalidate();
+        setContentToBookRecPanel();
     }
+
+
+
+
+
+
 
     // MODIFIES: this
     // EFFECTS: recommends a book by genre
@@ -860,9 +921,9 @@ public class MainFrame extends JFrame {
                         JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{"Get another recommendation", "Return to home"}, null);
             if (option == JOptionPane.YES_OPTION) {
-                getBookRecommendation(null);
+                setContentToBookRecPanel();
             } else if (option == JOptionPane.NO_OPTION) {
-                handleHomePanelOption();
+                setContentToHomePanel();
             }
         }
     }
@@ -884,9 +945,9 @@ public class MainFrame extends JFrame {
                         JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{"Get another recommendation", "Return to home"}, null);
             if (option == JOptionPane.YES_OPTION) {
-                getBookRecommendation(null);
+                setContentToBookRecPanel();
             } else if (option == JOptionPane.NO_OPTION) {
-                handleHomePanelOption();
+                setContentToHomePanel();
             }
         } else {
             JOptionPane.showMessageDialog(this, "No books match the specified length.");
@@ -905,16 +966,16 @@ public class MainFrame extends JFrame {
                     JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{"Get another recommendation", "Return to home"}, null);
         if (option == JOptionPane.YES_OPTION) {
-            getBookRecommendation(null);
+            setContentToBookRecPanel();
         } else if (option == JOptionPane.NO_OPTION) {
-            handleHomePanelOption();
+            setContentToHomePanel();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: returns to the home panel
     private void returnHomeAction(ActionEvent e) {
-        handleHomePanelOption();
+        setContentToHomePanel();
     }
 
     // EFFECTS: runs the application
