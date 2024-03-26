@@ -1,15 +1,15 @@
 {
     "books": [{
-        "entry": {"content": "TItle\r\n\r\nWow so cool]\r\n\r\nwhat the fuck\r\n\r\nxoxo gopiss girl\r\n\r\nHello!!!!\r\n\r\nOk  word thats a bit better innit"},
-        "pageCount": 123,
-        "author": "a",
-        "genre": "a",
-        "rating": "THREE_STARS",
-        "title": "a",
-        "status": "Read"
+        "entry": {"content": "Hi"},
+        "pageCount": 123123,
+        "author": "sdfsdf",
+        "genre": "dsfsdf",
+        "rating": "UNRATED",
+        "title": "dsfdsf",
+        "status": "unread"
     }],
     "tracker": {
-        "pages": 0,
+        "pages": 10,
         "goal": 0
     }
 }
