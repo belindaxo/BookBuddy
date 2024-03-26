@@ -1,9 +1,6 @@
 package ui;
 
-import model.Book;
-import model.JournalEntry;
-import model.VirtualBookshelf;
-import model.Rating;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -15,6 +12,7 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 // Represents the main frame of the BookBuddy application
 public class MainFrame extends JFrame {
@@ -660,7 +658,7 @@ public class MainFrame extends JFrame {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
-                new Object[]{"Return to home", "Stay on tracker panel"},
+                new Object[]{"Return to home", "Return to tracker"},
                 null);
 
         if (option == JOptionPane.YES_OPTION) {
@@ -842,24 +840,75 @@ public class MainFrame extends JFrame {
                 this::randomRecAction,
                 this::returnHomeAction
         ));
+        pack();
+        revalidate();
     }
 
     // MODIFIES: this
     // EFFECTS: recommends a book by genre
     private void recByGenreAction(ActionEvent e) {
-        //TODO: Implement this method
+        RecommendationSystem rec = new RecommendationSystem(bookshelf);
+        String[] genres = getUniqueGenres();
+        String selectedGenre = (String) JOptionPane.showInputDialog(this, "Select a genre:",
+                "Recommend by Genre", JOptionPane.QUESTION_MESSAGE, null, genres, genres[0]);
+        Book recBook = rec.recBookByGenre(selectedGenre);
+        if (recBook != null) {
+            int option = JOptionPane.showOptionDialog(this, "Recommended Book: "
+                            + recBook.getTitle() + " by " + recBook.getAuthor() + "\nWhat would you like to do next?",
+                    "Book Recommendation",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null,
+                        new Object[]{"Get another recommendation", "Return to home"}, null);
+            if (option == JOptionPane.YES_OPTION) {
+                getBookRecommendation(null);
+            } else if (option == JOptionPane.NO_OPTION) {
+                handleHomePanelOption();
+            }
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: recommends a book by page count
     private void recByPageCountAction(ActionEvent e) {
-        //TODO: Implement this method
+        RecommendationSystem rec = new RecommendationSystem(bookshelf);
+        String[] lengths = {"short", "medium", "long"};
+        String selectedLength = (String) JOptionPane.showInputDialog(this,
+                "Select a book length:",
+                "Recommend by Book Length", JOptionPane.QUESTION_MESSAGE, null, lengths, lengths[0]);
+        Book recBook = rec.recBookByPageCount(selectedLength);
+        if (recBook != null) {
+            int option = JOptionPane.showOptionDialog(this, "Recommended Book: "
+                            + recBook.getTitle() + " by " + recBook.getAuthor() + "\nWhat would you like to do next?",
+                    "Book Recommendation",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null,
+                        new Object[]{"Get another recommendation", "Return to home"}, null);
+            if (option == JOptionPane.YES_OPTION) {
+                getBookRecommendation(null);
+            } else if (option == JOptionPane.NO_OPTION) {
+                handleHomePanelOption();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No books match the specified length.");
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: recommends a random book
     private void randomRecAction(ActionEvent e) {
-        //TODO: Implement this method
+        RecommendationSystem rec = new RecommendationSystem(bookshelf);
+        Book recBook = rec.recRandomBook();
+        int option = JOptionPane.showOptionDialog(this, "Recommended Book: "
+                        + recBook.getTitle() + " by " + recBook.getAuthor() + "\nWhat would you like to do next?",
+                "Book Recommendation",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{"Get another recommendation", "Return to home"}, null);
+        if (option == JOptionPane.YES_OPTION) {
+            getBookRecommendation(null);
+        } else if (option == JOptionPane.NO_OPTION) {
+            handleHomePanelOption();
+        }
     }
 
     // MODIFIES: this
