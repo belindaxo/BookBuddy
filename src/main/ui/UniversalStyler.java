@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.UIManager;
 
 // Represents the universal styling for the BookBuddy application
 public class UniversalStyler {
@@ -45,6 +46,17 @@ public class UniversalStyler {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 50, 10, 50);
         return gbc;
+    }
+
+    public void styleProgressBar(JProgressBar progressBar) {
+        progressBar.setBackground(new Color(194, 243, 78));
+        progressBar.setForeground(new Color(77, 99, 26));
+        progressBar.setFont(new Font("Arial", Font.BOLD, 16));
+        UIManager.put("ProgressBar.selectionBackground", new Color(77, 99, 26));
+        UIManager.put("ProgressBar.selectionForeground", new Color(194, 243, 78));
+        progressBar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        progressBar.setBorderPainted(false);
+        progressBar.setPreferredSize(new Dimension(300, 40));
     }
 
 }
