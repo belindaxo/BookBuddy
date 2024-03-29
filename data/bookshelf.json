@@ -1,15 +1,251 @@
 {
-    "books": [{
-        "entry": {"content": "Hi"},
-        "pageCount": 123123,
-        "author": "sdfsdf",
-        "genre": "dsfsdf",
-        "rating": "UNRATED",
-        "title": "dsfdsf",
-        "status": "unread"
-    }],
+    "books": [
+        {
+            "entry": {"content": ""},
+            "pageCount": 288,
+            "author": "Patti Smith",
+            "genre": "Memoir",
+            "rating": "FIVE_STARS",
+            "title": "Just Kids",
+            "status": "In Progress"
+        },
+        {
+            "entry": {"content": "ISTG I will NEVER finish this long ass book. It's so bloody depressing too like idk if I can take another few 100 pages of pain and suffering. I have literally been reading this book for like 3 years. Past halfway though!"},
+            "pageCount": 814,
+            "author": "Hanya Yanagihara",
+            "genre": "Fiction",
+            "rating": "THREE_STARS",
+            "title": "A Little Life",
+            "status": "In Progress"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 213,
+            "author": "Jenara Nerenberg",
+            "genre": "Non-Fiction",
+            "rating": "UNRATED",
+            "title": "Divergent Mind",
+            "status": "In Progress"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 493,
+            "author": "Charlotte Bronte",
+            "genre": "Fiction",
+            "rating": "UNRATED",
+            "title": "Jane Eyre",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 197,
+            "author": "Vladimir Nabokov",
+            "genre": "Fiction",
+            "rating": "UNRATED",
+            "title": "Laughter in the Dark",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 309,
+            "author": "Vladimir Nabokov",
+            "genre": "Fiction",
+            "rating": "FOUR_STARS",
+            "title": "Lolita",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 229,
+            "author": "Oscar Wilde",
+            "genre": "Fiction",
+            "rating": "FIVE_STARS",
+            "title": "The Picture of Dorian Gray",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": "Literally the GOAT. Most relatable book I have ever read, and I feel like only those who those who GET IT get it."},
+            "pageCount": 257,
+            "author": "Sylvia Plath",
+            "genre": "Fiction",
+            "rating": "FIVE_STARS",
+            "title": "The Bell Jar",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 391,
+            "author": "Khaled Hosseini",
+            "genre": "Fiction",
+            "rating": "UNRATED",
+            "title": "The Kite Runner",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 559,
+            "author": "Donna Tartt",
+            "genre": "Fiction",
+            "rating": "UNRATED",
+            "title": "The Secret History",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 351,
+            "author": "Taylor Jenkins Reid",
+            "genre": "Fiction",
+            "rating": "UNRATED",
+            "title": "Daisy Jones and the Six",
+            "status": "In Progress"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 132,
+            "author": "Fyodor Dostoevsky",
+            "genre": "Fiction",
+            "rating": "UNRATED",
+            "title": "Notes from Underground",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 352,
+            "author": "Emily Bronte",
+            "genre": "Fiction",
+            "rating": "UNRATED",
+            "title": "Wuthering Heights",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 647,
+            "author": "Frank Herbert",
+            "genre": "Science Fiction",
+            "rating": "UNRATED",
+            "title": "Dune",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 230,
+            "author": "James S. Romm",
+            "genre": "Philosophy",
+            "rating": "UNRATED",
+            "title": "How to Die - Seneca",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 69,
+            "author": "Giuseppe Tomasi Di Lampedusa",
+            "genre": "Short Story Collection",
+            "rating": "FOUR_STARS",
+            "title": "The Professor and the Siren",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": "First time I tried to read this I though the narrator was annoying as hell and super whiney, and did not finish it. Second time I picked it up, it was after reading The Bell Jar, and my entire opinion changed. You just have to give it a few pages to really get into it. Overall think it is one of the best coming-of-books out there."},
+            "pageCount": 277,
+            "author": "J.D. Salinger",
+            "genre": "Fiction",
+            "rating": "FIVE_STARS",
+            "title": "The Catcher in the Rye",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": "Absolute classic romance novel, one of my favorites of all time. While definitely not the most exciting book to read, there's something about this story that is so comforting and nostalgic. Love it! "},
+            "pageCount": 373,
+            "author": "Jane Austen",
+            "genre": "Fiction",
+            "rating": "FOUR_STARS",
+            "title": "Pride and Prejudice",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 370,
+            "author": "Tove Ditlevsen",
+            "genre": "Memoir Collection",
+            "rating": "UNRATED",
+            "title": "Childhood, Youth, Dependency",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 118,
+            "author": "Franz Kafka",
+            "genre": "Philosophical Fiction",
+            "rating": "UNRATED",
+            "title": "Metamorphosis",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": "Insanely good. Could not put it down. Luv Kafka <3"},
+            "pageCount": 262,
+            "author": "Franz Kafka",
+            "genre": "Philosophical Fiction",
+            "rating": "FIVE_STARS",
+            "title": "The Trial",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 576,
+            "author": "Fyodor Dostoevsky",
+            "genre": "Philosophical Fiction",
+            "rating": "FOUR_STARS",
+            "title": "Crime and Punishment",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 160,
+            "author": "Albert Camus",
+            "genre": "Philosophy",
+            "rating": "UNRATED",
+            "title": "The Myth of Sisyphus",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 213,
+            "author": "Virginia Woolf",
+            "genre": "Fiction",
+            "rating": "UNRATED",
+            "title": "Mrs Dalloway",
+            "status": "unread"
+        },
+        {
+            "entry": {"content": "Crazy book, Margaret Atwood is a genius. Scary to see how many themes of this book have actually started to actualize in real life. Lots to dissect in this book as well, even wrote on it for the AP English Lit exam."},
+            "pageCount": 336,
+            "author": "Margaret Atwood",
+            "genre": "Dystopian Fiction",
+            "rating": "FOUR_STARS",
+            "title": "The Handmaid's Tale",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": "This book was very good, I could not put it down. It is such an intriguing commentary on the objectification and commodification of the experience of girlhood. Very interesting through the lens of an unreliable narrator as well (the group of neighborhood boys), as we don't truly ever know what really happened and why."},
+            "pageCount": 249,
+            "author": "Jeffrey Eugenides",
+            "genre": "Fiction",
+            "rating": "FIVE_STARS",
+            "title": "The Virgin Suicides",
+            "status": "Read"
+        },
+        {
+            "entry": {"content": ""},
+            "pageCount": 81,
+            "author": "Sylvia Plath",
+            "genre": "Poetry",
+            "rating": "FIVE_STARS",
+            "title": "Ariel",
+            "status": "Read"
+        }
+    ],
     "tracker": {
-        "pages": 10,
-        "goal": 0
+        "pages": 0,
+        "goal": 500
     }
 }

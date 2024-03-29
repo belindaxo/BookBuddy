@@ -1,0 +1,15 @@
+{
+    "books": [{
+        "entry": {"content": ""},
+        "pageCount": 213,
+        "author": "f",
+        "genre": "fdsf",
+        "rating": "UNRATED",
+        "title": "sdfsdf",
+        "status": "unread"
+    }],
+    "tracker": {
+        "pages": 0,
+        "goal": 0
+    }
+}

@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/bookshelf.json";
+    private static final String JSON_STORE_NEW = "./data/newBookshelf.json";
     private final UniversalStyler styler;
 
     // EFFECTS: constructs the main frame of the application
@@ -81,8 +82,8 @@ public class MainFrame extends JFrame {
     // EFFECTS: creates a new bookshelf
     private void onCreateButtonClicked(ActionEvent e) {
         bookshelf = new VirtualBookshelf();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE_NEW);
+        jsonReader = new JsonReader(JSON_STORE_NEW);
         System.out.println("New bookshelf created");
         setContentToHomePanel();
     }
@@ -289,7 +290,7 @@ public class MainFrame extends JFrame {
     // EFFECTS: saves changes to the bookshelf
     private void saveChanges() {
         try {
-            System.out.println("Saving changes to: " + JSON_STORE);
+            System.out.println("Saving changes...");
             jsonWriter.open();
             jsonWriter.write(bookshelf);
             jsonWriter.close();
@@ -302,7 +303,7 @@ public class MainFrame extends JFrame {
     // EFFECTS: deletes changes to the bookshelf
     private void deleteChanges() {
         try {
-            System.out.println("Deleting changes to: " + JSON_STORE);
+            System.out.println("Deleting changes...");
             bookshelf = jsonReader.read();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error: Unable to delete changes to bookshelf");
@@ -326,6 +327,7 @@ public class MainFrame extends JFrame {
         revalidate();
     }
 
+    // EFFECTS: creates a table model
     private DefaultTableModel createTableModel() {
         DefaultTableModel tableModel = new DefaultTableModel(new Object[]{
                 "Title", "Author", "Genre", "Page Count"}, 0);
@@ -338,12 +340,14 @@ public class MainFrame extends JFrame {
         return tableModel;
     }
 
+    // EFFECTS: creates a table
     private JTable createTable(DefaultTableModel tableModel) {
         JTable table = new JTable(tableModel);
         table.getModel().addTableModelListener(createTableModelListener(table, tableModel));
         return table;
     }
 
+    // EFFECTS: creates a table model listener
     private TableModelListener createTableModelListener(JTable table, DefaultTableModel tableModel) {
         return e -> {
             int row = e.getFirstRow();
@@ -689,7 +693,6 @@ public class MainFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Invalid input. Please enter a number.");
             }
         }
-        getNextTrackerAction();
     }
 
     // MODIFIES: this
@@ -707,14 +710,12 @@ public class MainFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Invalid input. Please enter a number.");
             }
         }
-        getNextTrackerAction();
     }
 
     // EFFECTS: views the goal summary
     private void viewSummaryAction(ActionEvent e) {
         String goalSummary = bookshelf.getGoalSummary();
         JOptionPane.showMessageDialog(this, goalSummary);
-        getNextTrackerAction();
     }
 
     // EFFECTS: gets the next action to be performed
@@ -735,8 +736,6 @@ public class MainFrame extends JFrame {
         }
     }
 
-
-
     // MODIFIES: this
     // EFFECTS: accesses the reading journal
     private void accessReadingJournal(ActionEvent e) {
@@ -744,14 +743,14 @@ public class MainFrame extends JFrame {
         setContentToJournalPanel();
     }
 
-
-
     // MODIFIES: this
     // EFFECTS: allows user to edit an entry in the reading journal
     private void editEntryAction(ActionEvent e) {
         setEntryPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the entry panel
     private void setEntryPanel() {
         Book selectedBook = getSelectedBook();
         if (selectedBook != null) {
@@ -819,6 +818,7 @@ public class MainFrame extends JFrame {
         setContentToJournalViewPanel();
     }
 
+    // EFFECTS: creates a view journal panel
     private JPanel createViewJournalPanel() {
         List<JournalEntry> allEntries = bookshelf.getAllEntries();
         StringBuilder allEntriesText = getAllEntriesText(allEntries);
@@ -839,6 +839,8 @@ public class MainFrame extends JFrame {
         return createJournalPanel(scrollPane, buttonPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the content to the journal view panel
     private void setContentToJournalViewPanel() {
         setContentPane(createViewJournalPanel());
         pack();
@@ -850,8 +852,11 @@ public class MainFrame extends JFrame {
         StringBuilder allEntriesText = new StringBuilder();
         for (Book b: bookshelf.getBooks()) {
             JournalEntry entry = b.getEntry();
-            allEntriesText.append("Book: ").append(b.getTitle()).append(" by ").append(b.getAuthor()).append("\n");
-            allEntriesText.append("Content: ").append("\n").append(entry.getContent()).append("\n");
+            if (entry.getContent().isEmpty()) {
+                continue;
+            }
+            allEntriesText.append("\nBook: ").append(b.getTitle()).append(" by ").append(b.getAuthor());
+            allEntriesText.append("\n").append(entry.getContent()).append("\n ");
         }
         return allEntriesText;
     }
@@ -862,6 +867,7 @@ public class MainFrame extends JFrame {
         textArea.setEditable(false);
         textArea.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
         return textArea;
     }
 
@@ -898,12 +904,6 @@ public class MainFrame extends JFrame {
         System.out.println("Getting book recommendation...");
         setContentToBookRecPanel();
     }
-
-
-
-
-
-
 
     // MODIFIES: this
     // EFFECTS: recommends a book by genre

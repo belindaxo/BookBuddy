@@ -30,6 +30,7 @@ public class ReadingTracker implements Writeable {
 
     public void setReadingGoal(int goal) {
         this.readingGoal = goal;
+        this.totalPagesRead = 0;
     }
 
     // EFFECTS: calculates number of pages left to reach goal
@@ -46,7 +47,7 @@ public class ReadingTracker implements Writeable {
                     + "\nPages Left: " + getPagesLeft() + " pages";
         } else if (getPagesLeft() == 1) {
             return "Goal: " + readingGoal + " pages"
-                    + "\nPages Read: " + totalPagesRead + " page"
+                    + "\nPages Read: " + totalPagesRead + " pages"
                     + "\nPages Left: " + getPagesLeft() + " page";
         } else {
             return "Goal of " + readingGoal + " pages has been met!";
