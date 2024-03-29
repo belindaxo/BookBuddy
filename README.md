@@ -79,3 +79,15 @@ book recommendations from my collection to help me decide what to read next.
 
 - As a user, when I start the application, I want to have the option to load my virtual bookshelf from file.
 
+****
+
+## Instructions for Grader
+
+- **Adding a Book to the Virtual Bookshelf:** You can generate the first required action related to the user story "adding multiple Xs to a Y" by clicking on the "Access Bookshelf" button on the home panel, then clicking on the "Add Book" button. This will prompt you to enter details for the new book (title, author, genre, page count). After entering the details, you will have the option to add another book or return to the bookshelf or home panel.
+- **Viewing the Bookshelf:** You can generate the second required action related to the user story "adding multiple Xs to a Y" by clicking on the "View Bookshelf" button after adding books in the bookshelf panel. This action displays the virtual bookshelf with all the added books, allowing you to see the titles, authors, genres, and page counts in a table format.
+- **Visual Component:** You can locate my visual component by
+- **Saving the State of the Application:** You can save the state of the application by closing the window. Upon attempting to exit, a dialog box will appear with options to save changes, discard changes, or cancel the action. Selecting "Save changes" will write the current state of the bookshelf to the JSON file located at `./data/bookshelf.json`.
+- **Loading the State of the Application from File:** You can load the state of the application by starting the application and clicking on the "Load Bookshelf" button on the main menu. This will load the bookshelf's state from the previously saved JSON file. This will load the books and their details, reading goals, journal entries, and reading progress that was previously saved on the file.
+
+
+
