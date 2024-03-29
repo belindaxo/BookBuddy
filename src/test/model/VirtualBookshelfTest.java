@@ -399,5 +399,20 @@ public class VirtualBookshelfTest {
         assertFalse(bookshelf.getBooks().contains(book3));
     }
 
+    @Test
+    public void testSetTotalPagesRead() {
+        bookshelf.setTotalPagesRead(100);
+        assertEquals(100, bookshelf.getTotalPagesRead());
+    }
+
+    @Test
+    public void testResetReadingProgress() {
+        bookshelf.setTotalPagesRead(100);
+        bookshelf.setReadingGoal(500);
+        bookshelf.resetReadingProgress();
+        assertEquals(0, bookshelf.getTotalPagesRead());
+        assertEquals(500, bookshelf.getReadingGoal());
+    }
+
 
 }

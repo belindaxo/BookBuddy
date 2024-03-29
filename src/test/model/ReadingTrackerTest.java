@@ -72,4 +72,13 @@ public class ReadingTrackerTest {
                 + " pages has been met!",
                 tracker.goalSummary());
     }
+
+    @Test
+    public void testResetReadingProgress() {
+        tracker.setReadingGoal(50);
+        tracker.addPagesRead(10);
+        tracker.resetReadingProgress();
+        assertEquals(0, tracker.getTotalPagesRead());
+        assertEquals(50, tracker.getPagesLeft());
+    }
 }
