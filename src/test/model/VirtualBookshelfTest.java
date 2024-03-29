@@ -374,8 +374,29 @@ public class VirtualBookshelfTest {
     public void testTrackerMethods() {
         bookshelf.setReadingGoal(500);
         bookshelf.addPagesRead(200);
+        bookshelf.getGoalSummary();
         assertEquals(500, bookshelf.getReadingGoal());
         assertEquals(300, bookshelf.getPagesLeft());
+        assertFalse(bookshelf.getGoalSummary().isEmpty());
+    }
+
+    @Test
+    public void testRemoveBook() {
+        bookshelf.addBook(book1);
+        bookshelf.addBook(book2);
+        bookshelf.addBook(book3);
+
+        bookshelf.removeBook(book1);
+        assertEquals(2, bookshelf.getBooks().size());
+        assertFalse(bookshelf.getBooks().contains(book1));
+
+        bookshelf.removeBook(book2);
+        assertEquals(1, bookshelf.getBooks().size());
+        assertFalse(bookshelf.getBooks().contains(book2));
+
+        bookshelf.removeBook(book3);
+        assertEquals(0, bookshelf.getBooks().size());
+        assertFalse(bookshelf.getBooks().contains(book3));
     }
 
 

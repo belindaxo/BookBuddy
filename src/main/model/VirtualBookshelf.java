@@ -163,6 +163,14 @@ public class VirtualBookshelf implements Writeable {
         this.tracker.addPagesRead(pages);
     }
 
+    public void setTotalPagesRead(int pages) {
+        this.tracker.setTotalPagesRead(pages);
+    }
+
+    public int getTotalPagesRead() {
+        return this.tracker.getTotalPagesRead();
+    }
+
     public int getReadingGoal() {
         return this.tracker.getReadingGoal();
     }
@@ -177,6 +185,10 @@ public class VirtualBookshelf implements Writeable {
 
     public String getGoalSummary() {
         return this.tracker.goalSummary();
+    }
+
+    public void resetReadingProgress() {
+        this.tracker.resetReadingProgress();
     }
 
     public void removeBook(Book book) {

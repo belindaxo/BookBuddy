@@ -62,7 +62,7 @@ public class ReadingTrackerTest {
         // pages left = 1
         tracker.addPagesRead(1);
         assertEquals("Goal: " + tracker.getReadingGoal() + " pages"
-                + "\nPages Read: " + tracker.getTotalPagesRead() + " page"
+                + "\nPages Read: " + tracker.getTotalPagesRead() + " pages"
                 + "\nPages Left: " + tracker.getPagesLeft() + " page",
                 tracker.goalSummary());
 

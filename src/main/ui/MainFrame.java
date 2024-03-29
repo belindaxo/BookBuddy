@@ -683,11 +683,13 @@ public class MainFrame extends JFrame {
     private void setGoalAction(ActionEvent e) {
         System.out.println("Setting reading goal...");
         String goalInput = JOptionPane.showInputDialog(this,
-                "Enter your reading goal (number of pages):");
+                "Enter your reading goal (number of pages): "
+                        + "\n** note that this will overwrite any existing goal and pages logged **");
         if (goalInput != null && !goalInput.isEmpty()) {
             try {
                 int goal = Integer.parseInt(goalInput);
                 bookshelf.setReadingGoal(goal);
+                bookshelf.resetReadingProgress();
                 JOptionPane.showMessageDialog(this, "Reading goal set to: " + goal + " pages");
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Invalid input. Please enter a number.");

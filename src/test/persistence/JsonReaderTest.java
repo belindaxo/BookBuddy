@@ -1,6 +1,5 @@
 package persistence;
 
-import model.JournalEntry;
 import model.Rating;
 import model.VirtualBookshelf;
 import model.Book;
@@ -41,6 +40,7 @@ public class JsonReaderTest extends JsonTest{
         JsonReader reader = new JsonReader("./data/testReaderGeneralBookshelf.json");
         try {
             VirtualBookshelf vb = reader.read();
+            System.out.println("Total pages read from VirtualBookshelf: " + vb.getTracker().getTotalPagesRead());
             List<Book> books = vb.getBooks();
             assertEquals(2, books.size());
 

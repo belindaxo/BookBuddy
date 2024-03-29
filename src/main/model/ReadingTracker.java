@@ -18,6 +18,10 @@ public class ReadingTracker implements Writeable {
         return this.totalPagesRead;
     }
 
+    public void setTotalPagesRead(int pages) {
+        this.totalPagesRead = pages;
+    }
+
     // MODIFIES: this
     // EFFECTS: adds specified number of pages read to total pages read
     public void addPagesRead(int pages) {
@@ -30,7 +34,6 @@ public class ReadingTracker implements Writeable {
 
     public void setReadingGoal(int goal) {
         this.readingGoal = goal;
-        this.totalPagesRead = 0;
     }
 
     // EFFECTS: calculates number of pages left to reach goal
@@ -52,6 +55,10 @@ public class ReadingTracker implements Writeable {
         } else {
             return "Goal of " + readingGoal + " pages has been met!";
         }
+    }
+
+    public void resetReadingProgress() {
+        this.totalPagesRead = 0;
     }
 
     public JSONObject toJson() {

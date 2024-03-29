@@ -245,7 +245,7 @@
         }
     ],
     "tracker": {
-        "pages": 0,
-        "goal": 500
+        "pages": 10,
+        "goal": 1000
     }
 }
