@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+// Represents the book rec panel with options to get book recommendations based on genre, page count, or randomly
 public class BookRecPanel extends JPanel {
     private final UniversalStyler styler;
 
