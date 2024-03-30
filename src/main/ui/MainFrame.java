@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 // Represents the main frame of the BookBuddy application
 public class MainFrame extends JFrame {
     private VirtualBookshelf bookshelf;
@@ -714,13 +713,6 @@ public class MainFrame extends JFrame {
         }
     }
 
-//    // EFFECTS: views the goal summary
-//    private void viewSummaryAction(ActionEvent e) {
-//        String goalSummary = bookshelf.getGoalSummary();
-//        JOptionPane.showMessageDialog(this, goalSummary);
-//    }
-
-
     // MODIFIES: this
     // EFFECTS: creates and displays a panel showing the reading goal summary and progress
     private void viewSummaryAction(ActionEvent e) {
@@ -728,7 +720,7 @@ public class MainFrame extends JFrame {
     }
 
     // MODIFIES: this
-// EFFECTS: sets the content to the goal summary panel
+    // EFFECTS: sets the content to the goal summary panel
     private void setContentToGoalSummaryPanel() {
         JPanel goalSummaryPanel = createGoalSummaryPanel();
         setContentPane(goalSummaryPanel);
@@ -741,11 +733,71 @@ public class MainFrame extends JFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setPreferredSize(new Dimension(350, 250));
+        mainPanel.setBackground(new Color(26, 67, 76));
+
+        JPanel textPanel = createTextPanel();
+        mainPanel.add(textPanel);
+
+        JPanel progressBarPanel = createProgressBarPanel();
+        mainPanel.add(progressBarPanel);
+
+        JPanel buttonPanel = createReturnButtonPanel();
+        mainPanel.add(buttonPanel);
+
+        return mainPanel;
+    }
+
+    // EFFECTS: creates the return button panel
+    private JPanel createReturnButtonPanel() {
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(new Color(26, 67, 76));
+        buttonPanel.add(createReturnButton());
+        return buttonPanel;
+    }
+
+    // EFFECTS: creates the return button that returns to the tracker panel
+    private JButton createReturnButton() {
+        JButton returnButton = new JButton("Return");
+        styler.styleButton(returnButton);
+        returnButton.setPreferredSize(new Dimension(350, 30));
+        returnButton.addActionListener(e -> setContentToTrackerPanel());
+        return returnButton;
+    }
+
+    // EFFECTS: creates a panel for the progress bar
+    private JPanel createProgressBarPanel() {
+        JPanel progressBarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
+        progressBarPanel.setBackground(new Color(26, 67, 76));
+        progressBarPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 45, 0));
+        progressBarPanel.add(createProgressBar());
+        return progressBarPanel;
+    }
+
+    // EFFECTS: creates a progress bar
+    private JProgressBar createProgressBar() {
+        JProgressBar progressBar = new JProgressBar(0, bookshelf.getReadingGoal());
+        progressBar.setValue(bookshelf.getTotalPagesRead());
+        progressBar.setStringPainted(true);
+        styler.styleProgressBar(progressBar);
+        return progressBar;
+    }
+
+    // EFFECTS: creates a panel for the text summary
+    private JPanel createTextPanel() {
+        JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        textPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        textPanel.setBackground(new Color(26, 67, 76));
+        JLabel goalSummaryLabel = createGoalSummaryLabel();
+        textPanel.add(goalSummaryLabel);
+        return textPanel;
+    }
+
+    // EFFECTS: creates a label for the goal summary
+    private JLabel createGoalSummaryLabel() {
         String totalPagesRead = "Total pages read: " + bookshelf.getTotalPagesRead();
         String pagesLeft = "Pages left: " + bookshelf.getPagesLeft();
         String goal = "Reading goal: " + bookshelf.getReadingGoal() + " pages";
 
-        // Goal Summary
         String goalSummaryHtml = "<html><div style='padding: 5px;'>"
                 + totalPagesRead + "<br>"
                 + pagesLeft + "<br>"
@@ -754,37 +806,10 @@ public class MainFrame extends JFrame {
         JLabel goalSummaryLabel = new JLabel(goalSummaryHtml);
         goalSummaryLabel.setForeground(Color.WHITE);
         goalSummaryLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-
-        JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        textPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        textPanel.setBackground(new Color(26, 67, 76));
-        textPanel.add(goalSummaryLabel);
-        mainPanel.add(textPanel);
-        mainPanel.setBackground(new Color(26, 67, 76));
-
-        JProgressBar progressBar = new JProgressBar(0, bookshelf.getReadingGoal());
-        progressBar.setValue(bookshelf.getTotalPagesRead());
-        progressBar.setStringPainted(true);
-        JPanel progressBarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        styler.styleProgressBar(progressBar);
-        progressBarPanel.setBackground(new Color(26, 67, 76));
-        progressBarPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 45, 0));
-        progressBarPanel.add(progressBar);
-        mainPanel.add(progressBarPanel);
-
-        JButton returnButton = new JButton("Return");
-        styler.styleButton(returnButton);
-        returnButton.setPreferredSize(new Dimension(350, 30));
-        returnButton.addActionListener(e -> setContentToTrackerPanel());
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.setBackground(new Color(26, 67, 76));
-        buttonPanel.add(returnButton);
-        mainPanel.add(buttonPanel);
-
-        return mainPanel;
+        return goalSummaryLabel;
     }
 
-        // EFFECTS: gets the next action to be performed
+    // EFFECTS: gets the next action to be performed
     private void getNextTrackerAction() {
         int option = JOptionPane.showOptionDialog(this,
                 "What would you like to do next?",

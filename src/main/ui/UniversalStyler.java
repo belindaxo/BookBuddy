@@ -48,6 +48,8 @@ public class UniversalStyler {
         return gbc;
     }
 
+    // MODIFIES: this
+    // EFFECTS: styles the progress bar
     public void styleProgressBar(JProgressBar progressBar) {
         progressBar.setBackground(new Color(194, 243, 78));
         progressBar.setForeground(new Color(77, 99, 26));

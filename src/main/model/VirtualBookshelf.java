@@ -139,6 +139,7 @@ public class VirtualBookshelf implements Writeable {
         this.tracker = tracker;
     }
 
+    // EFFECTS: returns books in bookshelf as a JSON array
     public JSONArray booksToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -148,6 +149,7 @@ public class VirtualBookshelf implements Writeable {
         return jsonArray;
     }
 
+    // EFFECTS: returns a list of all journal entries in the bookshelf
     public List<JournalEntry> getAllEntries() {
         List<JournalEntry> allEntries = new ArrayList<>();
         for (Book b : books) {
@@ -187,10 +189,14 @@ public class VirtualBookshelf implements Writeable {
         return this.tracker.goalSummary();
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets the reading progress
     public void resetReadingProgress() {
         this.tracker.resetReadingProgress();
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes book from bookshelf
     public void removeBook(Book book) {
         this.books.remove(book);
     }

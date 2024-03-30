@@ -57,10 +57,13 @@ public class ReadingTracker implements Writeable {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets total pages read to 0
     public void resetReadingProgress() {
         this.totalPagesRead = 0;
     }
 
+    // EFFECTS: returns reading tracker as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("pages", totalPagesRead);
