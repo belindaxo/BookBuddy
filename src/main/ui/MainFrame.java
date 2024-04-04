@@ -1,8 +1,6 @@
 package ui;
 
 import model.*;
-import persistence.JsonReader;
-import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
@@ -16,8 +14,7 @@ import java.util.List;
 // Represents the main frame of the BookBuddy application
 public class MainFrame extends JFrame {
     private VirtualBookshelf bookshelf;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private PersistenceManager persistenceManager;
     private static final String JSON_STORE = "./data/bookshelf.json";
     private static final String JSON_STORE_NEW = "./data/newBookshelf.json";
     private final UniversalStyler styler;
@@ -26,8 +23,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         createMainFrame();
         this.bookshelf = new VirtualBookshelf();
-        this.jsonWriter = new JsonWriter(JSON_STORE);
-        this.jsonReader = new JsonReader(JSON_STORE);
+        this.persistenceManager = new PersistenceManager(JSON_STORE);
         this.styler = new UniversalStyler();
         setContentToMainMenuPanel();
     }
@@ -69,7 +65,7 @@ public class MainFrame extends JFrame {
     // EFFECTS: loads bookshelf from file
     private void onLoadButtonClicked(ActionEvent e) {
         try {
-            bookshelf = jsonReader.read();
+            bookshelf = persistenceManager.loadBookshelf();
             System.out.println("Loading bookshelf: " + JSON_STORE);
             setContentToHomePanel();
         } catch (IOException ex) {
@@ -81,8 +77,7 @@ public class MainFrame extends JFrame {
     // EFFECTS: creates a new bookshelf
     private void onCreateButtonClicked(ActionEvent e) {
         bookshelf = new VirtualBookshelf();
-        jsonWriter = new JsonWriter(JSON_STORE_NEW);
-        jsonReader = new JsonReader(JSON_STORE_NEW);
+        persistenceManager = new PersistenceManager(JSON_STORE_NEW);
         System.out.println("New bookshelf created");
         setContentToHomePanel();
     }
@@ -290,9 +285,7 @@ public class MainFrame extends JFrame {
     private void saveChanges() {
         try {
             System.out.println("Saving changes...");
-            jsonWriter.open();
-            jsonWriter.write(bookshelf);
-            jsonWriter.close();
+            persistenceManager.saveBookshelf(bookshelf);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error: Unable to save changes to bookshelf");
         }
@@ -303,7 +296,7 @@ public class MainFrame extends JFrame {
     private void deleteChanges() {
         try {
             System.out.println("Deleting changes...");
-            bookshelf = jsonReader.read();
+            bookshelf = persistenceManager.loadBookshelf();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error: Unable to delete changes to bookshelf");
         }
