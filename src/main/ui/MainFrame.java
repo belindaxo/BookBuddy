@@ -208,7 +208,7 @@ public class MainFrame extends JFrame implements LogPrinter {
             while (continueAdding) {
                 Book newBook = getBookDetails();
                 addBookToBookshelf(newBook);
-                int option = getNextAddAction(newBook);
+                int option = getNextAction(newBook);
                 continueAdding = handleNextAddAction(option);
             }
         }
@@ -232,7 +232,7 @@ public class MainFrame extends JFrame implements LogPrinter {
     }
 
     // EFFECTS: gets the next action to be performed
-    private int getNextAddAction(Book newBook) {
+    private int getNextAction(Book newBook) {
         String confirmation = newBook.getTitle() + " by " + newBook.getAuthor()
                 + " has been added to your bookshelf!";
         return JOptionPane.showOptionDialog(this,
