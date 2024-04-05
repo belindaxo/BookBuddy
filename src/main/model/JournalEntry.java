@@ -17,6 +17,7 @@ public class JournalEntry implements Writeable {
 
     public void setContent(String content) {
         this.content = content;
+        EventLog.getInstance().logEvent(new Event("Journal entry added."));
     }
 
     public JSONObject toJson() {

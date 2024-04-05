@@ -20,12 +20,14 @@ public class ReadingTracker implements Writeable {
 
     public void setTotalPagesRead(int pages) {
         this.totalPagesRead = pages;
+        EventLog.getInstance().logEvent(new Event("Total pages read has been set to " + pages + " pages."));
     }
 
     // MODIFIES: this
     // EFFECTS: adds specified number of pages read to total pages read
     public void addPagesRead(int pages) {
         this.totalPagesRead += pages;
+        EventLog.getInstance().logEvent(new Event(pages + " pages have been added to total pages read."));
     }
 
     public int getReadingGoal() {
@@ -34,6 +36,7 @@ public class ReadingTracker implements Writeable {
 
     public void setReadingGoal(int goal) {
         this.readingGoal = goal;
+        EventLog.getInstance().logEvent(new Event("Reading goal has been set to " + goal + " pages."));
     }
 
     // EFFECTS: calculates number of pages left to reach goal
@@ -61,6 +64,7 @@ public class ReadingTracker implements Writeable {
     // EFFECTS: resets total pages read to 0
     public void resetReadingProgress() {
         this.totalPagesRead = 0;
+        EventLog.getInstance().logEvent(new Event("Reading goal progress has been reset."));
     }
 
     // EFFECTS: returns reading tracker as a JSON object

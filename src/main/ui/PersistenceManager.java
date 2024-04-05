@@ -1,8 +1,10 @@
 package ui;
 
+import model.Event;
 import model.VirtualBookshelf;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import model.EventLog;
 
 import java.io.IOException;
 
@@ -16,6 +18,8 @@ public class PersistenceManager {
     }
 
     public VirtualBookshelf loadBookshelf() throws IOException {
+        EventLog.getInstance().clear();
+        EventLog.getInstance().logEvent(new Event("Loaded bookshelf from file."));
         return jsonReader.read();
     }
 
@@ -23,5 +27,6 @@ public class PersistenceManager {
         jsonWriter.open();
         jsonWriter.write(bookshelf);
         jsonWriter.close();
+        EventLog.getInstance().logEvent(new Event("Saved bookshelf to file."));
     }
 }

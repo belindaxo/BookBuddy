@@ -54,7 +54,6 @@ public class JsonReader {
         ReadingTracker tracker = new ReadingTracker();
         tracker.setTotalPagesRead(jsonObject.getInt("pages"));
         tracker.setReadingGoal(jsonObject.getInt("goal"));
-        System.out.println("Total pages read from JSON: " + tracker.getTotalPagesRead()); // for debugging
         return tracker;
     }
 

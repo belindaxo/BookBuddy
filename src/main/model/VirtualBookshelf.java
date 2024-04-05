@@ -22,6 +22,7 @@ public class VirtualBookshelf implements Writeable {
     // EFFECTS: adds book to bookshelf
     public void addBook(Book book) {
         this.books.add(book);
+        EventLog.getInstance().logEvent(new Event("Added " + book.getTitle() + " to bookshelf."));
     }
 
     // EFFECTS: returns the number of books in bookshelf that are read
@@ -67,6 +68,7 @@ public class VirtualBookshelf implements Writeable {
         for (Book b : books) {
             temp.add(b.getTitle());
         }
+        EventLog.getInstance().logEvent(new Event("Viewed all books in bookshelf."));
         return temp;
     }
 
@@ -78,6 +80,7 @@ public class VirtualBookshelf implements Writeable {
                 temp.add(b);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Viewed books by genre."));
         return temp;
     }
 
@@ -96,6 +99,7 @@ public class VirtualBookshelf implements Writeable {
                 temp.add(b);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Viewed books by length."));
         return temp;
     }
 
@@ -107,6 +111,7 @@ public class VirtualBookshelf implements Writeable {
                 temp.add(b);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Viewed books by author."));
         return temp;
     }
 
@@ -119,6 +124,7 @@ public class VirtualBookshelf implements Writeable {
                 temp.add(b);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Viewed books by status."));
         return temp;
     }
 
@@ -158,6 +164,7 @@ public class VirtualBookshelf implements Writeable {
                 allEntries.add(entry);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Reading journal viewed."));
         return allEntries;
     }
 
@@ -199,5 +206,6 @@ public class VirtualBookshelf implements Writeable {
     // EFFECTS: removes book from bookshelf
     public void removeBook(Book book) {
         this.books.remove(book);
+        EventLog.getInstance().logEvent(new Event(book.getTitle() + "removed from bookshelf."));
     }
 }

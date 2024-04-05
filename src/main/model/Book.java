@@ -52,7 +52,6 @@ public class Book implements Writeable {
         this.genre = genre;
     }
 
-
     public int getPageCount() {
         return this.pageCount;
     }
@@ -61,13 +60,13 @@ public class Book implements Writeable {
         this.pageCount = pageCount;
     }
 
-
     public String getStatus() {
         return this.status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+        EventLog.getInstance().logEvent(new Event("Status has been updated."));
     }
 
     public JournalEntry getEntry() {
@@ -92,6 +91,7 @@ public class Book implements Writeable {
 
     public void setRating(Rating rating) {
         this.rating = rating;
+        EventLog.getInstance().logEvent(new Event("Rating has been updated."));
     }
 
     // EFFECTS: returns string representation of a book

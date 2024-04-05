@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.Event;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Represents the main frame of the BookBuddy application
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements LogPrinter {
     private VirtualBookshelf bookshelf;
     private PersistenceManager persistenceManager;
     private static final String JSON_STORE = "./data/bookshelf.json";
@@ -39,9 +40,17 @@ public class MainFrame extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 handleSaveOptions();
+                printLog(EventLog.getInstance());
             }
         });
         setLocationRelativeTo(null);
+    }
+
+    @Override
+    public void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString() + "\n");
+        }
     }
 
     // MODIFIES: this
