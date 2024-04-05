@@ -89,5 +89,70 @@ book recommendations from my collection to help me decide what to read next.
 - **Saving the State of the Application:** You can save the state of the application by closing the window. Upon attempting to exit, a dialog box will appear with options to save changes, discard changes, or cancel the action. Selecting "Save changes" will write the current state of the bookshelf to the JSON file located at `./data/bookshelf.json`.
 - **Loading the State of the Application from File:** You can load the state of the application by starting the application and clicking on the "Load Bookshelf" button on the main menu. This will load the bookshelf's state from the previously saved JSON file. This will load the books and their details, reading goals, journal entries, and reading progress that was previously saved on the file.
 
+****
+
+## Phase 4: Task 2
+Fri Apr 05 16:48:16 PDT 2024  
+Event log cleared.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Loaded bookshelf from file.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Added The Catcher in the Rye to bookshelf.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Status has been updated.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Rating has been updated.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Journal entry added.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Added Pride and Prejudice to bookshelf.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Status has been updated.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Rating has been updated.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Journal entry added.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Added Crime and Punishment to bookshelf.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Status has been updated.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Rating has been updated.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Journal entry added.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Added The Handmaid's Tale to bookshelf.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Status has been updated.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Rating has been updated.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Journal entry added.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Total pages read has been set to 67 pages.
+
+Fri Apr 05 16:48:16 PDT 2024  
+Reading goal has been set to 100 pages.
+
+Fri Apr 05 16:48:27 PDT 2024  
+Saved bookshelf to file.
 
 
