@@ -1,4 +1,6 @@
-package ui;
+package ui.panels;
+
+import ui.UniversalStyler;
 
 import javax.swing.*;
 import java.awt.*;

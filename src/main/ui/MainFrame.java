@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 import model.Event;
+import ui.panels.*;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
