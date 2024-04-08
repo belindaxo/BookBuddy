@@ -155,4 +155,23 @@ Reading goal has been set to 100 pages.
 Fri Apr 05 16:48:27 PDT 2024  
 Saved bookshelf to file.
 
+****
 
+## Phase 4: Task 3
+
+If I had more time to work on this project, I would find ways to improve the design of my ui package. In particular, 
+the `MainFrame` class could be refactored to be more modular and less cluttered. My main goal would be to separate the
+functionality of the main frame into smaller, more manageable classes that each handle a specific aspect of the
+application. This would make the codebase more organized and easier to maintain in the long run. Additionally, I would
+like to improve the visual design of the application by incorporating more visual elements to make the application more 
+engaging and user-friendly. 
+
+To further improve the design of this application, I would modify the save and load functionality to 
+include a better-implemented save/load system that allows for more flexibility in saving and loading the state of the 
+application, particularly allowing users to save and load multiple bookshelves. I would also like to modify the way 
+users add books in the GUI, so that if a user chooses to close the book-adding dialog without filling out the fields, the 
+dialog box will close without continuing to prompt the user to enter the remaining information. This would make the 
+application more user-friendly and intuitive to use. I also would love to improve the Reading Goal Tracker feature by 
+adding visual data representations to illustrate the user's progress over time. This would include graphs and charts 
+that show the user's reading habits and goals in a more visual and interactive way than the currently implemented 
+progress bar.
