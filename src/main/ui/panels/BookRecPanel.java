@@ -11,12 +11,15 @@ public class BookRecPanel extends JPanel {
     private final UniversalStyler styler;
 
 
+    // EFFECTS: constructs a book rec panel with buttons to get recommendations
     public BookRecPanel(ActionListener recByGenreAction, ActionListener recByPageCount,
                         ActionListener randomRecAction, ActionListener returnHomeAction) {
         this.styler = new UniversalStyler();
         initPanel(recByGenreAction, recByPageCount, randomRecAction, returnHomeAction);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the book rec panel with title and buttons
     private void initPanel(ActionListener recByGenreAction, ActionListener recByPageCount,
                            ActionListener randomRecAction, ActionListener returnHomeAction) {
         this.setLayout(new BorderLayout());
@@ -26,6 +29,8 @@ public class BookRecPanel extends JPanel {
                 BorderLayout.CENTER);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the title panel with title and subtitle
     private JPanel createTitlePanel() {
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
@@ -42,6 +47,8 @@ public class BookRecPanel extends JPanel {
         return titlePanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the button panel with buttons to get recommendations
     private JPanel createButtonPanel(ActionListener recByGenreAction, ActionListener recByPageCount,
                                      ActionListener randomRecAction, ActionListener returnHomeAction) {
         JPanel buttonPanel = new JPanel();

@@ -30,6 +30,14 @@ public class MainFrame extends JFrame implements LogPrinter {
         setContentToMainMenuPanel();
     }
 
+    // EFFECTS: runs the application
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            MainFrame frame = new MainFrame();
+            frame.setVisible(true);
+        });
+    }
+
     // MODIFIES: this
     // EFFECTS: creates the main frame
     private void createMainFrame() {
@@ -47,6 +55,7 @@ public class MainFrame extends JFrame implements LogPrinter {
         setLocationRelativeTo(null);
     }
 
+    // EFFECTS: prints the event log
     @Override
     public void printLog(EventLog el) {
         for (Event next : el) {
@@ -1070,13 +1079,5 @@ public class MainFrame extends JFrame implements LogPrinter {
     // EFFECTS: returns to the home panel
     private void returnHomeAction(ActionEvent e) {
         setContentToHomePanel();
-    }
-
-    // EFFECTS: runs the application
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            MainFrame frame = new MainFrame();
-            frame.setVisible(true);
-        });
     }
 }

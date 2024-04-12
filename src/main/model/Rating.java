@@ -1,5 +1,6 @@
 package model;
 
+// Represents the rating options for a book
 public enum Rating {
     UNRATED("Unrated"),
     ONE_STAR("*"),

@@ -12,7 +12,7 @@ public class VirtualBookshelf implements Writeable {
     private final ArrayList<Book> books;
     private ReadingTracker tracker;
 
-    // EFFECTS: initializes a virtual bookshelf with an empty list of books
+    // EFFECTS: initializes a virtual bookshelf with an empty list of books and a new reading tracker
     public VirtualBookshelf() {
         this.books = new ArrayList<>();
         this.tracker = new ReadingTracker();

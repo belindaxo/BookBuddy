@@ -3,7 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistence.Writeable;
 
-// Represents a book in a user's collection that has a title, author, genre, page count, and read status
+// Represents a book in a user's collection that has a title, author, genre, page count, and read status,
+// as well as a journal entry and rating
 public class Book implements Writeable {
     private String title;
     private String author;
@@ -14,7 +15,8 @@ public class Book implements Writeable {
     private Rating rating;
 
 
-    // EFFECTS: constructs book with given title, author, genre, page count, and initial status set to "unread"
+    // EFFECTS: constructs book with given title, author, genre, page count, and initial status set to "unread",
+    //          entry set to empty, and rating set to UNRATED
     public Book(String title, String author, String genre, int pageCount) {
         this.title = title;
         this.author = author;
@@ -42,7 +44,6 @@ public class Book implements Writeable {
     public void setAuthor(String author) {
         this.author = author;
     }
-
 
     public String getGenre() {
         return this.genre;
@@ -103,6 +104,7 @@ public class Book implements Writeable {
                 + "\nRating: " + this.rating;
     }
 
+    // EFFECTS: returns the book as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

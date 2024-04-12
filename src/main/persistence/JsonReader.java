@@ -50,6 +50,7 @@ public class JsonReader {
         return vb;
     }
 
+    // EFFECTS: parses reading tracker from JSON object and returns it
     private ReadingTracker parseReadingTracker(JSONObject jsonObject) {
         ReadingTracker tracker = new ReadingTracker();
         tracker.setTotalPagesRead(jsonObject.getInt("pages"));
