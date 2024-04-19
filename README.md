@@ -81,7 +81,7 @@ book recommendations from my collection to help me decide what to read next.
 
 ****
 
-## Instructions for Grader
+## Useage Examples
 
 - **Adding a Book to the Virtual Bookshelf:** You can generate the first required action related to the user story "adding multiple Xs to a Y" by clicking on the "Access Bookshelf" button on the home panel, then clicking on the "Add Book" button. This will prompt you to enter details for the new book (title, author, genre, page count). After entering the details, you will have the option to add another book or return to the bookshelf or home panel.
 - **Viewing the Bookshelf:** You can generate the second required action related to the user story "adding multiple Xs to a Y" by clicking on the "View Bookshelf" button after adding books in the bookshelf panel. This action displays the virtual bookshelf with all the added books, allowing you to see the titles, authors, genres, and page counts in a table format.
@@ -91,73 +91,7 @@ book recommendations from my collection to help me decide what to read next.
 
 ****
 
-## Phase 4: Task 2
-Fri Apr 05 16:48:16 PDT 2024  
-Event log cleared.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Loaded bookshelf from file.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Added The Catcher in the Rye to bookshelf.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Status has been updated.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Rating has been updated.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Journal entry added.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Added Pride and Prejudice to bookshelf.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Status has been updated.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Rating has been updated.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Journal entry added.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Added Crime and Punishment to bookshelf.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Status has been updated.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Rating has been updated.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Journal entry added.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Added The Handmaid's Tale to bookshelf.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Status has been updated.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Rating has been updated.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Journal entry added.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Total pages read has been set to 67 pages.
-
-Fri Apr 05 16:48:16 PDT 2024  
-Reading goal has been set to 100 pages.
-
-Fri Apr 05 16:48:27 PDT 2024  
-Saved bookshelf to file.
-
-****
-
-## Phase 4: Task 3
+## Reflection
 
 If I had more time to work on this project, I would find ways to improve the design of my ui package. In particular, 
 the `MainFrame` class could be refactored to be more modular and less cluttered. My main goal would be to separate the
